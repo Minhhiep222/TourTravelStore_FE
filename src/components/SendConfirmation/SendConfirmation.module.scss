@@ -1,0 +1,125 @@
+// .wrap-parent {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }
+// .parent {
+//    display: flex;
+//    flex-direction: column;
+//    max-width: 200px;
+// }
+
+// .placeholder {
+//     position: relative;
+//     color: red;
+//     pointer-events: none; 
+// }
+
+
+.wrapper {
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(3, 18, 26, 0.5);
+    .parent {
+        position: relative;
+        padding: 16px;
+        background-color: rgba(255, 255, 255);
+        max-width: 600px;
+        min-height: 200px;
+        width: 432px;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        margin: 0 auto;
+        transform: translateY(50%);
+        .iconClose {
+            position: absolute;
+            right: 3%;
+            cursor: pointer;
+        }
+        .title {
+            line-height: 28px;
+            font-size: 24px;
+            color: rgba(3, 18, 26, 1.00);
+            font-weight: 700;
+        }
+        .subtitle {
+            font-weight: 500;
+            line-height: 20px;
+            font-size: 14px;
+            color: rgba(3, 18, 26, 1.00);
+            text-align: left;
+            padding-top: 16px;
+            .username {
+                font-size: 16px;
+                line-height: 20px;
+                color: rgba(3, 18, 26, 1.00);
+                font-weight: 700;
+            }
+        }
+        .titleVerify {
+            padding-top: 16px;
+            line-height: 16px;
+            font-size: 14px;
+            color: rgba(3, 18, 26, 1.00);
+            font-weight: 700;
+            text-align: center;
+        }
+        .parentInput {
+            padding: 5px;
+            border: 1px solid grey;
+            border-radius: 6px;
+            background-color: rgba(255, 255, 255);
+            // background-color: red;
+            margin-top: 15px;
+            width: 63%;
+            margin: 0 auto;
+            .inputEmail {
+                width: 100%;
+                background-color: transparent;
+                border: none;
+                outline: none;
+                
+                &:focus {
+                    background-color: transparent;
+                    border: none;
+                    outline: none; 
+                }
+            }
+        }
+        .btnVerify {
+            border: none;
+            width: 100%;
+            margin-top: 20px;
+            background-color: rgb(1, 148, 243);
+            padding-bottom: 8px;
+            padding-top: 8px;
+            padding-left: 12px;
+            padding-right: 12px;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            
+        }
+        .errorInput {
+            color: rgb(231, 9, 14);
+            font-weight: 500;
+            line-height: 20px;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+        }
+    }
+}

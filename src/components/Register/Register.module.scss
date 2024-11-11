@@ -1,0 +1,179 @@
+// .wrap-parent {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }
+// .parent {
+//    display: flex;
+//    flex-direction: column;
+//    max-width: 200px;
+// }
+
+// .placeholder {
+//     position: relative;
+//     color: red;
+//     pointer-events: none;
+// }
+
+.wrapper {
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  // opacity: 0.5;
+  background-color: rgba(3, 18, 26, 0.5);
+  .parent {
+    top: 20%;
+    position: relative;
+    padding: 16px;
+    background-color: rgba(255, 255, 255);
+    max-width: 600px;
+    min-height: 200px;
+    width: 432px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    margin: 0 auto;
+    transform: translateY(5%);
+    .iconClose {
+      position: absolute;
+      right: 3%;
+      cursor: pointer;
+    }
+    .title {
+      color: rgb(3, 18, 26);
+      font-size: 24px;
+      line-height: 28px;
+      font-family: Godwit, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+        Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+      font-weight: 700;
+      text-align: center;
+    }
+    .subtitle {
+      color: rgba(104, 113, 118, 1);
+      font-weight: 500;
+      line-height: 20px;
+      font-size: 14px;
+    }
+    .parentInput {
+      padding: 5px;
+      border: 1px solid grey;
+      border-radius: 6px;
+      background-color: rgba(255, 255, 255);
+      // background-color: red;
+      margin-top: 15px;
+      .inputEmail {
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        outline: none;
+
+        &:focus {
+          background-color: transparent;
+          border: none;
+          outline: none;
+        }
+      }
+    }
+    .errorInput {
+      color: rgb(231, 9, 14);
+      font-weight: 500;
+      line-height: 20px;
+      font-size: 14px;
+    }
+    .errorRole {
+      color: rgb(231, 9, 14);
+      font-weight: 500;
+      line-height: 20px;
+      font-size: 14px;
+      transform: translateX(10%);
+    }
+    .parentRole {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+      .parentContent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .contentInput {
+          margin-right: 5px;
+          margin-top: 3px;
+        }
+        .contentLabel {
+          color: rgb(3, 18, 26);
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+        }
+      }
+      .parentContent + .parentContent {
+        margin-left: 10px;
+      }
+    }
+
+    .btnLogin {
+      background-color: rgb(253, 93, 28);
+      border-color: rgba(0, 0, 0, 0);
+      border-radius: 999px;
+      border-width: 3px;
+      min-width: 384px;
+      height: 48px;
+      color: #ffff;
+      margin-top: 16px;
+      font-size: 16px;
+      transform: translateX(10px);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .wrapTitleChoose {
+      position: relative;
+      text-align: center;
+      // background-color: red;
+      margin-bottom: 16px;
+      color: rgb(104, 113, 118);
+      .lineLeft {
+        position: absolute;
+        width: 27%;
+        border: 0.5px solid rgb(253, 93, 28);
+        top: 50%;
+        left: 0;
+      }
+      .lineRight {
+        position: absolute;
+        width: 27%;
+        height: 0.5px;
+        border: 0.5px solid rgb(253, 93, 28);
+        top: 50%;
+        right: 0;
+      }
+    }
+    .social {
+      width: 384px;
+      .facebookBtn {
+        height: 48px;
+        background-color: rgb(209 240 255);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 30px;
+        color: #2a3e47;
+        font-weight: 500;
+        margin-top: 10px;
+        position: relative;
+        cursor: pointer;
+        .facebookIcon {
+          position: absolute;
+          z-index: 1;
+          right: 5%;
+        }
+      }
+    }
+  }
+}

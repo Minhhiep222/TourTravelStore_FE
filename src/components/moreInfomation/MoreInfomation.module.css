@@ -1,0 +1,119 @@
+.wrapper {
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(3, 18, 26, 0.5);
+}
+.wrapper .parent {
+  position: relative;
+  padding: 16px;
+  background-color: rgb(255, 255, 255);
+  max-width: 600px;
+  min-height: 200px;
+  width: 432px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  margin: 0 auto;
+  transform: translateY(30%);
+}
+.wrapper .parent .iconClose {
+  position: absolute;
+  right: 3%;
+  cursor: pointer;
+}
+.wrapper .parent .title {
+  line-height: 28px;
+  font-size: 24px;
+  color: rgb(3, 18, 26);
+  font-weight: 700;
+}
+.wrapper .parent .wrapParent {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wrapper .parent .wrapParent .parentDOB {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 32%;
+}
+.wrapper .parent .wrapParent .parentDOB .titleText {
+  color: rgb(104, 113, 118);
+}
+.wrapper .parent .wrapParent .parentDOB .parentInput {
+  padding: 5px;
+  border: 1px solid grey;
+  border-radius: 6px;
+  background-color: rgb(255, 255, 255);
+}
+.wrapper .parent .wrapParent .parentDOB .parentInput .inputDOB {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.wrapper .parent .wrapParent .parentDOB .parentInput .inputDOB:focus {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.wrapper .parent .wrapParent .parentDOB .errorInput {
+  color: rgb(231, 9, 14);
+  font-weight: 500;
+  line-height: 20px;
+  font-size: 14px;
+}
+.wrapper .parent .wrapGender .titleText {
+  color: rgb(104, 113, 118);
+}
+.wrapper .parent .wrapGender .parentGender {
+  margin-top: 20px;
+  width: 30%;
+  margin-left: 10px;
+}
+.wrapper .parent .errorGender {
+  color: rgb(231, 9, 14);
+  font-weight: 500;
+  line-height: 20px;
+  font-size: 14px;
+}
+.wrapper .parent .wrapRegister {
+  background-color: rgb(255, 94, 31);
+  margin-top: 24px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  border: none;
+}
+.wrapper .parent .wrapSkip {
+  background-color: red;
+  margin-top: 24px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  border: none;
+}/*# sourceMappingURL=MoreInfomation.module.css.map */
