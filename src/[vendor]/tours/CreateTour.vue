@@ -462,6 +462,7 @@ export default {
     setSwicth(item) {
       this.swicth = item;
     },
+
     handleFileUpload(event) {
       const files = event.target.files;
       if (files && files.length > 10) {
@@ -474,6 +475,7 @@ export default {
         this.errorImage = null; // Reset lỗi nếu có
         this.selectedFiles = Array.from(files);
         this.imagePreviews = this.selectedFiles.map((file) =>
+          //dùng để tạo url objectUrl trên client
           URL.createObjectURL(file)
         );
       } else {

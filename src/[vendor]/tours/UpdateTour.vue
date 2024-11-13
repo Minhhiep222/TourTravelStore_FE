@@ -195,6 +195,7 @@
       <!-- Updated to show modal -->
       <button class="cancel" @click.prevent="close">Đóng</button>
     </div>
+
     <!-- Modal for confirmation -->
     <div
       v-if="isModalVisible"
