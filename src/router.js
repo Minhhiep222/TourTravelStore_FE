@@ -24,6 +24,8 @@ import UpdateTourGuide from "./components/TourGuide/AddTourGuide/UpdateTourGuide
 import BookingTicket from "./Page/Booking/BookingTicket/BookingTicket.vue";
 import BookingTour from "./Page/Booking/BookingTour/BookingTour.vue";
 import Search from "./[user]/Search.vue";
+import ChatBot from "./components/ChatBot/ChatBot.vue";
+import Favorite from "./Page/Favorite/Favorite.vue";
 const routes = [
   {
     path: "/register",
@@ -95,6 +97,16 @@ const routes = [
         name: "UserAdmin",
         component: UserAdmin,
       },
+      {
+        path: "/chatbot",
+        name: "ChatBot",
+        component: ChatBot, 
+      },
+      {
+        path: "/favorite",
+        name: "Favorite",
+        component: Favorite,
+      }
     ],
   },
   {

@@ -41,8 +41,12 @@
               ><span>Hỗ trợ <i class="fas fa-chevron-down"></i></span
             ></a>
             <a class="text-gray-800" href="#">Hợp tác với chúng tôi</a>
-            <a class="text-gray-800" href="#">Đã Lưu</a>
+            <span  @click="goToFavorite" class="text-gray-800 d-flex align-items-center justify-content-around" style="cursor: pointer">
+                Đã Lưu
+                <font-awesome-icon :class="$style.solidSave"  class="ml-0.5" icon="bookmark" />
+              </span>
             <a class="text-gray-800" href="#">Đặt chỗ của tôi</a>
+          
             <div class="flex items-center space-x-1">
               <img
                 alt="User avatar"
@@ -113,6 +117,7 @@
 
 <script>
 import { inject } from "vue";
+import { useRouter } from "vue-router";
 document.title = "Trang chủ";
 export default {
   name: "HeaderComponent",
@@ -127,6 +132,7 @@ export default {
   },
 
   setup() {
+    const router = useRouter();
     const valueCurrentUser = inject("valueCurrentUser");
 
     const setCurrentUser = inject("setCurrentUser");
@@ -142,6 +148,9 @@ export default {
     const setRegister = () => {
       handleDisplayRegister(true);
     };
+    const goToFavorite = async() => {
+      router.push({ name: "Favorite"});
+    };
 
     const setLogout = () => {
       document.cookie =
@@ -156,6 +165,7 @@ export default {
       setLogout,
       showCurrentUser,
       setRegister,
+      goToFavorite
     };
   },
 };
