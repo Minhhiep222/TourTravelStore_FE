@@ -24,6 +24,8 @@ import UpdateTourGuide from "./components/TourGuide/AddTourGuide/UpdateTourGuide
 import BookingTicket from "./Page/Booking/BookingTicket/BookingTicket.vue";
 import BookingTour from "./Page/Booking/BookingTour/BookingTour.vue";
 import Search from "./[user]/Search.vue";
+import Chat from "./components/chat/chat.vue";
+import Socket from "./components/socket/socket.vue";
 const routes = [
   {
     path: "/register",
@@ -44,6 +46,16 @@ const routes = [
         path: "/search",
         name: "Search",
         component: Search,
+      },
+      {
+        path: "/:user/chat",
+        name: "chat",
+        component: Chat,
+      },
+      {
+        path: "/:user/socket",
+        name: "socket",
+        component: Socket,
       },
       {
         path: "/detail/:id",
