@@ -301,30 +301,89 @@
       </div>
     </div>
 
-    <div class="max-w-6xl mx-auto py-4">
+    <div v-if="user_id != null" class="max-w-6xl mx-auto py-4">
       <div class="bg-white rounded shadow-lg mb-4 p-4">
-        <form class="" @submit.prevent="submitForm">
+        <form class="">
           <div class="mb-2">
             <label class="block text-gray-700 font-bold mb-2">
               Đánh giá <span class="text-red-500">*</span>
             </label>
             <div class="flex space-x-1">
-              <i class="cursor-pointer far fa-star text-2xl text-gray-400"></i>
-              <i class="cursor-pointer far fa-star text-2xl text-gray-400"></i>
-              <i class="cursor-pointer far fa-star text-2xl text-gray-400"></i>
-              <i class="cursor-pointer far fa-star text-2xl text-gray-400"></i>
-              <i class="cursor-pointer far fa-star text-2xl text-gray-400"></i>
+              <i
+                v-for="i in 5"
+                v-bind:key="i"
+                @click="handleRating(i)"
+                :class="[
+                  'cursor-pointer fa fa-star text-2xl text-gray-400 hover:text-blue-500',
+                ]"
+                :style="rating >= i ? { color: '#2563eb' } : { color: '#888' }"
+              ></i>
+            </div>
+            <div v-if="errorRating" class="error">{{ errorRating }}</div>
+          </div>
+          <!-- image -->
+          <div class="form-group">
+            <label> Hình ảnh </label>
+            <div class="group_image">
+              <div class="image_tours" v-if="imagePreviews.length">
+                <div
+                  class="image-item"
+                  v-for="(image, index) in imagePreviews"
+                  :key="index"
+                >
+                  <img
+                    class="image_tours-item"
+                    :src="image"
+                    alt="Image"
+                    width="100"
+                  />
+                  <button
+                    class="btn_removeImage"
+                    @click.prevent="removeImage(index)"
+                  >
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+                <img
+                  class="image_tours-item button"
+                  :src="imageDefault"
+                  alt="Image"
+                  width="100"
+                  @click="openFileDialog"
+                />
+              </div>
+              <div v-else>
+                <img
+                  class="image_tours-item button"
+                  :src="imageDefault"
+                  alt="Image"
+                  width="100"
+                  @click="openFileDialog"
+                />
+              </div>
+              <input
+                class="input_img"
+                type="file"
+                @change="handleFileUpload"
+                accept=".jpg, .png, .svg, .jpeg"
+                multiple
+                hidden
+              />
+              <div v-if="errorImage" class="error">{{ errorImage }}</div>
             </div>
           </div>
           <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2"> Comments </label>
             <textarea
+              v-model="comment"
               class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               rows="4"
             ></textarea>
+            <div v-if="errorComment" class="error">{{ errorComment }}</div>
           </div>
-          <div class="flex items-center justify-between">
+          <div class="flex items-center justify-end">
             <button
+              @click.prevent="submitReviews"
               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
@@ -335,16 +394,31 @@
       </div>
     </div>
 
-    <div class="max-w-6xl mx-auto p-4">
+    <div class="max-w-6xl mx-auto">
       <div class="flex justify-between items-center mb-2">
         <h1 class="text-lg font-semibold">
           Đánh giá của du khách Three Islands Excursion by Canoe in Sout...
         </h1>
         <div class="flex items-center">
           <span class="mr-2">Số lượng đánh giá trên mỗi trang</span>
-          <button class="bg-blue-500 text-white px-3 py-1 rounded">20</button>
-          <button class="bg-gray-200 text-gray-700 px-3 py-1 rounded ml-2">
-            40
+          <button
+            @click.prevent="fetchReview(10)"
+            :class="{
+              'bg-blue-500 text-white px-3 py-1 rounded': selected === 10,
+              'bg-gray-200 text-gray-700 px-3 py-1 rounded': selected !== 10,
+            }"
+          >
+            10
+          </button>
+          <button
+            @click.prevent="fetchReview(20)"
+            :class="{
+              'bg-blue-500 text-white px-3 py-1 rounded ml-2': selected === 20,
+              'bg-gray-200 text-gray-700 px-3 py-1 rounded ml-2':
+                selected !== 20,
+            }"
+          >
+            20
           </button>
           <button class="bg-gray-200 text-gray-700 px-3 py-1 rounded ml-2">
             <i class="fas fa-chevron-left"></i>
@@ -355,108 +429,77 @@
         </div>
       </div>
 
-      <div class="bg-white p-4 rounded-lg shadow mb-2 border-b">
-        <div class="flex items-center mb-2">
-          <div
-            class="bg-blue-700 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-semibold"
-          >
-            TD
-          </div>
-          <div class="ml-4">
-            <h2 class="font-semibold">Trần D.</h2>
-          </div>
-        </div>
-        <div class="flex items-center mb-2">
-          <div
-            class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-sm font-semibold"
-          >
-            8.0 /10
-          </div>
-          <span class="ml-2 text-gray-500">Đánh giá cách đây 17 tuần</span>
-        </div>
-        <p class="mb-2">Dịch vụ tương đối tốt</p>
-        <div class="flex items-center text-blue-500">
-          <i class="fas fa-thumbs-up mr-2"></i>
-          <a href="#" class="hover:underline">Đánh giá này hữu ích không?</a>
-        </div>
-      </div>
-
-      <div class="bg-white p-4 rounded-lg shadow mb-2">
-        <div class="flex items-center mb-2">
-          <div
-            class="bg-blue-700 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-semibold"
-          >
-            LT
-          </div>
-          <div class="ml-4">
-            <h2 class="font-semibold">Ly Thuy N. T.</h2>
-          </div>
-        </div>
-        <div class="flex items-center mb-2">
-          <div
-            class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-sm font-semibold"
-          >
-            10.0 /10
-          </div>
-          <span class="ml-2 text-gray-500">Đánh giá cách đây 17 tuần</span>
-        </div>
-        <p class="mb-2">
-          hướng dẫn viên vui vẻ, nhiệt tình, thức ăn vừa miệng. tôi rất hài
-          lòng. hành trình tour rõ ràng, chăm sóc chu đáo.
-        </p>
-        <div class="flex items-center text-blue-500">
-          <i class="fas fa-thumbs-up mr-2"></i>
-          <a href="#" class="hover:underline">Đánh giá này hữu ích không?</a>
-        </div>
-      </div>
-
-      <div class="bg-white p-4 rounded-lg shadow mb-2">
+      <div
+        v-for="(review, index) in reviews"
+        v-bind:key="index"
+        class="review_item bg-white p-4 rounded-lg shadow mb-2"
+      >
         <div class="flex items-start">
-          <img
-            alt="Profile picture of the reviewer"
-            class="w-12 h-12 rounded-full mr-4"
-            height="50"
-            src="https://storage.googleapis.com/a1aa/image/pNKa1qUHP3bqM1rWYbyfOf2ut5x1rwDYYWKJ8aTiVrY9zquTA.jpg"
-            width="50"
-          />
           <div class="flex-1">
-            <div class="flex items-center mb-2">
-              <span class="font-semibold"> Luu K. T. </span>
-              <div
-                class="flex items-center ml-2 bg-blue-100 text-blue-600 rounded-full px-2 py-1 text-sm"
-              >
-                <i class="fas fa-star"> </i>
-                <span class="ml-1"> 10.0 </span>
-                <span class="text-gray-500 ml-1"> /10 </span>
+            <div class="flex justify-between mb-2">
+              <div class="flex items-center">
+                <img
+                  alt="Profile picture of the reviewer"
+                  class="w-12 h-12 rounded-full mr-2"
+                  height="50"
+                  src="https://storage.googleapis.com/a1aa/image/pNKa1qUHP3bqM1rWYbyfOf2ut5x1rwDYYWKJ8aTiVrY9zquTA.jpg"
+                  width="50"
+                />
+                <div class="flex flex-col">
+                  <span class="font-semibold">
+                    {{ review?.user?.name }}
+                  </span>
+                  <div class="flex items-center">
+                    <div
+                      class="flex items-center bg-blue-100 text-blue-600 rounded-full px-2 py-1 text-sm"
+                    >
+                      <i class="fas fa-star"></i>
+                      <span class="ml-1"> {{ review?.rating }}.0</span>
+                      <span class="ml-1">/ 5 </span>
+                    </div>
+                    <span class="text-gray-500 ml-2 text-sm">
+                      {{ formatDateTime(review?.updated_at) }}
+                    </span>
+                  </div>
+                </div>
               </div>
-              <span class="text-gray-500 ml-4">
-                Đánh giá cách đây 95 tuần
-              </span>
+
+              <div class="box px-3 flex flex-col items-end">
+                <i class="action fa-solid fa-ellipsis cursor-pointer"></i>
+                <div
+                  v-if="review?.user_id === this.user_id"
+                  class="action_group shadow border-b flex flex-col rounded"
+                >
+                  <button
+                    @click.prevent="deleteReview(review?.id)"
+                    class="border-b py-1 px-4 hover:bg-gray-100"
+                  >
+                    xóa
+                  </button>
+                  <button
+                    @click.prevent="showModal(review?.id)"
+                    class="border-b py-1 px-4 hover:bg-gray-100"
+                  >
+                    sửa
+                  </button>
+                </div>
+              </div>
             </div>
+
             <p class="text-gray-800 mb-2">
-              Dịch vụ tốt. Các bạn dẫn tour Hằng, Tuyền, 1 bạn nam nữa không nhớ
-              tên rất thân thiện. Trải nghiệm lần đầu cảm thấy khá hài lòng
+              {{ review?.comment }}
             </p>
-            <div class="flex space-x-2 mb-2">
+            <div
+              v-if="review?.image_reviews.length > 0"
+              class="flex space-x-2 mb-2"
+            >
               <img
+                v-for="(image, index) in review?.image_reviews"
+                v-bind:key="index"
                 alt="Image 1 of the review"
                 class="w-24 h-24 rounded-lg"
                 height="100"
-                src="https://storage.googleapis.com/a1aa/image/fgwKrPpNbqTcdaQPpSWIajOWN7krsSJHjo9ypdDCu9ZezquTA.jpg"
-                width="100"
-              />
-              <img
-                alt="Image 2 of the review"
-                class="w-24 h-24 rounded-lg"
-                height="100"
-                src="https://storage.googleapis.com/a1aa/image/U5uMebrXs8yrBiX6FuKfV1obBNIBW9q06IsjoIlJNSnfnVdnA.jpg"
-                width="100"
-              />
-              <img
-                alt="Image 3 of the review"
-                class="w-24 h-24 rounded-lg"
-                height="100"
-                src="https://storage.googleapis.com/a1aa/image/ueCFSEBUlow1MidYePJ4IjHsVfI1tJaYsXt2krx2E0F3nVdnA.jpg"
+                :src="handleGetImg(image?.image_url)"
                 width="100"
               />
             </div>
@@ -469,11 +512,167 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal for confirmation -->
+  <div
+    v-if="isModalVisible"
+    class="modal fade show"
+    style="display: block; z-index: 1050"
+  >
+    <div
+      class="modal-dialog"
+      style="position: absolute; top: 20%; right: 35%; width: 50%"
+    >
+      <div class="modal-content p-3 border-none shadow">
+        <div class="modal-body">
+          <form class="">
+            <div class="mb-2">
+              <label class="block text-gray-700 font-bold mb-2">
+                Đánh giá <span class="text-red-500">*</span>
+              </label>
+              <div class="flex space-x-1">
+                <i
+                  v-for="i in 5"
+                  v-bind:key="i"
+                  @click="handleRating(i)"
+                  :class="[
+                    'cursor-pointer fa fa-star text-2xl text-gray-400 hover:text-blue-500',
+                  ]"
+                  :style="
+                    rating >= i ? { color: '#2563eb' } : { color: '#888' }
+                  "
+                ></i>
+              </div>
+            </div>
+            <!-- image -->
+            <div class="form-group">
+              <label> Hình ảnh </label>
+              <div class="group_image">
+                <div class="image_tours" v-if="imagePreviews.length">
+                  <div
+                    class="image-item"
+                    v-for="(image, index) in imagePreviews"
+                    :key="index"
+                  >
+                    <img
+                      class="image_tours-item"
+                      :src="image"
+                      alt="Image"
+                      width="100"
+                    />
+                    <button
+                      class="btn_removeImage"
+                      @click.prevent="removeImage(index)"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                  <img
+                    class="image_tours-item button"
+                    :src="imageDefault"
+                    alt="Image"
+                    width="100"
+                    @click="openFileDialog"
+                  />
+                </div>
+                <div v-else>
+                  <img
+                    class="image_tours-item button"
+                    :src="imageDefault"
+                    alt="Image"
+                    width="100"
+                    @click="openFileDialog"
+                  />
+                </div>
+                <input
+                  class="input_img"
+                  type="file"
+                  @change="handleFileUpload"
+                  accept=".jpg, .png, .svg, .jpeg"
+                  multiple
+                  hidden
+                />
+                <div v-if="errorImage" class="error">{{ errorImage }}</div>
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2">
+                Comments
+              </label>
+              <textarea
+                v-model="comment"
+                class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                rows="4"
+              ></textarea>
+              <div v-if="errorComment" class="error">{{ errorComment }}</div>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" @click="closeModal">
+            Đóng
+          </button>
+          <button
+            type="button"
+            class="btn btn-success"
+            @click="handleSubmitUpdate"
+          >
+            Lưu
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for confirmation -->
+  <div
+    v-if="isModalVisibleVerify"
+    @click="closeModalVerify"
+    class="modal fade show"
+    style="display: block; z-index: 1050"
+  >
+    <div
+      class="modal-dialog"
+      style="position: absolute; top: 30%; right: 35%; width: 50%"
+    >
+      <div class="modal-content p-3 border-none shadow">
+        <div class="modal-header">
+          <h5 class="modal-title text-3xl text-red-600">
+            Xóa Comment <i class="fa-solid fa-triangle-exclamation"></i>
+          </h5>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc chắn muốn xóa comment này không?</p>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            @click="closeModalVerify"
+          >
+            Đóng
+          </button>
+          <button type="button" class="btn btn-danger" @click="confirmDelete">
+            <i class="fas fa-trash-alt"></i> Xóa
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import Cookies from "js-cookie";
 import axios from "axios";
+import { inject } from "vue";
+import { format } from "date-fns";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { comment } from "postcss";
 
 export default {
   name: "DetailComponent",
@@ -484,10 +683,8 @@ export default {
     const valueTour = ref(null);
     const errorValue = ref(null);
     const router = useRouter();
+    const valueCurrentUser = inject("valueCurrentUser");
 
-    // const getImage = ($urlImage) => {
-    //     return `http://localhost:8000/images/${$urlImage}`
-    // }
     const getDetailTour = async () => {
       try {
         console.log("Tour ID:", tourID);
@@ -518,10 +715,12 @@ export default {
       return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
     const logValue = () => {
+      console.log("valueCurrentUser", valueCurrentUser);
       console.log("tourID", tourID);
       console.log("errorValue", errorValue);
       console.log("valueTour", valueTour.value);
     };
+
     return {
       tourID,
       logValue,
@@ -529,11 +728,380 @@ export default {
       valueTour,
       bookTour,
       errorValue,
+      valueCurrentUser,
       formatPrice,
     };
+  },
+
+  data() {
+    return {
+      rating: 0,
+      comment: "",
+      parent_id: null,
+      reviews: null,
+      review: null,
+      review_id: null,
+      id: null,
+      user_id: null,
+      valueUser: null,
+      status: null,
+      tour_id: null,
+      selectedFiles: [],
+      imagePreviews: [],
+      selected: null,
+      errorImage: "",
+      imageDefault: "http://127.0.0.1:8000/images/default.png",
+      isModalVisible: false,
+      reviewToDelete: null,
+      isModalVisibleVerify: false,
+      errorComment: "",
+      errorRating: "",
+    };
+  },
+
+  watch: {
+    comment: {
+      handler(val) {
+        this.comment = val;
+        if (this.comment.length > 200) {
+          this.errorComment = "Nội dung comment chỉ chứa 200 ký tự";
+          return;
+        }
+        this.errorComment = "";
+      },
+      deep: true,
+    },
+
+    rating: {
+      handler(val) {
+        this.rating = val;
+        if (this.rating > 0) {
+          this.errorRating = "";
+        }
+      },
+      deep: true,
+    },
+  },
+
+  methods: {
+    handleRating(i) {
+      this.rating = i;
+    },
+
+    showModal(id) {
+      this.isModalVisible = true; // Show the modal
+      this.fetchReviewById(id);
+    },
+
+    closeModal() {
+      this.isModalVisible = false;
+      this.rating = 0;
+      this.comment = "";
+      this.imagePreviews = [];
+    },
+
+    closeModalVerify() {
+      this.isModalVisibleVerify = false;
+    },
+
+    handleGetImg(url) {
+      return `http://127.0.0.1:8000/images/${url}`;
+    },
+
+    async submitReviews() {
+      try {
+        if (this.comment.length === 0) {
+          this.errorComment = "Vui lòng nhập nội dung comment";
+          return;
+        }
+        // if (this.comment.length > 200) {
+        //   this.errorComment = "Nội dung comment chỉ chứa 200 ký tự";
+        //   return;
+        // }
+        if (this.rating == 0) {
+          this.errorRating = "Vui lòng nhập chọn đánh giá";
+          return;
+        }
+        this.errorRating = "";
+        this.user_id = this.fetchUser(this.valueCurrentUser);
+        const formData = new FormData();
+        formData.append("tour_id", this.tour_id);
+        formData.append("user_id", this.user_id);
+        formData.append("rating", this.rating);
+        formData.append("comment", this.comment);
+        formData.append("parent_id", this.parent_id);
+        formData.append("status", this.status);
+        formData.append("rating", this.rating);
+
+        this.selectedFiles.forEach((file) => {
+          formData.append("images[]", file);
+        });
+
+        console.log(this.selectedFiles);
+
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/reviews",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (response.status !== 200) {
+          console.log("something went wrong", response);
+        }
+        // console.log(response);
+        this.comment = "";
+        this.rating = 0;
+        this.selectedFiles = [];
+        this.imagePreviews = [];
+        this.fetchReview(10);
+      } catch (error) {
+        console.log("Something went wrong", error);
+      }
+    },
+
+    async fetchReview(per_page) {
+      try {
+        this.selected = per_page;
+        this.tour_id = this.$route.params.id;
+        const formData = new FormData();
+        formData.append("tour_id", this.tour_id);
+        formData.append("_method", "GET");
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/reviews/list?page=1&per_page=${per_page}`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        if (response.status !== 200) {
+          console.log("something went wrong", response);
+        }
+
+        const data = await response.json();
+        this.reviews = data.reviews;
+      } catch (error) {
+        console.log("something went wrong", error);
+      }
+    },
+
+    fetchUser(user) {
+      let userProxy = new Proxy(user, {
+        get: function (target, prop) {
+          return prop in target ? target[prop] : undefined;
+        },
+      });
+      return userProxy.id;
+    },
+
+    async fetchUserData() {
+      try {
+        const jwt = Cookies.get("tokenLogin");
+        if (!jwt) {
+          return;
+        }
+        const token = jwt.split("|")[1];
+        const response = await fetch(
+          `http://localhost:8000/api/inforCurrentUser`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`, // Nếu cần sử dụng token để xác thực
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        const user = data.data;
+        this.user_id = user.id;
+        console.log(this.user_id);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        // this.$router.push({ name: "login" });
+        // return null;
+      }
+    },
+
+    formatDateTime(time) {
+      return format(new Date(time), "yyyy-MM-dd HH:mm");
+    },
+
+    async fetchReviewById(id) {
+      try {
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/reviews/${id}`
+        );
+        console.log(response);
+        this.review = response.data.review;
+        this.rating = this.review.rating;
+        this.comment = this.review.comment;
+        const arrayImage = this.review.image_reviews;
+        arrayImage.forEach((item) => {
+          this.imagePreviews.push(
+            `http://127.0.0.1:8000/images/${item.image_url}`
+          );
+        });
+        this.review_id = response.data.id;
+        // localStorage.setItem('tourId', tourId.value);
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          document.querySelector(".modal-body").innerHTML = `
+            <div class="error-message">
+              <h2>Rivew Not Found</h2>
+              <p>We apologize, but the Rivew you are looking for does not exist.</p>
+              <button class="btn btn-primary" onclick="window.location.href='/minh-hiep/tours'">View All Tours</button>
+            </div>
+          `;
+          return;
+        }
+      }
+    },
+
+    async handleSubmitUpdate() {
+      try {
+        this.user_id = this.fetchUser(this.valueCurrentUser);
+        const formData = new FormData();
+        formData.append("tour_id", this.tour_id);
+        formData.append("user_id", this.user_id);
+        formData.append("rating", this.rating);
+        formData.append("comment", this.comment);
+        formData.append("parent_id", this.parent_id);
+        formData.append("status", this.status);
+
+        this.selectedFiles.forEach((file) => {
+          formData.append("images[]", file);
+        });
+
+        console.log(this.selectedFiles);
+
+        formData.append("_method", "PUT");
+
+        const response = await axios.post(
+          `http://127.0.0.1:8000/api/reviews/${this.review_id}`,
+          formData
+        );
+
+        if (response.status !== 200) {
+          console.log("something went wrong", response.error);
+        }
+
+        this.comment = null;
+        this.rating = null;
+        this.selectedFiles = [];
+        this.imagePreviews = [];
+        this.isModalVisible = false;
+        this.fetchReview(10);
+      } catch (error) {
+        console.log("Something went wrong", error.response);
+      }
+    },
+
+    handleFileUpload(event) {
+      const files = event.target.files;
+      if (files && files.length > 5) {
+        this.errorImage = "Vui lòng chọn nhiều nhất 5 hình ảnh.";
+        return;
+      } else if (files && files.length > 0) {
+        this.errorImage = null; // Reset lỗi nếu có
+        this.selectedFiles = Array.from(files);
+        this.imagePreviews = this.selectedFiles.map((file) =>
+          //dùng để tạo url objectUrl trên client
+          URL.createObjectURL(file)
+        );
+      }
+    },
+
+    openFileDialog() {
+      // Tìm input và kích hoạt sự kiện click
+      const fileInput = document.querySelector('input[type="file"]');
+      if (fileInput) {
+        fileInput.click();
+      }
+    },
+
+    removeImage(index) {
+      this.selectedFiles.splice(index, 1);
+      this.imagePreviews.splice(index, 1);
+    },
+
+    deleteReview(review_id) {
+      this.reviewToDelete = review_id;
+      this.isModalVisibleVerify = true;
+    },
+
+    confirmDelete() {
+      if (this.reviewToDelete) {
+        axios
+          .delete(`http://127.0.0.1:8000/api/reviews/${this.reviewToDelete}`)
+          .then(() => {
+            this.notifySuccess("Xóa comment thành công");
+            this.fetchReview(10);
+          })
+          .catch((error) => {
+            console.error("Failed to delete comment:", error);
+            this.notifyError("Xóa comment thất bại");
+          })
+          .finally(() => {
+            this.isModalVisibleVerify = false; // Hide the modal after operation
+            this.reviewToDelete = null; // Reset the tour ID
+          });
+      }
+    },
+
+    notifySuccess(message) {
+      toast.success(`${message} thành công !`, {
+        autoClose: 1500,
+      }); // ToastOptions
+    },
+
+    notifyError(message) {
+      toast.error(`${message} thất bại !`, {
+        autoClose: 1500,
+      }); // ToastOptions
+    },
+  },
+
+  mounted() {
+    this.selected = 10;
+    this.fetchReview(this.selected);
+    this.fetchUserData();
   },
 };
 </script>
 <style lang="scss" module>
-@import "./Detail.module.scss";
+@use "./Detail.module.scss";
+@use "../../assets/Global.module.scss";
+</style>
+
+<style lang="scss" scoped>
+.box {
+  position: relative;
+  top: 0;
+  right: 0;
+
+  .action {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .action_group {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    display: none;
+  }
+}
+
+.box:hover .action_group {
+  display: block;
+  display: flex;
+  flex-direction: column;
+}
 </style>
