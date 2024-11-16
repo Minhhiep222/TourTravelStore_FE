@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import UserRegister from "./components/Register/Register.vue";
 // import UserLogin from "./components/Login/Login.vue";
 import TourList from "./[vendor]/tours/Tour.vue";
+import QLTour from "./[vendor]/tours/QLTour.vue";
 import CreateTour from "./[vendor]/tours/CreateTour.vue";
 import UpdateTour from "./[vendor]/tours/UpdateTour.vue";
 import DetailTour from "./[vendor]/tours/DetailTour.vue";
@@ -26,6 +27,9 @@ import BookingTour from "./Page/Booking/BookingTour/BookingTour.vue";
 import Search from "./[user]/Search.vue";
 import ChatBot from "./components/ChatBot/ChatBot.vue";
 import Favorite from "./Page/Favorite/Favorite.vue";
+import CustomerSupport from './components/CustomerSupport/CustomerSupport.vue';
+import ContactUs from './components/CustomerSupport/ContactUs.vue';
+import Statistical from './components/Statistical/Statistical.vue';
 const routes = [
   {
     path: "/register",
@@ -97,6 +101,7 @@ const routes = [
         name: "UserAdmin",
         component: UserAdmin,
       },
+     
       {
         path: "/chatbot",
         name: "ChatBot",
@@ -106,7 +111,13 @@ const routes = [
         path: "/favorite",
         name: "Favorite",
         component: Favorite,
-      }
+      },
+      {
+        path: "/UserDetails/:id",
+        name: "UserDetails",
+        component: UserDetails,
+      },
+
     ],
   },
   {
@@ -124,12 +135,7 @@ const routes = [
         name: "Storage",
         component: Storage,
       },
-      {
-        path: "/UserDetails",
-        name: "UserDetails",
-        component: UserDetails,
-      },
-
+      
       {
         path: "/HomePage",
         name: "HomePage",
@@ -141,9 +147,29 @@ const routes = [
         component: TourList,
       },
       {
+        path: "/:vendor/qltours",
+        name: "QLTour",
+        component: QLTour,
+      },
+      {
         path: "/:vendor/tours/:id",
         name: "DetailTour",
         component: DetailTour,
+      },
+      {
+        path: "/Statistical",
+        name: "Statistical",
+        component: Statistical,
+      },
+      {
+        path: "/CustomerSupport",
+        name: "CustomerSupport",
+        component: CustomerSupport,
+      },
+      {
+        path: "/CustomerSupport/ContactUs",
+        name: "ContactUs",
+        component: ContactUs,
       },
     ],
   },

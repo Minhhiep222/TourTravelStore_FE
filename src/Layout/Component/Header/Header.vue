@@ -38,9 +38,9 @@
               ><span>Khuyến mãi</span></a
             >
             <a class="text-gray-800 flex items-center space-x-1" href="#"
-              ><span>Hỗ trợ <i class="fas fa-chevron-down"></i></span
+              ><span @click="goToCustomerSupport" >Hỗ trợ <i class="fas fa-chevron-down"></i></span
             ></a>
-            <a class="text-gray-800" href="#">Hợp tác với chúng tôi</a>
+            <a class="text-gray-800" >Hợp tác với chúng tôi</a>
             <span  @click="goToFavorite" class="text-gray-800 d-flex align-items-center justify-content-around" style="cursor: pointer">
                 Đã Lưu
                 <font-awesome-icon :class="$style.solidSave"  class="ml-0.5" icon="bookmark" />
@@ -51,10 +51,12 @@
               <img
                 alt="User avatar"
                 class="w-5 h-5 rounded-full"
+            @click="goToUserDetails(valueCurrentUser.id)" 
                 src="https://storage.googleapis.com/a1aa/image/WZNnADVMnkqlKVQ5vH3H483t1j2I9eIbX5axZ5u0ejqFCrtTA.jpg"
                 v-if="valueCurrentUser"
               />
               <span v-if="valueCurrentUser" class="text-blue-500"
+             @click="goToUserDetails(valueCurrentUser.id)" 
                 >{{ valueCurrentUser.name }} |
               </span>
               <!-- <span v-if="valueCurrentUser" class="text-yellow-500">| {{ valueCurrentUser.points }} Điểm -->
@@ -151,6 +153,9 @@ export default {
     const goToFavorite = async() => {
       router.push({ name: "Favorite"});
     };
+    const goToCustomerSupport = async() => {
+      router.push({ name: "ContactUs"});
+    };
 
     const setLogout = () => {
       document.cookie =
@@ -158,6 +163,13 @@ export default {
       handleDisplayLogin(false);
       setCurrentUser(null);
     };
+    const goToUserDetails = (userId) => {
+  if (userId) {
+    router.push({ name: 'UserDetails', params: { id: userId } });
+  }
+};
+
+
 
     return {
       valueCurrentUser,
@@ -165,7 +177,9 @@ export default {
       setLogout,
       showCurrentUser,
       setRegister,
-      goToFavorite
+      goToFavorite,
+      goToUserDetails,
+      goToCustomerSupport,
     };
   },
 };

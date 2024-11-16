@@ -2,19 +2,15 @@
     <div class="container">
         <div class="sidebar">
             <div class="profile">
-                <img alt="Profile Picture" height="50" src="https://storage.googleapis.com/a1aa/image/2Q7eD6euH6pTEUfAozdUIg2WHvLOxSkn5AIwxgcrUP7QsdUnA.jpg" width="50"/>
-                <div class="name">Toàn Đức</div>
+                <img :src="profilePicture" alt="" height="50" width="50" />
+                <div class="name">{{ name }}</div>
             </div>
             <ul class="menu">
                 <li><a href="#"><i class="fas fa-home"></i> Trang chủ</a></li>
-                <li><a href="#"><i class="fas fa-credit-card"></i> Thẻ của tôi</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Đặt chỗ của tôi</a></li>
-                <li><a href="#"><i class="fas fa-list"></i> Danh sách giao dịch</a></li>
-                <li><a href="#"><i class="fas fa-undo"></i> Refunds</a></li>
-                <li><a href="#"><i class="fas fa-plane"></i> Thông báo giá vé máy bay</a></li>
-                <li><a href="#"><i class="fas fa-user-friends"></i> Thông tin hành khách đã lưu</a></li>
-                <li><a href="#"><i class="fas fa-tags"></i> Khuyến mãi</a></li>
                 <li><a class="active" href="#"><i class="fas fa-user"></i> Tài khoản</a></li>
+                <li v-if="role === 3"><a href="#"><i class="fas fa-user"></i> Quản Lý Tour</a></li>
+                <li v-if="role === 3"><a href="#"><i class="fas fa-user"></i> Quản lý User</a></li>
+
                 <li><a href="#"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
             </ul>
         </div>
@@ -22,193 +18,272 @@
             <h1>Cài đặt</h1>
             <div class="tabs">
                 <a class="active" href="#">Thông tin tài khoản</a>
-                <a href="#">Mật khẩu & Bảo mật</a>
-                <a href="#">Bản tin & tin Khuyến mãi</a>
             </div>
-            <div class="notification">
-                <p>Bạn muốn nhận thông báo đăng nhập mới và các hoạt động khác của <a href="#">Cho phép gửi thông báo trên máy tính</a></p>
+
+            <input type="file" ref="fileInput" @change="handleFileChange" style="display: none" />
+
+         
+            <div class="profile">
+                <img :src="profilePicture" alt="" height="50" width="50" @click="changeProfilePicture" />
+                
             </div>
             <div class="form-group">
-                <label for="name">Tên đầy đủ</label>
-                <input id="name" type="text" v-model="fullName"/>
+                <label for="name">Tên</label>
+                <input id="name" type="tel" v-model="name" autocomplete="tel" />
+                <div v-if="errorName" class="error-message">{{ errorName }}</div>
             </div>
             <div class="form-group">
                 <label for="gender">Giới tính</label>
-                <select id="gender" v-model="gender">
-                    <option value="Male">Nam</option>
-                    <option value="Female">Nữ</option>
+                <select id="gender"  autocomplete="sex" v-model="gender">
+                    <option value="male">Nam</option>
+                    <option value="female">Nữ</option>
+                    <option  value="other">Khác</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="dob">Ngày sinh</label>
                 <div class="dob-select">
-                    <select id="dob-day" v-model="dobDay">
+                    <select id="dob-day" v-model="dobDay" autocomplete="bday-day">
                         <option v-for="day in days" :key="day" :value="day">{{ day }}</option>
                     </select>
-                    <select id="dob-month" v-model="dobMonth">
+                    <select id="dob-month" v-model="dobMonth" autocomplete="bday-month">
                         <option v-for="month in months" :key="month" :value="month">Tháng {{ month }}</option>
                     </select>
-                    <select id="dob-year" v-model="dobYear">
+                    <select id="dob-year" v-model="dobYear" autocomplete="bday-year">
                         <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
-                <label for="phone">Số điện thoại của bạn</label>
-                <input id="phone" placeholder="Số điện thoại của bạn" type="text" v-model="phone"/>
+                <label for="phone">Số điện thoại</label>
+                <input id="phone" type="tel" v-model="phone" autocomplete="tel" />
+                <div v-if="errorPhone" class="error-message">{{ errorPhone }}</div>
             </div>
             <div class="form-group">
-                <label for="city">Thành phố bạn đang ở</label>
-                <input id="city" placeholder="Thành phố bạn đang ở" type="text" v-model="city"/>
+                <label for="email">Gmail</label>
+                <input id="email" type="email" v-model="email" autocomplete="email" />
+                <div v-if="errorEmail" class="error-message">{{ errorEmail }}</div>
+            </div>
+            <div class="form-group">
+                <label for="address">Địa chỉ</label>
+                <input id="address" type="text" v-model="address" autocomplete="street-address" />
+                <div v-if="errorAddress" class="error-message">{{ errorAddress }}</div>
             </div>
             <div class="form-actions">
                 <button class="cancel" @click="cancel">Hủy</button>
                 <button class="save" @click="save">Lưu</button>
             </div>
         </div>
+        <div v-if="showSuccessModal" class="modal">
+            <div class="modal-content">
+                <p>Đã lưu thành công!</p>
+                <button @click="closeModal">Đóng</button>
+            </div>
+        </div>
     </div>
+   
+        
+   
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'UserDetails',
+    // Nếu muốn nhận id từ route params
+    // props: ['id'], // bỏ dòng này nếu lấy từ route params
     data() {
         return {
-            fullName: 'Toàn Đức',
-            gender: 'Male',
+            name: '',
+            gender: '',
             dobDay: null,
             dobMonth: null,
             dobYear: null,
             phone: '',
-            city: '',
+            email: '',
+            address: '',
+            role:null,  
+            profilePicture: '',
             days: Array.from({ length: 31 }, (_, i) => i + 1),
             months: Array.from({ length: 12 }, (_, i) => i + 1),
-            years: Array.from({ length: new Date().getFullYear() - 1899 }, (_, i) => new Date().getFullYear() - i)
+            years: Array.from({ length: new Date().getFullYear() - 1899 }, (_, i) => new Date().getFullYear() - i),
+            showSuccessModal: false, 
+            errorName: '',
+            errorPhone: '',
+            errorEmail: '',
+            errorAddress: ''
         };
     },
+    mounted() {
+        // Lấy id từ props (nếu có) hoặc từ route params
+        this.userId = this.id || this.$route.params.id; // Điều này giả định bạn đang sử dụng Vue Router
+        this.fetchUserDetails();
+    },
     methods: {
-        cancel() {
-            console.log('Hủy bỏ chỉnh sửa');
+        fetchUserDetails() {
+            // Sử dụng userId đã lấy ở trên để fetch dữ liệu
+            axios.get(`http://127.0.0.1:8000/api/users/${this.userId}`)
+                .then(response => {
+                    const userDetails = response.data;
+                    this.name = userDetails.name;
+                    this.gender = userDetails.details.gender;
+                    this.dobDay = userDetails.details.dob ? new Date(userDetails.details.dob).getDate() : null;
+                    this.dobMonth = userDetails.details.dob ? new Date(userDetails.details.dob).getMonth() + 1 : null;
+                    this.dobYear = userDetails.details.dob ? new Date(userDetails.details.dob).getFullYear() : null;
+                    this.phone = userDetails.details.phone;
+                    this.email = userDetails.email;
+                    this.role = userDetails.role;
+                    this.address = userDetails.details.address;
+                    this.profilePicture = userDetails.details.profile_picture;
+                    console.log('User details fetched:', this.role);
+
+                })
+                .catch(error => {
+                    console.error("Error fetching user details:", error);
+                });
+                
         },
+        fetchUser(user) {
+      let userProxy = new Proxy(user, {
+        get: function (target, prop) {
+          return prop in target ? target[prop] : undefined;
+        },
+      });
+      return userProxy.role;
+    },
+        
+        changeProfilePicture() {
+            this.$refs.fileInput.click();
+        },
+        handleFileChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                this.profilePicture = URL.createObjectURL(file);
+                const formData = new FormData();
+                formData.append("profile_picture", file);
+
+                axios.post(`http://127.0.0.1:8000/api/users/${this.userId}/uploadProfilePicture`, formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                })
+                .then(response => {
+                    console.log("Profile picture updated:", response.data);
+                })
+                .catch(error => {
+                    console.error("Error updating profile picture:", error);
+                });
+            }
+        },
+        validateField(fieldNameError, fieldName, fieldValue, minLength, maxLength, regexPattern) {
+            if (!fieldValue || fieldValue.trim() === "") {
+                this[`error${fieldNameError}`] = `${fieldName} không được để trống`;
+                return false;
+            }
+
+            if (fieldNameError === "Name") {
+                if (fieldValue.length > 100) {
+                    this[`error${fieldNameError}`] = `${fieldName} không được dài quá 100 ký tự`;
+                    return false;
+                }
+                if (/\s{2,}/.test(fieldValue)) {
+                    this[`error${fieldNameError}`] = `${fieldName} không được có 2 khoảng trắng gần nhau`;
+                    return false;
+                }
+                if (/^\s/.test(fieldValue)) {
+                    this[`error${fieldNameError}`] = `${fieldName} không được có khoảng trắng ở đầu`;
+                    return false;
+                }
+            }
+
+            if (fieldNameError === "Phone") {
+                if (fieldValue.length !== 10 || !/^0\d{9}$/.test(fieldValue)) {
+                    this[`error${fieldNameError}`] = `${fieldName} phải có 10 ký tự và bắt đầu bằng số 0`;
+                    return false;
+                }
+            }
+
+            if (fieldNameError === "Email") {
+                if (fieldValue.length > 100) {
+                    this[`error${fieldNameError}`] = `${fieldName} không được dài quá 100 ký tự`;
+                    return false;
+                }
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(fieldValue)) {
+                    this[`error${fieldNameError}`] = `${fieldName} không hợp lệ`;
+                    return false;
+                }
+            }
+
+            if (fieldNameError === "Address") {
+                if (fieldValue.length > 100) {
+                    this[`error${fieldNameError}`] = `${fieldName} không được dài quá 100 ký tự`;
+                    return false;
+                }
+                if (/\s{2,}/.test(fieldValue)) {
+                    this[`error${fieldNameError}`] = `${fieldName} không được có 2 khoảng trắng gần nhau`;
+                    return false;
+                }
+                if (/^\s/.test(fieldValue)) {
+                    this[`error${fieldNameError}`] = `${fieldName} không được có khoảng trắng ở đầu`;
+                    return false;
+                }
+            }
+
+            if (fieldValue.length < minLength || fieldValue.length > maxLength) {
+                this[`error${fieldNameError}`] = `${fieldName} phải có ít nhất ${minLength} ký tự hoặc ít hơn ${maxLength} ký tự`;
+                return false;
+            }
+            if (regexPattern && !regexPattern.test(fieldValue)) {
+                this[`error${fieldNameError}`] = `${fieldName} không được chứa ký tự đặc biệt`;
+                return false;
+            }
+
+            this[`error${fieldNameError}`] = ""; 
+            return true;
+        },
+
         save() {
-            console.log('Lưu thông tin', this.fullName, this.gender, this.dobDay, this.dobMonth, this.dobYear, this.phone, this.city);
+            const validName = this.validateField("Name", "Tên", this.name, 1, 100);
+            const validPhone = this.validateField("Phone", "Số điện thoại", this.phone, 10, 10, /^0\d{9}$/);
+            const validEmail = this.validateField("Email", "Email", this.email, 5, 100);
+            const validAddress = this.validateField("Address", "Địa chỉ", this.address, 1, 100);
+            if (validName && validPhone && validEmail && validAddress) {
+                const updatedUserDetails = {
+                    name: this.name,
+                    gender: this.gender,
+                    dob: `${this.dobYear}-${this.dobMonth}-${this.dobDay}`,  
+                    phone: this.phone,
+                    email: this.email,
+                    address: this.address,
+                    profile_picture: this.profilePicture || ''
+                };
+
+                axios.put(`http://127.0.0.1:8000/api/users/${this.userId}`, updatedUserDetails)
+                    .then(response => {
+                        console.log('User details updated:', response.data);
+                        this.showSuccessModal = true; 
+
+                        setTimeout(() => {
+                            this.showSuccessModal = false;
+                        }, 3000);
+                    })
+                    .catch(error => {
+                        console.error("Error saving user details:", error);
+                    });
+            }
+        },
+        closeModal() {
+            this.showSuccessModal = false;
+        },
+        cancel() {
+            this.fetchUserDetails();
         }
+        
     }
 };
 </script>
 
-<style scoped>
-.container {
-    display: flex;
-}
-.sidebar {
-    width: 250px;
-    background-color: #ffffff;
-    border-right: 1px solid #e1e8ed;
-    padding: 20px;
-}
-.sidebar .profile {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.sidebar .profile img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-}
-.sidebar .profile .name {
-    font-weight: bold;
-}
-.sidebar .menu {
-    list-style: none;
-    padding: 0;
-}
-.sidebar .menu li {
-    margin-bottom: 10px;
-}
-.sidebar .menu li a {
-    text-decoration: none;
-    color: #1da1f2;
-    display: flex;
-    align-items: center;
-}
-.sidebar .menu li a i {
-    margin-right: 10px;
-}
-.sidebar .menu li a.active {
-    color: #ffffff;
-    background-color: #1da1f2;
-    padding: 10px;
-    border-radius: 5px;
-}
-.content {
-    flex-grow: 1;
-    padding: 20px;
-}
-.content h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-.tabs {
-    display: flex;
-    border-bottom: 1px solid #e1e8ed;
-    margin-bottom: 20px;
-}
-.tabs a {
-    text-decoration: none;
-    color: #1da1f2;
-    padding: 10px 20px;
-    border-bottom: 3px solid transparent;
-}
-.tabs a.active {
-    border-bottom: 3px solid #1da1f2;
-    font-weight: bold;
-}
-.notification {
-    background-color: #e1e8ed;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-.notification a {
-    color: #1da1f2;
-    text-decoration: none;
-}
-.form-group {
-    margin-bottom: 20px;
-}
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-.form-group input, .form-group select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #e1e8ed;
-    border-radius: 5px;
-}
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-}
-.form-actions button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.form-actions .cancel {
-    background-color: #e1e8ed;
-    margin-right: 10px;
-}
-.form-actions .save {
-    background-color: #1da1f2;
-    color: #ffffff;
-}
-.dob-select {
-    display: flex;
-    gap: 10px;
-}
+
+<style lang="scss" scoped>
+@import "@/components/UserDetails/UserDetails.scss";
 </style>
