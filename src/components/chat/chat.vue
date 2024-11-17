@@ -38,7 +38,7 @@
         </div>
       </div>
     </div>
-    <div class="w-3/4 flex flex-col">
+    <div class="bg-white w-3/4 flex flex-col">
       <div
         class="p-4 flex items-center justify-between border-b border-gray-300"
       >
@@ -95,11 +95,16 @@
       </div>
       <div class="p-4 border-t border-gray-300 flex items-center">
         <i class="far fa-smile text-xl mr-4"> </i>
-        <input
-          class="flex-1 p-2 border border-gray-300 rounded-lg"
-          placeholder="Message..."
-          type="text"
-        />
+        <div
+          class="flex-1 flex items-center border border-gray-300 rounded-lg forcus:border"
+        >
+          <input
+            class="w-full p-2 outline-none"
+            placeholder="Message..."
+            type="text"
+          />
+          <i class="fa-solid fa-paper-plane ml-4 p-2 cursor-pointer"></i>
+        </div>
         <i class="fas fa-microphone text-xl ml-4"> </i>
         <i class="far fa-image text-xl ml-4"> </i>
         <i class="far fa-heart text-xl ml-4"> </i>
@@ -108,8 +113,98 @@
   </div>
 </template>
 
+<!-- <script setup>
+import { ref, onMounted, nextTick } from "vue";
+import { useStore } from "vuex"; // Thay vì Pinia, ta dùng Vuex
+import axios from "axios";
+import Echo from "laravel-echo";
+import Pusher from "pusher-js";
+import Cookies from "js-cookie";
+
+window.Pusher = Pusher;
+
+const store = useStore();
+const messages = ref([]);
+const newMessage = ref("");
+const messageContainer = ref(null);
+const isLoading = ref(true);
+
+// Lấy thông tin người dùng từ Vuex
+const userStore = store.state;
+
+const scrollToBottom = async () => {
+  await nextTick();
+  if (messageContainer.value) {
+    messageContainer.value.scrollTop = messageContainer.value.scrollHeight;
+  }
+};
+
+const fetchMessages = async () => {
+  try {
+    const token = Cookies.get("tokenLogin");
+    const response = await axios.get("http://127.0.0.1:8000/api/messages", {
+      headers: {
+        Authorization: `Bearer ${token}`, // Thêm token vào header
+      },
+    });
+    messages.value = response.data;
+    console.log(messages.value);
+    await scrollToBottom();
+  } catch (error) {
+    console.error("Error fetching messages:", error);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const sendMessage = async () => {
+  if (!newMessage.value.trim()) return;
+  const token = Cookies.get("tokenLogin");
+  try {
+    const response = await axios.post(
+      "http://127.0.0.1:8000/api/messages",
+      {
+        message: newMessage.value,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Thêm token vào header
+        },
+      }
+    );
+    // messages.value.push(response.data);
+    newMessage.value = "";
+    await scrollToBottom();
+  } catch (error) {
+    console.error("Error sending message:", error);
+  }
+};
+
+const initializeEcho = () => {
+  window.Echo = new Echo({
+    broadcaster: "pusher",
+    key: "3e4fadf6091f7e34865d",
+    cluster: "ap1",
+    forceTLS: false,
+    wsHost: window.location.hostname,
+    wsPort: 6001,
+    disableStats: true,
+  });
+
+  window.Echo.channel("chat").listen("MessageSent", (event) => {
+    messages.value.push(event.message);
+    scrollToBottom();
+  });
+};
+
+onMounted(async () => {
+  await fetchMessages();
+  initializeEcho();
+});
+</script> -->
+
 <script>
 export default {
-  name: "ChatBox",
+  name: "ChatRealTime",
 };
 </script>
