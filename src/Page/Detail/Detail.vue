@@ -1,5 +1,7 @@
 <template>
   <!-- /// -->
+  <Map :tourLocation="valueTour.location" :tourName="valueTour.name" :handleDisplayMap="handleDisplayMap" v-if="displayMap"></Map>
+
   <div class="max-w-6xl mx-auto">
     <div v-if="errorValue" class="alert alert-danger mt-3">
       <p>Error: {{ errorValue }}</p>
@@ -36,7 +38,7 @@
       <div class="flex items-center mb-4">
         <i class="fas fa-map-marker-alt mr-2"> </i>
         <span> Gam Ghi island, Hòn Thơm, Phu Quoc, Kien Giang, Vietnam </span>
-        <a class="text-lime-400 ml-2" href="#"> Xem bản đồ </a>
+        <a @click="handleDisplayMap" class="text-lime-400 ml-2" href="#"> Xem bản đồ </a>
       </div>
       <div class="flex items-center mb-4">
         <i class="fas fa-calendar-alt mr-2"> </i>
@@ -107,7 +109,7 @@
             <div class="text-sm">Từ 49 đánh giá</div>
           </div>
         </div>
-        <div class="flex items-center">
+        <div @click="handleDisplayMap" class="flex items-center">
           <i class="fas fa-map-marker-alt text-blue-800 mr-2"> </i>
           <a class="text-blue-800 text-lg" href="#"> Xem bản đồ </a>
         </div>
@@ -150,7 +152,7 @@
         </div>
       </div>
       <div class="flex items-center">
-        <div class="text-blue-600 font-bold flex items-center">
+        <div @click="handleDisplayMap" class="text-blue-600 font-bold flex items-center">
           <i class="fas fa-map-marker-alt"></i> Xem bản đồ
           <i class="fas fa-chevron-right ml-1"></i>
         </div>
@@ -473,10 +475,14 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import Map from "@/components/Map/Map.vue";
 import axios from "axios";
 
 export default {
   name: "DetailComponent",
+  components: {
+    Map,
+  },
 
   setup() {
     const tourID = ref(null);
@@ -484,10 +490,14 @@ export default {
     const valueTour = ref(null);
     const errorValue = ref(null);
     const router = useRouter();
+    const displayMap = ref(false);
 
     // const getImage = ($urlImage) => {
     //     return `http://localhost:8000/images/${$urlImage}`
     // }
+    const handleDisplayMap = () => {
+  displayMap.value = !displayMap.value; 
+};
     const getDetailTour = async () => {
       try {
         console.log("Tour ID:", tourID);
@@ -530,6 +540,8 @@ export default {
       bookTour,
       errorValue,
       formatPrice,
+      handleDisplayMap,
+      displayMap,
     };
   },
 };
