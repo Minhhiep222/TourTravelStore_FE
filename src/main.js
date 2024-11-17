@@ -8,9 +8,11 @@ import "bootstrap-vue-3/dist/bootstrap-vue-3.css";
 import "./assets/tailwind.css";
 import { store } from './store';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHeart, faBookmark } from '@fortawesome/free-solid-svg-icons'
+import { faHeart, faBookmark,faClock,faRoad } from '@fortawesome/free-solid-svg-icons'
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faHeart, faBookmark)
+
+library.add(faHeart, faBookmark,faClock,faRoad)
 const app = createApp(App);
 
 

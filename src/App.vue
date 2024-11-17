@@ -3,7 +3,7 @@
     <main>
       <router-view />
     </main>
-
+    <!-- <Map></Map> -->
     <Login v-if="displayLogin" :handleDisplayLogin="handleDisplayLogin" :setCurrentUser="setCurrentUser"></Login>
     <Register v-if="displayRegister" :handleDisplayRegister="handleDisplayRegister"></Register>
     <!-- <button @click="logData">logData</button> -->
@@ -16,10 +16,12 @@ import Login from './components/Login/Login.vue';
 import Register from './components/Register/Register.vue';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+// import Map from './components/Map/Map.vue';
 
 export default {
   components: {
     Login,
+    // Map,
     Register
   },
   setup() {
@@ -42,6 +44,11 @@ export default {
     const handleDisplayLogin = (item) => {
       displayLogin.value = item;
     };
+
+    // const getLocation = () => {
+    //   navigator.geolocation
+    // }
+
     const handleDisplayRegister = (item) => {
       displayRegister.value = item;
     };

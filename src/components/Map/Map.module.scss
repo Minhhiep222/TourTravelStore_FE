@@ -1,0 +1,76 @@
+.parent {
+    background-color: rgba(3, 18, 26, 0.4);
+    width: 100%;
+    height: 100%;
+    z-index: 999 !important;
+    position: fixed;
+    .wrapper {
+        position: absolute;
+        width: 864px;
+        height: 81vh;
+        // top: 50%; 
+        // left: 50%; 
+        // transform: translate(-45%, -45%);
+        background-color: rgba(255, 255, 255, 1.00);
+        box-shadow: 0px 1px 2px rgba(3, 18, 26, 0.20);
+        .wrapTitle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-left: 20px;
+            padding-right: 20px;
+            .iconClose {
+                width: 24px;
+                height: 24px;
+                cursor: pointer;
+                padding: 1px;
+            }
+            .title {
+                padding-bottom: 4px;
+                padding-top: 12px;
+                color: rgb(3, 18, 26);
+                font-size: 24px;
+                line-height: 28px;
+                font-weight: 700;
+                font-family: Godwit, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+            }
+        }
+        .content {
+            padding-left: 20px;
+            padding-right: 20px;
+            overflow-y: auto;
+            width: 100%;
+            height: 400px;
+            .tourName {
+                color: rgb(3, 18, 26);
+                font-size: 16px;
+                line-height: 24px;
+                font-weight: 500;
+            }
+            .map {
+                border-bottom-left-radius: 6px;
+                border-bottom-right-radius: 6px;
+                border-top-left-radius: 6px;
+                border-top-right-radius: 6px;
+                border-bottom-left-radius: 6px;
+                border-bottom-right-radius: 6px;
+                position: relative;
+             
+            }
+            .line {
+                margin: 48px 0px 24px 0px;
+                background-color: rgb(242, 243, 243);   
+                height: 1px;
+            }
+            .titleService {
+                color: rgb(3, 18, 26);
+                font-size: 24px;
+                line-height: 28px;
+                font-weight: 700;
+            }
+          .service {
+            margin-top: 10px;
+          }
+        }
+    }
+}
