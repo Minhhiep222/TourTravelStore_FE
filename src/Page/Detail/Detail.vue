@@ -991,8 +991,8 @@ export default {
           console.log("something went wrong", response.error);
         }
 
-        this.comment = null;
-        this.rating = null;
+        this.comment = "";
+        this.rating = 0;
         this.selectedFiles = [];
         this.imagePreviews = [];
         this.isModalVisible = false;

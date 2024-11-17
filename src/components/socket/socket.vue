@@ -26,17 +26,24 @@ export default {
     };
   },
   mounted() {
-    const echo = new Echo({
+    window.Echo = new Echo({
       broadcaster: "socket.io",
-      host: window.location.hostname + ":6001",
+      client: io, // Cấu hình client là socket.io-client
+      host: window.location.hostname + ":6001", // URL của server WebSocket
     });
 
-    echo.join("chat");
+    // Join vào kênh "chat" và lắng nghe sự kiện "MessageSent"
+    window.Echo.join("chat").listen("MessageSent", (event) => {
+      console.log("Message received:", event); // Kiểm tra sự kiện MessageSent
+      this.messages.push(event.message); // Thêm tin nhắn vào mảng messages
+    });
+
+    // Để kiểm tra xem có nhận được sự kiện không
   },
   methods: {
     sendMessage() {
       axios
-        .post("http://127.0.0.1:8000/api/chat/send-message", {
+        .post("http://127.0.0.1:6001/apps/APP_ID/chat/send-message", {
           message: this.message,
         })
         .then((response) => {
