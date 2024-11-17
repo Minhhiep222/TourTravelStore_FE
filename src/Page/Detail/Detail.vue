@@ -669,13 +669,13 @@ import { useRouter, useRoute } from "vue-router";
 import Map from "@/components/Map/Map.vue";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { inject } from "vue";
+// import { inject } from "vue";
 import { format } from "date-fns";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { comment } from "postcss";
+// import { comment } from "postcss";
 
 export default {
   name: "DetailComponent",
@@ -689,6 +689,7 @@ export default {
     const valueTour = ref(null);
     const errorValue = ref(null);
     const router = useRouter();
+    const displayMap = ref(false);
 
     // const getImage = ($urlImage) => {
     //     return `http://localhost:8000/images/${$urlImage}`
@@ -722,8 +723,11 @@ export default {
     const formatPrice = (price) => {
       return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
+    const handleDisplayMap = () => {
+  displayMap.value = !displayMap.value; 
+};
     const logValue = () => {
-      console.log("valueCurrentUser", valueCurrentUser);
+      // console.log("valueCurrentUser", valueCurrentUser);
       console.log("tourID", tourID);
       console.log("errorValue", errorValue);
       console.log("valueTour", valueTour.value);
@@ -736,7 +740,7 @@ export default {
       valueTour,
       bookTour,
       errorValue,
-      valueCurrentUser,
+      // valueCurrentUser,
       formatPrice,
       handleDisplayMap,
       displayMap,
