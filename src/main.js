@@ -27,7 +27,6 @@ const app = createApp(App);
 app.use(BootstrapVue3);
 app.use(router);
 app.use(store);
-app.use(store);
 app.component("font-awesome-icon", FontAwesomeIcon);
 
 app.mount("#app");
