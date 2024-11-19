@@ -1,93 +1,138 @@
 <template>
-  <div class="min-h-full flex" style="height: 87vh">
-    <div class="w-1/4 bg-white border-r border-gray-300">
+  <div class="min-h-full flex bg-gray-50" style="height: 87vh">
+    <!-- Sidebar -->
+    <div class="w-1/4 bg-white border-r border-gray-200 shadow-sm">
+      <!-- Header -->
       <div
-        class="p-4 flex items-center justify-between border-b border-gray-300"
+        class="p-4 flex items-center justify-between border-b border-gray-200 bg-white"
       >
-        <div class="text-xl font-bold">min_hiq</div>
-        <i class="fas fa-edit text-xl"> </i>
+        <div class="text-xl font-bold text-blue-600">min_hiq</div>
+        <i
+          class="fas fa-edit text-xl hover:text-blue-600 transition-colors duration-200"
+        >
+        </i>
       </div>
-      <div class="flex justify-around border-b border-gray-300">
-        <div class="py-2 px-4 border-b-2 border-black">Primary</div>
-        <div class="py-2 px-4">General</div>
-        <div class="py-2 px-4">Requests</div>
+
+      <!-- Tabs -->
+      <div class="flex justify-around border-b border-gray-200 bg-white">
+        <div
+          class="py-2 px-4 border-b-2 border-blue-600 text-blue-600 font-medium"
+        >
+          Primary
+        </div>
+        <div
+          class="py-2 px-4 hover:text-blue-600 transition-colors duration-200 cursor-pointer"
+        >
+          General
+        </div>
+        <div
+          class="py-2 px-4 hover:text-blue-600 transition-colors duration-200 cursor-pointer"
+        >
+          Requests
+        </div>
       </div>
-      <div class="p-4 flex items-center">
+
+      <!-- Notes -->
+      <div
+        class="p-4 flex items-center hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
+      >
         <img
           alt="Profile picture of a person looking at a flower"
-          class="rounded-full w-12 h-12"
+          class="rounded-full w-12 h-12 object-cover border-2 border-gray-200"
           height="50"
           src="https://storage.googleapis.com/a1aa/image/w6e1eTNxEMgnrkdkoZWVmKFkVb55bnaIZV5XCR5CfYGy9ThnA.jpg"
           width="50"
         />
         <div class="ml-4">
-          <div class="text-sm">Your note</div>
+          <div class="text-sm font-medium">Your note</div>
         </div>
       </div>
 
-      <div
-        v-for="conversation in conversations"
-        v-bind:key="conversation.id"
-        @click="
-          fetchMessages(conversation.id), getUser(conversation.other_user)
-        "
-        class="p-4 flex items-center bg-white-200 cursor-pointer hover:bg-gray-200"
-      >
-        <img
-          alt="Profile picture of Nguyễn Thị Ngọc Như"
-          class="rounded-full w-12 h-12"
-          height="50"
-          src="https://storage.googleapis.com/a1aa/image/3xbiUbVTIjZSJVNHTJWVFppsyXPA2Ppr3bwavi6r2E9ufU4JA.jpg"
-          width="50"
-        />
-        <div class="ml-4 w-full">
-          <div class="text-sm font-bold">
-            {{ conversation?.other_user?.name }}
-          </div>
-          <div class="flex items-center justify-between">
-            <div class="text-sm text-black-500">
-              {{ conversation?.last_message?.message?.substring(0, 20) }}
+      <!-- Conversation List -->
+      <div class="overflow-y-auto" style="height: calc(87vh - 160px)">
+        <div
+          v-for="conversation in conversations"
+          v-bind:key="conversation.id"
+          @click="
+            fetchMessages(conversation.id), getUser(conversation.other_user)
+          "
+          class="p-4 flex items-center cursor-pointer transition-all duration-200 hover:bg-blue-50 border-l-4 border-transparent hover:border-blue-600"
+        >
+          <img
+            alt="Profile picture"
+            class="rounded-full w-12 h-12 object-cover border-2 border-gray-200"
+            height="50"
+            :src="
+              conversation?.other_user?.avatar_url ||
+              'https://via.placeholder.com/50'
+            "
+            width="50"
+          />
+          <div class="ml-4 w-full">
+            <div class="text-sm font-bold text-gray-900">
+              {{ conversation?.other_user?.name }}
             </div>
-            <div class="text-xs text-gray-500">Active 3h ago</div>
+            <div class="flex items-center justify-between">
+              <div class="text-sm text-gray-600 truncate max-w-[150px]">
+                {{ conversation?.last_message?.message?.substring(0, 20) }}
+              </div>
+              <div class="text-xs text-gray-500">Active 3h ago</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div v-if="messages.length > 0" class="bg-white w-3/4 flex flex-col">
+    <!-- Chat Area -->
+    <div
+      v-if="messages.length > 0"
+      class="bg-white w-3/4 flex flex-col shadow-sm"
+    >
+      <!-- Chat Header -->
       <div
-        class="p-4 flex items-center justify-between border-b border-gray-300"
+        class="p-4 flex items-center justify-between border-b border-gray-200 bg-white"
       >
         <div class="flex items-center">
           <img
-            alt="Profile picture of Nguyễn Thị Ngọc Như"
-            class="rounded-full w-12 h-12"
+            alt="Profile picture"
+            class="rounded-full w-12 h-12 object-cover border-2 border-gray-200"
             height="50"
-            src="https://storage.googleapis.com/a1aa/image/3xbiUbVTIjZSJVNHTJWVFppsyXPA2Ppr3bwavi6r2E9ufU4JA.jpg"
+            :src="user_other?.avatar_url || 'https://via.placeholder.com/50'"
             width="50"
           />
           <div class="ml-4">
-            <div class="text-lg font-bold">{{ user_other?.name }}</div>
+            <div class="text-lg font-bold text-gray-900">
+              {{ user_other?.name }}
+            </div>
             <div class="text-sm text-gray-500">Active 3h ago</div>
           </div>
         </div>
         <div class="flex space-x-4">
-          <i class="fas fa-phone text-xl"> </i>
-          <i class="fas fa-video text-xl"> </i>
-          <i class="fas fa-info-circle text-xl"> </i>
+          <i
+            class="fas fa-phone text-xl hover:text-blue-600 transition-colors duration-200 cursor-pointer"
+          >
+          </i>
+          <i
+            class="fas fa-video text-xl hover:text-blue-600 transition-colors duration-200 cursor-pointer"
+          >
+          </i>
+          <i
+            class="fas fa-info-circle text-xl hover:text-blue-600 transition-colors duration-200 cursor-pointer"
+          >
+          </i>
         </div>
       </div>
 
-      <!-- Message Container -->
+      <!-- Messages Container -->
       <div
-        class="flex-1 p-4 flex flex-col justify-end overflow-y-auto"
+        class="flex-1 p-4 flex flex-col overflow-y-auto bg-gray-50"
         ref="messageContainer"
+        style="max-height: calc(87vh - 140px)"
       >
-        <!-- Loop over messages -->
         <div
           v-for="message in messages"
           :key="message.id"
-          class="flex items-center mb-4"
+          class="flex items-start mb-1 animate-fade-in"
           :class="{
             'justify-end': message.sender_id === currentUserId,
             'justify-start': message.sender_id !== currentUserId,
@@ -96,10 +141,8 @@
           <img
             v-if="message.sender_id !== currentUserId"
             alt="Profile picture"
-            class="rounded-full w-8 h-8"
+            class="rounded-full w-8 h-8 object-cover mt-1"
             :src="message?.user?.avatar_url || 'https://via.placeholder.com/50'"
-            height="50"
-            width="50"
           />
           <div
             :class="{
@@ -108,37 +151,69 @@
             }"
           >
             <div
+              class="max-w-md break-words shadow-sm"
               :class="{
-                'text-sm bg-gray-200 p-2 rounded-lg':
+                'bg-white rounded-r-lg rounded-bl-lg p-2':
                   message.sender_id !== currentUserId,
-                'text-sm bg-blue-500 text-white p-2 rounded-lg':
+                'bg-blue-600 text-white rounded-l-lg rounded-br-lg p-2':
                   message.sender_id === currentUserId,
               }"
             >
               {{ message.message }}
             </div>
+            <div
+              class="text-xs mt-1 text-gray-500"
+              :class="{
+                'text-left': message.sender_id !== currentUserId,
+                'text-right': message.sender_id === currentUserId,
+              }"
+            >
+              {{ formatTime(message.updated_at) }}
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Message input -->
-      <div class="p-4 border-t border-gray-300 flex items-center">
-        <i class="far fa-smile text-xl mr-4"> </i>
-        <div class="flex-1 flex items-center border border-gray-300 rounded-lg">
-          <input
-            v-model="newMessage"
-            class="w-full p-2 outline-none"
-            placeholder="Message..."
-            type="text"
-          />
-          <i
-            @click.prevent="sendMessage(currentConversationId)"
-            class="fa-solid fa-paper-plane ml-4 p-2 cursor-pointer"
-          ></i>
+      <!-- Input Area -->
+      <div class="p-4 border-t border-gray-200 bg-white">
+        <div class="flex items-center space-x-4">
+          <button
+            class="text-gray-500 hover:text-blue-600 transition-colors duration-200"
+          >
+            <i class="far fa-smile text-xl"> </i>
+          </button>
+          <div
+            class="flex-1 flex items-center bg-gray-50 rounded-full border border-gray-200 focus-within:border-blue-400 transition-colors duration-200"
+          >
+            <input
+              v-model="newMessage"
+              class="w-full p-2 bg-transparent outline-none px-4"
+              placeholder="Type a message..."
+              type="text"
+            />
+            <button
+              @click.prevent="sendMessage(currentConversationId)"
+              class="p-2 mr-2 text-blue-600 hover:text-blue-700 transition-colors duration-200"
+            >
+              <i class="fa-solid fa-paper-plane text-xl"></i>
+            </button>
+          </div>
+          <button
+            class="text-gray-500 hover:text-blue-600 transition-colors duration-200"
+          >
+            <i class="fas fa-microphone text-xl"> </i>
+          </button>
+          <button
+            class="text-gray-500 hover:text-blue-600 transition-colors duration-200"
+          >
+            <i class="far fa-image text-xl"> </i>
+          </button>
+          <button
+            class="text-gray-500 hover:text-blue-600 transition-colors duration-200"
+          >
+            <i class="far fa-heart text-xl"> </i>
+          </button>
         </div>
-        <i class="fas fa-microphone text-xl ml-4"> </i>
-        <i class="far fa-image text-xl ml-4"> </i>
-        <i class="far fa-heart text-xl ml-4"> </i>
       </div>
     </div>
   </div>
@@ -167,6 +242,7 @@ const conversations = ref([]);
 // Lấy thông tin người dùng từ Vuex
 // const userStore = store.state;
 
+//CUộn xuống cuối
 const scrollToBottom = async () => {
   await nextTick();
   if (messageContainer.value) {
@@ -174,10 +250,12 @@ const scrollToBottom = async () => {
   }
 };
 
+//Hàm get user trong cuộc trò chuyện
 const getUser = (user) => {
   user_other.value = user;
 };
 
+//Hàm lấy danh sách các tính nhắn
 const fetchMessages = async (conversation_id) => {
   try {
     const token = Cookies.get("tokenLogin");
@@ -200,6 +278,7 @@ const fetchMessages = async (conversation_id) => {
   }
 };
 
+//Hàm gửi tin nhắn đế người tham gia cuộc trò chuyện
 const sendMessage = async (conversation_id) => {
   if (!newMessage.value.trim()) return;
   const token = Cookies.get("tokenLogin");
@@ -222,6 +301,7 @@ const sendMessage = async (conversation_id) => {
   }
 };
 
+//Hàm lấy user hiện tại
 const fetchUserData = async () => {
   try {
     const jwt = Cookies.get("tokenLogin");
@@ -250,6 +330,7 @@ const fetchUserData = async () => {
   }
 };
 
+//Hàm danh sách cuộc trò chuyện
 const fetchConversations = async () => {
   try {
     const jwt = Cookies.get("tokenLogin");
@@ -272,6 +353,7 @@ const fetchConversations = async () => {
   }
 };
 
+//Format time send
 const formatTime = (timestamp) => {
   return new Date(timestamp).toLocaleTimeString([], {
     hour: "2-digit",
@@ -279,6 +361,7 @@ const formatTime = (timestamp) => {
   });
 };
 
+//Hàm kiểm tra cuộc sự tham gia hội thoại của người dùng
 const initializeEcho = (conversation_id) => {
   const jwt = Cookies.get("tokenLogin");
   console.log(jwt);
@@ -286,7 +369,7 @@ const initializeEcho = (conversation_id) => {
     console.log("CÓ LỖI");
     return;
   }
-  // Sửa echo thành Echo
+  //Sử dụng Larevl echo để set các giá trị pusher
   window.Echo = new Echo({
     broadcaster: "pusher",
     key: "3e4fadf6091f7e34865d",
@@ -321,12 +404,14 @@ const initializeEcho = (conversation_id) => {
     return;
   }
 
+  //Set broad channel mà user có thể tham gia
   const channel = `chat.${conversation_id}`;
   console.log("Subscribing to channel:", channel);
 
+  //Thêm gia vào hộp trò chuyện và lắm nghe sự kiện
   window.Echo.private(channel)
     .listen(".MessageSent", (event) => {
-      // Thêm dấu chấm trước tên event
+      // Thêm dấu chấm trước tên event để matche với App.Event.MessageSent
       messages.value.push(event.message);
       console.log(event.message);
       scrollToBottom();
@@ -343,17 +428,18 @@ const cleanup = () => {
   }
 };
 
+//Kiểm tra trạng thái của conversation id
 watch(currentConversationId, (newId) => {
   initializeEcho(newId);
-  console.log("Đã thay đổi conversation ID:", currentConversationId);
 });
 
+//Lấy user và lấy hộp trò chuyện
 onMounted(async () => {
   await fetchConversations();
   await fetchUserData();
-  // initializeEcho();
 });
 
+//Clean
 onUnmounted(() => {
   cleanup();
 });
@@ -364,3 +450,20 @@ export default {
   name: "ChatRealTime",
 };
 </script>
+
+<style>
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
