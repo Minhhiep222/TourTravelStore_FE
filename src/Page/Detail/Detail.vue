@@ -1,6 +1,11 @@
 <template>
   <!-- /// -->
-  <Map :tourLocation="valueTour.location" :tourName="valueTour.name" :handleDisplayMap="handleDisplayMap" v-if="displayMap"></Map>
+  <Map
+    :tourLocation="valueTour.location"
+    :tourName="valueTour.name"
+    :handleDisplayMap="handleDisplayMap"
+    v-if="displayMap"
+  ></Map>
 
   <div class="max-w-6xl mx-auto">
     <div v-if="errorValue" class="alert alert-danger mt-3">
@@ -38,7 +43,9 @@
       <div class="flex items-center mb-4">
         <i class="fas fa-map-marker-alt mr-2"> </i>
         <span> Gam Ghi island, Hòn Thơm, Phu Quoc, Kien Giang, Vietnam </span>
-        <a @click="handleDisplayMap" class="text-lime-400 ml-2" href="#"> Xem bản đồ </a>
+        <a @click="handleDisplayMap" class="text-lime-400 ml-2" href="#">
+          Xem bản đồ
+        </a>
       </div>
       <div class="flex items-center mb-4">
         <i class="fas fa-calendar-alt mr-2"> </i>
@@ -152,7 +159,10 @@
         </div>
       </div>
       <div class="flex items-center">
-        <div @click="handleDisplayMap" class="text-blue-600 font-bold flex items-center">
+        <div
+          @click="handleDisplayMap"
+          class="text-blue-600 font-bold flex items-center"
+        >
           <i class="fas fa-map-marker-alt"></i> Xem bản đồ
           <i class="fas fa-chevron-right ml-1"></i>
         </div>
@@ -724,8 +734,8 @@ export default {
       return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
     const handleDisplayMap = () => {
-  displayMap.value = !displayMap.value; 
-};
+      displayMap.value = !displayMap.value;
+    };
     const logValue = () => {
       // console.log("valueCurrentUser", valueCurrentUser);
       console.log("tourID", tourID);
@@ -1006,8 +1016,8 @@ export default {
           console.log("something went wrong", response.error);
         }
 
-        this.comment = null;
-        this.rating = null;
+        this.comment = "";
+        this.rating = 0;
         this.selectedFiles = [];
         this.imagePreviews = [];
         this.isModalVisible = false;
