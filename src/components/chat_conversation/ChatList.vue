@@ -145,8 +145,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick, watch } from "vue";
-import { useStore } from "vuex";
+import { ref, onMounted, onUnmounted, nextTick, watch } from "vue";
+// import { useStore } from "vuex";
 import axios from "axios";
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
@@ -155,7 +155,7 @@ import Cookies from "js-cookie";
 
 window.Pusher = Pusher;
 
-const store = useStore();
+// const store = useStore();
 const messages = ref([]);
 const newMessage = ref("");
 const messageContainer = ref(null);
@@ -165,10 +165,9 @@ const currentUserId = ref(null);
 const currentConversationId = ref(null);
 const conversations = ref([]);
 // Lấy thông tin người dùng từ Vuex
-const userStore = store.state;
+// const userStore = store.state;
 
 const scrollToBottom = async () => {
-  console.log(userStore);
   await nextTick();
   if (messageContainer.value) {
     messageContainer.value.scrollTop = messageContainer.value.scrollHeight;
@@ -177,7 +176,6 @@ const scrollToBottom = async () => {
 
 const getUser = (user) => {
   user_other.value = user;
-  console.log(user_other.value);
 };
 
 const fetchMessages = async (conversation_id) => {
@@ -217,9 +215,7 @@ const sendMessage = async (conversation_id) => {
         },
       }
     );
-    // messages.value.push(response.data);
     newMessage.value = "";
-    console.log(response);
     await scrollToBottom();
   } catch (error) {
     console.error("Error sending message:", error);
@@ -283,35 +279,83 @@ const formatTime = (timestamp) => {
   });
 };
 
-const initializeEcho = () => {
-  window.echo = new Echo({
+const initializeEcho = (conversation_id) => {
+  const jwt = Cookies.get("tokenLogin");
+  console.log(jwt);
+  if (!jwt) {
+    console.log("CÓ LỖI");
+    return;
+  }
+  // Sửa echo thành Echo
+  window.Echo = new Echo({
     broadcaster: "pusher",
     key: "3e4fadf6091f7e34865d",
     cluster: "ap1",
-    forceTLS: false,
-    wsHost: window.location.hostname,
-    wsPort: 6001,
-    disableStats: true,
+    authEndpoint: "http://127.0.0.1:8000/api/broadcasting/auth",
+    auth: {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        Accept: "application/json",
+      },
+    },
   });
 
-  window.echo
-    .channel(`chat.${currentConversationId}`)
-    .listen("MessageSent", (event) => {
-      console.log(event, "Check sự kiện có được lắng nghe không");
+  // Gắn error handler cho Echo
+  window.Echo.connector.pusher.connection.bind("error", (err) => {
+    console.error("Pusher connection error:", err);
+  });
+
+  // Gắn state change handler
+  window.Echo.connector.pusher.connection.bind("state_change", (states) => {
+    console.log(
+      "Connection state changed from",
+      states.previous,
+      "to",
+      states.current
+    );
+  });
+
+  // Kiểm tra currentConversationId có tồn tại không
+  if (!currentConversationId) {
+    console.error("currentConversationId is not defined");
+    return;
+  }
+
+  const channel = `chat.${conversation_id}`;
+  console.log("Subscribing to channel:", channel);
+
+  window.Echo.private(channel)
+    .listen(".MessageSent", (event) => {
+      // Thêm dấu chấm trước tên event
       messages.value.push(event.message);
+      console.log(event.message);
       scrollToBottom();
+    })
+    .error((error) => {
+      console.error("Channel error:", error);
     });
 };
 
+// Cleanup function khi component unmount
+const cleanup = () => {
+  if (window.Echo) {
+    window.Echo.disconnect();
+  }
+};
+
 watch(currentConversationId, (newId) => {
-  initializeEcho();
-  console.log("Đã thay đổi conversation ID:", newId);
+  initializeEcho(newId);
+  console.log("Đã thay đổi conversation ID:", currentConversationId);
 });
 
 onMounted(async () => {
   await fetchConversations();
   await fetchUserData();
-  initializeEcho();
+  // initializeEcho();
+});
+
+onUnmounted(() => {
+  cleanup();
 });
 </script>
 
