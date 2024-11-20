@@ -205,6 +205,7 @@ import "@vuepic/vue-datepicker/dist/main.css";
 import moment from "moment";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+import Cookies from "js-cookie";
 
 export default {
   name: "CreateTour",
@@ -377,6 +378,7 @@ export default {
       selectedFiles: [],
       imagePreviews: [],
       schedules: [],
+      user_id: 0,
       imageDefault: "http://127.0.0.1:8000/images/default.png",
     };
   },
@@ -575,7 +577,6 @@ export default {
         100,
         regex
       );
-      console.log("isValidName:", isValidName);
       const isValidLocation = this.validateField(
         "Location",
         "Địa chỉ",
@@ -584,7 +585,6 @@ export default {
         100,
         regex
       );
-      console.log("isValidLocation:", isValidLocation);
       const isValidDescription = this.validateField(
         "Description",
         "Mô tả",
@@ -718,6 +718,7 @@ export default {
         query: { message: "errorCreate" },
       });
     },
+
     async handleSubmit() {
       // console.log("file" + this.selectedFiles[0]);
       const checkValidate = this.checkValidate();
@@ -730,6 +731,7 @@ export default {
       // Prepare form data for upload
       const formData = new FormData();
       formData.append("name", this.name);
+      formData.append("user_id", this.user_id);
       formData.append("description", this.description);
       formData.append("duration", this.duration.trim());
       formData.append("price", this.price.trim());
@@ -769,6 +771,42 @@ export default {
         console.error("Registration failed:", error.response.data);
       }
     },
+
+    //Get user data
+    async fetchUserData() {
+      try {
+        const jwt = Cookies.get("tokenLogin");
+        if (!jwt) {
+          this.$router.push({ name: "/" });
+          return;
+        }
+        const response = await fetch(
+          `http://localhost:8000/api/inforCurrentUser`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${jwt}`, // Nếu cần sử dụng token để xác thực
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        const user = data.data;
+        this.user_id = user.id;
+        console.log(this.user_id);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        // this.$router.push({ name: "login" });
+        // return null;
+      }
+    },
+  },
+
+  mounted() {
+    this.fetchUserData();
   },
 };
 </script>

@@ -125,7 +125,9 @@
         </div>
       </div>
     </div>
-    <div class="bg-white p-4 rounded-lg mt-4 flex items-center justify-between">
+    <div
+      class="bg-white shadow-md p-4 rounded-lg mt-4 flex items-center justify-between"
+    >
       <div class="text-red-600 text-2xl font-bold">
         <div>
           <p v-if="valueTour">{{ formatPrice(valueTour.price) }} VND</p>
@@ -142,6 +144,8 @@
       </button>
     </div>
   </div>
+
+  <shop :shop="shop"> </shop>
 
   <div class="bg-white p-4 rounded-lg shadow-md max-w-6xl mx-auto mt-3">
     <div class="flex justify-between items-center mb-4">
@@ -685,26 +689,37 @@ import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-// import { comment } from "postcss";
 import Swal from "sweetalert2";
+
+//Component
+import shop from "@/components/shop/shopAccount.vue";
 
 export default {
   name: "DetailComponent",
   components: {
     Map,
+    shop,
   },
 
   setup() {
     const tourID = ref(null);
     const route = useRoute();
     const valueTour = ref(null);
+    // const seller = ref(null);
     const errorValue = ref(null);
     const router = useRouter();
     const displayMap = ref(false);
 
-    // const getImage = ($urlImage) => {
-    //     return `http://localhost:8000/images/${$urlImage}`
-    // }
+    const shop = ref({
+      id: 5,
+      name: "Shop Thời Trang Cao Cấp",
+      logoUrl:
+        "https://storage.googleapis.com/a1aa/image/T2AJGyFCnWKtO5WfPDe3YVVNPAhfpUajNnGKHlgL4PVJgxlnA.jpg",
+      product: {
+        count: "500", // Số lượng sản phẩm
+      },
+    });
+
     const getDetailTour = async () => {
       try {
         const response = await axios.get(
@@ -716,6 +731,8 @@ export default {
           }
         );
         valueTour.value = response.data.data;
+        // console.log(response.data.data);
+        shop.value = response.data.data.user;
       } catch (error) {
         console.error("Failed to retrieve tours:", error.response.data.error);
         errorValue.value = error.response.data.error;
@@ -749,8 +766,9 @@ export default {
       valueTour,
       bookTour,
       errorValue,
-      // valueCurrentUser,
+      shop,
       formatPrice,
+      // seller,
       handleDisplayMap,
       displayMap,
     };
@@ -811,11 +829,13 @@ export default {
       this.rating = i;
     },
 
+    //Handle open verify modal
     showModal(id) {
-      this.isModalVisible = true; // Show the modal
+      this.isModalVisible = true;
       this.fetchReviewById(id);
     },
 
+    //Handle close verify modal
     closeModal() {
       this.isModalVisible = false;
       this.rating = 0;
@@ -823,14 +843,17 @@ export default {
       this.imagePreviews = [];
     },
 
+    //Handle close verify modal
     closeModalVerify() {
       this.isModalVisibleVerify = false;
     },
 
+    /**Handle get image */
     handleGetImg(url) {
       return `http://127.0.0.1:8000/images/${url}`;
     },
 
+    //Handle submit review
     async submitReviews() {
       try {
         if (this.comment.length === 0) {
@@ -885,6 +908,7 @@ export default {
       }
     },
 
+    //Handle fetch review
     async fetchReview(per_page) {
       try {
         this.selected = per_page;
@@ -911,6 +935,7 @@ export default {
       }
     },
 
+    //Handle fetch user current
     fetchUser(user) {
       let userProxy = new Proxy(user, {
         get: function (target, prop) {
@@ -920,6 +945,7 @@ export default {
       return userProxy.id;
     },
 
+    //Handle fetch user data
     async fetchUserData() {
       try {
         const jwt = Cookies.get("tokenLogin");
@@ -950,6 +976,7 @@ export default {
       }
     },
 
+    //Format time
     formatDateTime(time) {
       return format(new Date(time), "yyyy-MM-dd HH:mm");
     },
@@ -986,6 +1013,7 @@ export default {
       }
     },
 
+    //Update review
     async handleSubmitUpdate() {
       try {
         const formData = new FormData();
@@ -1030,6 +1058,7 @@ export default {
       }
     },
 
+    //Upload img
     handleFileUpload(event) {
       const files = event.target.files;
       if (files && files.length > 5) {
@@ -1045,6 +1074,7 @@ export default {
       }
     },
 
+    //Open file
     openFileDialog() {
       // Tìm input và kích hoạt sự kiện click
       const fileInput = document.querySelector('input[type="file"]');
@@ -1053,16 +1083,19 @@ export default {
       }
     },
 
+    //Remove file image
     removeImage(index) {
       this.selectedFiles.splice(index, 1);
       this.imagePreviews.splice(index, 1);
     },
 
+    //Delete review
     deleteReview(review_id) {
       this.reviewToDelete = review_id;
       this.isModalVisibleVerify = true;
     },
 
+    //Verify confirm delete review
     confirmDelete() {
       if (this.reviewToDelete) {
         axios
@@ -1082,12 +1115,14 @@ export default {
       }
     },
 
+    //Notify
     notifySuccess(message) {
       toast.success(`${message} thành công !`, {
         autoClose: 1500,
       }); // ToastOptions
     },
 
+    //Notify
     notifyError(message) {
       toast.error(`${message} thất bại !`, {
         autoClose: 1500,

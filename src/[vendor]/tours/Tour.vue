@@ -199,6 +199,8 @@ import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import Cookies from "js-cookie";
+
 export default {
   name: "TourList",
   data() {
@@ -206,6 +208,7 @@ export default {
       tours: [],
       meta: {},
       links: {},
+      user_id: 0,
       sortBy: "latest", // Giá trị mặc định
       tourToDelete: null,
       isModalVisible: false,
@@ -214,9 +217,10 @@ export default {
   },
   methods: {
     async fetchTours(page = 1) {
+      console.log(this.user_id);
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/tours/list?page=${page}&per_page=3&sort=${this.sortBy}`
+          `http://127.0.0.1:8000/api/tours/list?page=${page}&per_page=3&sort=${this.sortBy}&user_id=${this.user_id}`
         );
         if (response.data.tours.length === 0) {
           console.log("Không có tour nào để hiển thị.");
@@ -226,7 +230,7 @@ export default {
         this.meta = response.data.meta;
         this.links = response.data.links;
       } catch (error) {
-        console.error("Failed to fetch tour data:", error);
+        console.error("Failed to fetch tour data:", error.response);
       }
     },
 
@@ -301,10 +305,10 @@ export default {
       }
     },
 
-    async countTour() {
+    async countTour(id) {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/tours/total/count`
+          `http://127.0.0.1:8000/api/tours/total/count?user_id=${id}`
         );
         console.log(response);
         this.count = response.data.count;
@@ -316,12 +320,43 @@ export default {
     detailTour(id) {
       this.$router.push({ name: "Detail", params: { id } });
     },
+    //Get user data
+    async fetchUserData() {
+      try {
+        const jwt = Cookies.get("tokenLogin");
+        if (!jwt) {
+          this.$router.push({ name: "/" });
+          return;
+        }
+        const response = await fetch(
+          `http://localhost:8000/api/inforCurrentUser`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${jwt}`, // Nếu cần sử dụng token để xác thực
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        const user = data.data;
+        this.user_id = user.id;
+        this.fetchTours();
+        this.countTour(user.id);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        // this.$router.push({ name: "login" });
+        // return null;
+      }
+    },
   },
 
   mounted() {
     //FetchData Tour
-    this.fetchTours();
-    this.countTour();
+    this.fetchUserData();
     const message = this.$route.query.message;
     //Send Notification
     switch (message) {

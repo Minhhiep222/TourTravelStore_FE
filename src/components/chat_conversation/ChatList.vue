@@ -54,7 +54,11 @@
           v-for="conversation in conversations"
           v-bind:key="conversation.id"
           @click="
-            fetchMessages(conversation.id), getUser(conversation.other_user)
+            cleanup(),
+              fetchMessages(conversation.id),
+              getUser(conversation.other_user);
+            currentConversationId = conversation.id;
+            setCurentConversation(conversation);
           "
           class="p-4 flex items-center cursor-pointer transition-all duration-200 hover:bg-blue-50 border-l-4 border-transparent hover:border-blue-600"
         >
@@ -84,10 +88,7 @@
     </div>
 
     <!-- Chat Area -->
-    <div
-      v-if="messages.length > 0"
-      class="bg-white w-3/4 flex flex-col shadow-sm"
-    >
+    <div v-if="user_other" class="bg-white w-3/4 flex flex-col shadow-sm">
       <!-- Chat Header -->
       <div
         class="p-4 flex items-center justify-between border-b border-gray-200 bg-white"
@@ -186,13 +187,14 @@
             class="flex-1 flex items-center bg-gray-50 rounded-full border border-gray-200 focus-within:border-blue-400 transition-colors duration-200"
           >
             <input
+              @keydown.enter="sendMessage(currentConversationId)"
               v-model="newMessage"
               class="w-full p-2 bg-transparent outline-none px-4"
               placeholder="Type a message..."
               type="text"
             />
             <button
-              @click.prevent="sendMessage(currentConversationId)"
+              @click="sendMessage(currentConversationId)"
               class="p-2 mr-2 text-blue-600 hover:text-blue-700 transition-colors duration-200"
             >
               <i class="fa-solid fa-paper-plane text-xl"></i>
@@ -221,16 +223,13 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick, watch } from "vue";
-// import { useStore } from "vuex";
 import axios from "axios";
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 import Cookies from "js-cookie";
-// import user from "@/stores/user";
 
 window.Pusher = Pusher;
 
-// const store = useStore();
 const messages = ref([]);
 const newMessage = ref("");
 const messageContainer = ref(null);
@@ -239,6 +238,8 @@ const user_other = ref(null);
 const currentUserId = ref(null);
 const currentConversationId = ref(null);
 const conversations = ref([]);
+// const router = useRouter();
+// const route = useRoute();
 // Lấy thông tin người dùng từ Vuex
 // const userStore = store.state;
 
@@ -268,8 +269,6 @@ const fetchMessages = async (conversation_id) => {
       }
     );
     messages.value = response.data;
-    currentConversationId.value = messages.value[0].conversation_id;
-    console.log("cu" + currentConversationId.value);
     await scrollToBottom();
   } catch (error) {
     console.error("Error fetching messages:", error);
@@ -283,7 +282,7 @@ const sendMessage = async (conversation_id) => {
   if (!newMessage.value.trim()) return;
   const token = Cookies.get("tokenLogin");
   try {
-    const response = await axios.post(
+    await axios.post(
       `http://127.0.0.1:8000/api/conversations/${conversation_id}/messages`,
       {
         message: newMessage.value,
@@ -400,7 +399,7 @@ const initializeEcho = (conversation_id) => {
 
   // Kiểm tra currentConversationId có tồn tại không
   if (!currentConversationId.value) {
-    console.error("currentConversationId is not defined");
+    console.log("currentConversationId is not defined");
     return;
   }
 
@@ -428,6 +427,26 @@ const cleanup = () => {
   }
 };
 
+//setConversation
+const setCurentConversation = (conversation) => {
+  localStorage.setItem("conversation", JSON.stringify(conversation));
+};
+
+//setConversation
+const getCurentConversation = () => {
+  if (localStorage.getItem("conversation")) {
+    const conversation = JSON.parse(localStorage.getItem("conversation"));
+    currentConversationId.value = conversation.id;
+    user_other.value = conversation.user_two;
+    if (!conversation.user_two) {
+      user_other.value = conversation.other_user;
+    } else {
+      user_other.value = conversation.user_two;
+    }
+    fetchMessages(conversation.id);
+  }
+};
+
 //Kiểm tra trạng thái của conversation id
 watch(currentConversationId, (newId) => {
   initializeEcho(newId);
@@ -437,11 +456,13 @@ watch(currentConversationId, (newId) => {
 onMounted(async () => {
   await fetchConversations();
   await fetchUserData();
+  getCurentConversation();
 });
 
 //Clean
 onUnmounted(() => {
   cleanup();
+  localStorage.removeItem("conversation");
 });
 </script>
 
