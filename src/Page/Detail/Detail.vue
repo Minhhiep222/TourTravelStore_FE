@@ -686,6 +686,7 @@ import "vue3-toastify/dist/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 // import { comment } from "postcss";
+import Swal from "sweetalert2";
 
 export default {
   name: "DetailComponent",
@@ -706,7 +707,6 @@ export default {
     // }
     const getDetailTour = async () => {
       try {
-        console.log("Tour ID:", tourID);
         const response = await axios.get(
           "http://localhost:8000/api/TourDetail",
           {
@@ -715,7 +715,6 @@ export default {
             },
           }
         );
-        console.log("Response data:", response.data.data);
         valueTour.value = response.data.data;
       } catch (error) {
         console.error("Failed to retrieve tours:", error.response.data.error);
@@ -838,16 +837,11 @@ export default {
           this.errorComment = "Vui lòng nhập nội dung comment";
           return;
         }
-        // if (this.comment.length > 200) {
-        //   this.errorComment = "Nội dung comment chỉ chứa 200 ký tự";
-        //   return;
-        // }
         if (this.rating == 0) {
           this.errorRating = "Vui lòng nhập chọn đánh giá";
           return;
         }
         this.errorRating = "";
-        this.user_id = this.fetchUser(this.valueCurrentUser);
         const formData = new FormData();
         formData.append("tour_id", this.tour_id);
         formData.append("user_id", this.user_id);
@@ -859,9 +853,8 @@ export default {
 
         this.selectedFiles.forEach((file) => {
           formData.append("images[]", file);
+          console.log(file);
         });
-
-        console.log(this.selectedFiles);
 
         const response = await axios.post(
           "http://127.0.0.1:8000/api/reviews",
@@ -876,7 +869,12 @@ export default {
         if (response.status !== 200) {
           console.log("something went wrong", response);
         }
-        // console.log(response);
+        Swal.fire({
+          title: "Thành công!",
+          text: "Đã bình luận thành công",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
         this.comment = "";
         this.rating = 0;
         this.selectedFiles = [];
@@ -945,7 +943,6 @@ export default {
         const data = await response.json();
         const user = data.data;
         this.user_id = user.id;
-        console.log(this.user_id);
       } catch (error) {
         console.error("Error fetching user data:", error);
         // this.$router.push({ name: "login" });
@@ -957,6 +954,7 @@ export default {
       return format(new Date(time), "yyyy-MM-dd HH:mm");
     },
 
+    //Fetch Review By Id
     async fetchReviewById(id) {
       try {
         const response = await axios.get(
@@ -990,7 +988,6 @@ export default {
 
     async handleSubmitUpdate() {
       try {
-        this.user_id = this.fetchUser(this.valueCurrentUser);
         const formData = new FormData();
         formData.append("tour_id", this.tour_id);
         formData.append("user_id", this.user_id);
@@ -1014,13 +1011,19 @@ export default {
 
         if (response.status !== 200) {
           console.log("something went wrong", response.error);
+          return;
         }
-
         this.comment = "";
         this.rating = 0;
         this.selectedFiles = [];
         this.imagePreviews = [];
         this.isModalVisible = false;
+        Swal.fire({
+          title: "Thành công!",
+          text: "Đã sửa bình luận thành công",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
         this.fetchReview(10);
       } catch (error) {
         console.log("Something went wrong", error.response);

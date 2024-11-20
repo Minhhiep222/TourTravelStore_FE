@@ -399,7 +399,7 @@ const initializeEcho = (conversation_id) => {
   });
 
   // Kiểm tra currentConversationId có tồn tại không
-  if (!currentConversationId) {
+  if (!currentConversationId.value) {
     console.error("currentConversationId is not defined");
     return;
   }

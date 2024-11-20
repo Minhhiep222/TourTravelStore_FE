@@ -26,7 +26,6 @@ import BookingTour from "./Page/Booking/BookingTour/BookingTour.vue";
 import Search from "./[user]/Search.vue";
 import ChatBot from "./components/ChatBot/ChatBot.vue";
 import Favorite from "./Page/Favorite/Favorite.vue";
-import Chat from "./components/Chat.vue";
 import ChatRealTime from "./components/chat_conversation/ChatList.vue";
 import Socket from "./components/socket/socket.vue";
 const routes = [
@@ -49,11 +48,6 @@ const routes = [
         path: "/search",
         name: "Search",
         component: Search,
-      },
-      {
-        path: "/:user/chat",
-        name: "chat",
-        component: Chat,
       },
       {
         path: "/:user/chat_cv",

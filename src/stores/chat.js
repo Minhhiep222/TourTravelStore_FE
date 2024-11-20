@@ -32,7 +32,7 @@ export default {
     },
   },
   actions: {
-    async fetchConversations() {
+    async fetchConversations({ commit }) {
       try {
         const jwt = Cookies.get("tokenLogin");
         if (!jwt) {

@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 export default {
   name: "PaymentSuccess",
 
@@ -79,8 +80,12 @@ export default {
         );
 
         if (response.ok) {
-          const data = await response.json();
-          console.log(data);
+          Swal.fire({
+            title: "Thành công!",
+            text: "Đặt hàng thành công",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
         }
       } catch (error) {
         console.log(error);

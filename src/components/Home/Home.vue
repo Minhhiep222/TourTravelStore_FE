@@ -171,52 +171,55 @@
     </div>
 
     <!-- tour Du lich moi nhat -->
-   
+
     <div class="p-8">
-  <h1 class="text-3xl font-bold mb-6">Tour du lịch mới nhất</h1>
-  <div v-if="displayErrors" class="alert alert-danger mt-3">
-    <p>Error: {{ displayErrors }}</p>
-  </div>
-  <div class="grid grid-cols-5 gap-1">
-    <div
-      v-for="tour in newesTour"
-      :key="tour.id"
-      
-      class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300"
-    >
-      <img
-      @click="detailTour(tour.id)"
-        :src="
-          tour.images.length > 0
-            ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
-            : ''
-        "
-        :alt="
-          tour.images.length > 0
-            ? tour.images[0].alt_text
-            : 'Default alt text'
-        "
-        class="w-full h-68 object-cover"
-        height="200"
-        width="300"
-      />
-      <div class="p-2 flex flex-col justify-between">
-        <p class="text-gray-700">
-          {{ tour.name }}
-        </p>
-        <div class="flex items-center mt-2">
-          <span @click="removeItem(tour.id)" v-if="tour.is_favorite == true"><font-awesome-icon :class="$style.heartSolid"  icon="heart" /></span>
-          <span @click="handleAddTourToFavorite(tour.id)" v-else><font-awesome-icon icon="heart"/></span>
-        </div>
-        <div class="w-full mt-8">
-          <p class="text-orange-500 font-bold">
-            <span>{{ formatPrice(tour.price) }} VND</span>
-          </p>
+      <h1 class="text-3xl font-bold mb-6">Tour du lịch mới nhất</h1>
+      <div v-if="displayErrors" class="alert alert-danger mt-3">
+        <p>Error: {{ displayErrors }}</p>
+      </div>
+      <div class="grid grid-cols-5 gap-1">
+        <div
+          v-for="tour in newesTour"
+          :key="tour.id"
+          class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300"
+        >
+          <img
+            @click="detailTour(tour.id)"
+            :src="
+              tour.images.length > 0
+                ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
+                : ''
+            "
+            :alt="
+              tour.images.length > 0
+                ? tour.images[0].alt_text
+                : 'Default alt text'
+            "
+            class="w-full h-68 object-cover"
+            height="200"
+            width="300"
+          />
+          <div class="p-2 flex flex-col justify-between">
+            <p class="text-gray-700">
+              {{ tour.name }}
+            </p>
+            <div class="flex items-center mt-2">
+              <span @click="removeItem(tour.id)" v-if="tour.is_favorite == true"
+                ><font-awesome-icon :class="$style.heartSolid" icon="heart"
+              /></span>
+              <span @click="handleAddTourToFavorite(tour.id)" v-else
+                ><font-awesome-icon icon="heart"
+              /></span>
+            </div>
+            <div class="w-full mt-8">
+              <p class="text-orange-500 font-bold">
+                <span>{{ formatPrice(tour.price) }} VND</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
     <!-- ----- -->
 
     <!-- Vé Vui Chơi & Tour Section -->
@@ -573,23 +576,26 @@ export default {
       if (valueCurrentUser.value && valueCurrentUser.value.id) {
         userID = valueCurrentUser.value.id;
       }
-  try {
-    const response = await axios.get("http://localhost:8000/api/displayNewstTour", {
-      params: {
-        user_id: userID,
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/displayNewstTour",
+          {
+            params: {
+              user_id: userID,
+            },
+          }
+        );
+
+        newesTour.value = response.data.data;
+      } catch (error) {
+        console.error(
+          "Failed to retrieve tours:",
+          error.response?.data?.message || error.message
+        );
+        displayErrors.value = error.response?.data?.message || error.message;
       }
-    });
+    };
 
-    console.log(response);
-    newesTour.value = response.data.data;
-    console.log("newesTour", response.data);
-  } catch (error) {
-    console.error("Failed to retrieve tours:", error.response?.data?.message || error.message);
-    displayErrors.value = error.response?.data?.message || error.message;
-  }
-};
-
-  
     const handleAddTourToFavorite = async (tour_id) => {
       let userID = null;
       if (valueCurrentUser.value && valueCurrentUser.value.id) {
@@ -614,53 +620,58 @@ export default {
             icon: "success",
             confirmButtonText: "OK",
           });
-          getNewesTour(); 
+          getNewesTour();
         }
       } catch (error) {
         if (error.response) {
           console.error("Failed to add tour to favorites:", error.response);
           Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text:  error.response.data.error,
-          footer: '<a href="#">Why do I have this issue?</a>'
-        });
-      
-      }
+            icon: "error",
+            title: "Oops...",
+            text: error.response.data.error,
+            footer: '<a href="#">Why do I have this issue?</a>',
+          });
+        }
       }
     };
     const removeItem = async (index) => {
-        let userID = null;
+      let userID = null;
       if (valueCurrentUser.value && valueCurrentUser.value.id) {
         userID = valueCurrentUser.value.id;
       }
       try {
-        const response = await axios.get('http://localhost:8000/api/deleteFavorite', {
-          params: {
-            tour_id: index,
-            user_id: userID,
+        const response = await axios.get(
+          "http://localhost:8000/api/deleteFavorite",
+          {
+            params: {
+              tour_id: index,
+              user_id: userID,
+            },
           }
-        });
-        console.log('data',response.data)
-        if(response.data.message == 'Delete tour favorite successful') {
+        );
+        console.log("data", response.data);
+        if (response.data.message == "Delete tour favorite successful") {
           Swal.fire({
-          title: 'Đã xóa!',
-          text: 'Đã xóa khỏi mục yêu thích',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-        getNewesTour();
-        } 
+            title: "Đã xóa!",
+            text: "Đã xóa khỏi mục yêu thích",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+          getNewesTour();
+        }
       } catch (error) {
-        console.error("Failed to retrieve tours:", error.response ? error.response.data.message : error.message);
+        console.error(
+          "Failed to retrieve tours:",
+          error.response ? error.response.data.message : error.message
+        );
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text:  error.response ? error.response.data.error : error.error,
-          footer: '<a href="#">Why do I have this issue?</a>'
+          text: error.response ? error.response.data.error : error.error,
+          footer: '<a href="#">Why do I have this issue?</a>',
         });
       }
-    }
+    };
 
     const detailTour = (id) => {
       router.push({ name: "Detail", params: { id } });
@@ -678,7 +689,7 @@ export default {
     });
     watch(() => {
       getNewesTour();
-    },[valueCurrentUser])
+    }, [valueCurrentUser]);
 
     return {
       newesTour,
@@ -688,7 +699,6 @@ export default {
       detailTour,
       formatPrice,
       removeItem,
-
     };
   },
   data() {
@@ -730,7 +740,6 @@ export default {
         },
       });
     },
-    
 
     formatVND(amount) {
       return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
