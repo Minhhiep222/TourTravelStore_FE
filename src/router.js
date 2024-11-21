@@ -27,11 +27,11 @@ import BookingTour from "./Page/Booking/BookingTour/BookingTour.vue";
 import Search from "./[user]/Search.vue";
 import ChatBot from "./components/ChatBot/ChatBot.vue";
 import Favorite from "./Page/Favorite/Favorite.vue";
-import CustomerSupport from './components/CustomerSupport/CustomerSupport.vue';
-import ContactUs from './components/CustomerSupport/ContactUs.vue';
-import Statistical from './components/Statistical/Statistical.vue';
 import ChatRealTime from "./components/chat_conversation/ChatList.vue";
 import Socket from "./components/socket/socket.vue";
+import CustomerSupport from "./components/CustomerSupport/CustomerSupport.vue";
+import ContactUs from "./components/CustomerSupport/ContactUs.vue";
+import Statistical from "./components/Statistical/Statistical.vue";
 const routes = [
   {
     path: "/register",
@@ -113,7 +113,7 @@ const routes = [
         name: "UserAdmin",
         component: UserAdmin,
       },
-     
+
       {
         path: "/chatbot",
         name: "ChatBot",
@@ -128,8 +128,6 @@ const routes = [
         path: "/UserDetails/:id",
         name: "UserDetails",
         component: UserDetails,
-      },
-
       },
     ],
   },
@@ -148,7 +146,7 @@ const routes = [
         name: "Storage",
         component: Storage,
       },
-      
+
       {
         path: "/HomePage",
         name: "HomePage",
