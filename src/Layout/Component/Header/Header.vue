@@ -38,29 +38,58 @@
               ><span>Khuyến mãi</span></a
             >
             <a class="text-gray-800 flex items-center space-x-1" href="#"
-              ><span @click="goToCustomerSupport" >Hỗ trợ <i class="fas fa-chevron-down"></i></span
+              ><span @click="goToCustomerSupport"
+                >Hỗ trợ <i class="fas fa-chevron-down"></i></span
             ></a>
-            <a class="text-gray-800" >Hợp tác với chúng tôi</a>
-            <span  @click="goToFavorite" class="text-gray-800 d-flex align-items-center justify-content-around" style="cursor: pointer">
-                Đã Lưu
-                <font-awesome-icon :class="$style.solidSave"  class="ml-0.5" icon="bookmark" />
-              </span>
+            <a class="text-gray-800">Hợp tác với chúng tôi</a>
+            <span
+              @click="goToFavorite"
+              class="text-gray-800 d-flex align-items-center justify-content-around"
+              style="cursor: pointer"
+            >
+              Đã Lưu
+              <font-awesome-icon
+                :class="$style.solidSave"
+                class="ml-0.5"
+                icon="bookmark"
+              />
+            </span>
             <a class="text-gray-800" href="#">Đặt chỗ của tôi</a>
-          
+
             <div class="flex items-center space-x-1">
+              <button
+                v-if="valueCurrentUser"
+                @click="handleChat"
+                class="text-blue-500 mr-1"
+              >
+                <div class="relative inline-flex items-center">
+                  <i
+                    class="fa fa-comment-dots text-2xl text-blue-500 hover:text-blue-700 cursor-pointer transition-colors"
+                  ></i>
+                  <span
+                    class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+                  >
+                    3
+                  </span>
+                </div>
+              </button>
+
               <img
                 alt="User avatar"
                 class="w-5 h-5 rounded-full"
-            @click="goToUserDetails(valueCurrentUser.id)" 
+                @click="goToUserDetails(valueCurrentUser.id)"
                 src="https://storage.googleapis.com/a1aa/image/WZNnADVMnkqlKVQ5vH3H483t1j2I9eIbX5axZ5u0ejqFCrtTA.jpg"
                 v-if="valueCurrentUser"
               />
-              <span v-if="valueCurrentUser" class="text-blue-500"
-             @click="goToUserDetails(valueCurrentUser.id)" 
+              <span
+                v-if="valueCurrentUser"
+                class="text-blue-500"
+                @click="goToUserDetails(valueCurrentUser.id)"
                 >{{ valueCurrentUser.name }} |
               </span>
               <!-- <span v-if="valueCurrentUser" class="text-yellow-500">| {{ valueCurrentUser.points }} Điểm -->
               <!-- <i class="fas fa-chevron-down"></i></span> -->
+
               <button
                 v-if="valueCurrentUser"
                 @click="setLogout"
@@ -150,11 +179,15 @@ export default {
     const setRegister = () => {
       handleDisplayRegister(true);
     };
-    const goToFavorite = async() => {
-      router.push({ name: "Favorite"});
+    const goToFavorite = async () => {
+      router.push({ name: "Favorite" });
     };
-    const goToCustomerSupport = async() => {
-      router.push({ name: "ContactUs"});
+    const goToCustomerSupport = async () => {
+      router.push({ name: "ContactUs" });
+    };
+
+    const handleChat = () => {
+      router.push({ path: "/minh-hiep/chat" });
     };
 
     const setLogout = () => {
@@ -164,12 +197,10 @@ export default {
       setCurrentUser(null);
     };
     const goToUserDetails = (userId) => {
-  if (userId) {
-    router.push({ name: 'UserDetails', params: { id: userId } });
-  }
-};
-
-
+      if (userId) {
+        router.push({ name: "UserDetails", params: { id: userId } });
+      }
+    };
 
     return {
       valueCurrentUser,
@@ -180,6 +211,7 @@ export default {
       goToFavorite,
       goToUserDetails,
       goToCustomerSupport,
+      handleChat,
     };
   },
 };
