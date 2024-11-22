@@ -9,22 +9,44 @@
                 <div class="p-4 pl-8">
                     <ul>
                         <li class="mb-4">
-                            <a href="#" class="flex items-center p-2 bg-blue-500 text-white rounded-lg">
-                                <i class="fas fa-home"></i>
-                                <span class="ml-4">Trang người bán</span>
-                            </a>
+                            <router-link 
+                                to="/admin/tours"
+                                class="flex items-center p-2"
+                                :class="{'bg-blue-500 text-white': isActive('/admin/tours')}"
+                            >
+                                <i class="fas fa-map-signs"></i>
+                                <span class="ml-4">Quản lý Tour</span>
+                            </router-link>
                         </li>
                         <li class="mb-4">
-                            <a href="#" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-                                <i class="fas fa-bell"></i>
-                                <span class="ml-4">Notifications</span>
-                            </a>
+                            <router-link 
+                                to="/QLOrder"
+                                class="flex items-center p-2"
+                                :class="{'bg-blue-500 text-white': isActive('/QLOrder')}"
+                            >
+                                <i class="fas fa-box"></i>
+                                <span class="ml-4">Quản lý đơn hàng</span>
+                            </router-link>
                         </li>
                         <li class="mb-4">
-                            <a href="#" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <router-link 
+                                to="/UserAdmin"
+                                class="flex items-center p-2"
+                                :class="{'bg-blue-500 text-white': isActive('/UserAdmin')}"
+                            >
+                                <i class="fas fa-users"></i>
+                                <span class="ml-4">Quản lý User</span>
+                            </router-link>
+                        </li>
+                        <li class="mb-4">
+                            <router-link 
+                                to="/Statistical"
+                                class="flex items-center p-2"
+                                :class="{'bg-blue-500 text-white': isActive('/Statistical')}"
+                            >
                                 <i class="fas fa-chart-pie"></i>
                                 <span class="ml-4">Thống kê</span>
-                            </a>
+                            </router-link>
                         </li>
                         <li class="mb-4">
                             <a href="#" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
@@ -56,11 +78,19 @@
         </div>
     </div>
 </template>
+
 <script>
 export default {
     name: 'SidebarComponent',
+    methods: {
+        // Kiểm tra xem đường dẫn hiện tại có khớp với đường dẫn của mục sidebar không
+        isActive(route) {
+            return this.$route.path === route;
+        }
+    }
 }
 </script>
+
 <style lang="scss" module>
 @import './Sidebar.module.scss';
 </style>
