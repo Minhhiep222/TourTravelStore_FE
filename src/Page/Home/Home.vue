@@ -48,13 +48,24 @@ import { onMounted, ref } from "vue";
 import { inject } from "vue";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
+
 export default {
   name: "HomeComponent",
   setup() {
     const router = useRouter();
     const valueCurrentUser = inject("valueCurrentUser");
     const newesTour = ref([]);
+    const notification = ref(null);
     const displayErrors = ref(null);
+
+
+    const listenForNewTours = () => {
+      window.Echo.channel('tour-notifications')
+        .listen('TourCreated', (event) => {
+          console.log('New tour created:', event.tour);
+          notification.value.unshift(event.tour);
+        });
+    };
 
     const getNewesTour = async () => {
       try {
@@ -107,9 +118,11 @@ export default {
 
     const logValue = () => {
       console.log("valueCurrentUser", valueCurrentUser);
+      console.log("notification",notification);
     };
     onMounted(() => {
       getNewesTour();
+      listenForNewTours
     });
 
     return {

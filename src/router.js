@@ -26,6 +26,7 @@ import BookingTour from "./Page/Booking/BookingTour/BookingTour.vue";
 import Search from "./[user]/Search.vue";
 import ChatBot from "./components/ChatBot/ChatBot.vue";
 import Favorite from "./Page/Favorite/Favorite.vue";
+import Notification from "./components/Notification.vue";
 const routes = [
   {
     path: "/register",
@@ -106,6 +107,11 @@ const routes = [
         path: "/favorite",
         name: "Favorite",
         component: Favorite,
+      },
+      {
+        path: "/notification",
+        name: "Notification",
+        component: Notification,
       }
     ],
   },

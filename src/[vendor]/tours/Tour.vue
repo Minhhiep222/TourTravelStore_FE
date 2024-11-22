@@ -199,6 +199,7 @@ import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
 export default {
   name: "TourList",
   data() {
@@ -338,7 +339,6 @@ export default {
         this.notifyError("Thêm");
         break;
     }
-
     //Replace url when success action
     setTimeout(() => {
       this.$router.replace({
@@ -346,6 +346,7 @@ export default {
       });
     }, 3000);
   },
+
 };
 </script>
 

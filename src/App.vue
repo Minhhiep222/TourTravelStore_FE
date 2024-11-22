@@ -16,7 +16,11 @@ import Login from './components/Login/Login.vue';
 import Register from './components/Register/Register.vue';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+
+
+
 // import Map from './components/Map/Map.vue';
+
 
 export default {
   components: {
@@ -45,10 +49,6 @@ export default {
       displayLogin.value = item;
     };
 
-    // const getLocation = () => {
-    //   navigator.geolocation
-    // }
-
     const handleDisplayRegister = (item) => {
       displayRegister.value = item;
     };
@@ -72,9 +72,16 @@ export default {
       }
     };
 
+  
     onMounted(() => {
       handleDataCurrentUser();
+      // window.Echo.channel('tour-channel').listen('Notify',(e) => {
+      //     console.log('logSocket',e);
+      // });
     });
+
+   
+   
 
     provide('dataValue', dataValue);
     provide('valueCurrentUser', valueCurrentUser);
@@ -91,6 +98,7 @@ export default {
       displayRegister,
       handleDisplayLogin,
       handleDisplayRegister,
+      // listenForTourCreated,
     };
   }
 };
