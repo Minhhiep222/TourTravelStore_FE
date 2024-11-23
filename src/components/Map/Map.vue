@@ -284,7 +284,7 @@ const updateZoomLevel = () => {
     } else if (distance < 1000) {
       zoomLevel = 4;  
     } else {
-      zoomLevel = 1;   
+      zoomLevel = 1.5;   
     }
      zoom.value = zoomLevel;
   
