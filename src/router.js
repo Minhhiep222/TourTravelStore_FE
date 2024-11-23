@@ -31,6 +31,7 @@ import ContactUs from "./components/CustomerSupport/ContactUs.vue";
 import Statistical from "./components/Statistical/Statistical.vue";
 import QLOrder from "./components/Order/Order.vue";
 import DetailsOrder from "./components/Order/DetailsOrder.vue";
+import Notification from "./components/Notification.vue";
 const routes = [
   {
     path: "/register",
@@ -122,6 +123,11 @@ const routes = [
         path: "/favorite",
         name: "Favorite",
         component: Favorite,
+      },
+      {
+        path: "/notification",
+        name: "Notification",
+        component: Notification,
       },
       {
         path: "/UserDetails/:id",

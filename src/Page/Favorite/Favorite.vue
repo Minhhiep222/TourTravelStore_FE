@@ -12,11 +12,11 @@
         
      
         <div v-for="(item, index) in favoriteTour" :key="index" class="flex items-center border-b py-4">
-          <img v-if="item.images && item.images.length > 0" :src="item.images[0].image_url" alt="Beach Paradise" />
+          <img  class="imgFavorite" :src="`http://127.0.0.1:8000/images/${item.images[0]?.image_url}`" alt="Beach Paradise" />
           <div class="flex-1">
             <div class="font-semibold">
               {{ item.name }}
-            </div>
+            </div>  
             <div class="text-sm text-gray-500">{{ item.description }}</div>
           </div>
 
@@ -179,5 +179,9 @@ export default {
   left: 0;
   right: 0;
   z-index: 10;
+}
+.imgFavorite {
+    width: 100px;
+    height: 100px;
 }
 </style>
