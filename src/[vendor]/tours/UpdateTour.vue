@@ -313,7 +313,6 @@ export default {
       end_date,
       status,
       user_id,
-      status,
     };
   },
   data() {
