@@ -361,7 +361,7 @@ export default {
       selectPayment: "",
       urlCheckout: "http://localhost:3000/minh-hiep/payment/success",
       price: 10000,
-      user: null,
+      user: 0,
       tour_id: null,
       booking: null,
     };
@@ -508,7 +508,6 @@ export default {
         console.log(this.user.id);
       } catch (error) {
         console.error("Error fetching user data:", error);
-        this.$router.push({ name: "login" });
         return null;
       }
     },

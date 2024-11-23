@@ -6,34 +6,39 @@ import { BootstrapVue3 } from "bootstrap-vue-3";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue-3/dist/bootstrap-vue-3.css";
 import "./assets/tailwind.css";
-import { store } from './store';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHeart, faBookmark,faClock,faRoad,faBell,faBellSlash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import Echo from 'laravel-echo'
+import { store } from "./store";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faHeart,
+  faBookmark,
+  faClock,
+  faRoad,
+  faBell,
+  faBellSlash,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import Echo from "laravel-echo";
 import axios from "axios";
-axios.defaults.baseURL = "/api"; 
+axios.defaults.baseURL = "/api";
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
-window.Pusher = require('pusher-js');
+window.Pusher = require("pusher-js");
 
 window.Echo = new Echo({
-  broadcaster: 'pusher',
-  key: process.env.VUE_APP_WEBSOCKETS_KEY,
+  broadcaster: "pusher",
+  key: "3e4fadf6091f7e34865d",
   wsHost: process.env.VUE_APP_WEBSOCKETS_SERVER,
   wsPort: 6001,
   forceTLS: false,
   disableStats: true,
-  cluster: 'local' 
+  cluster: "ap1",
 });
 
-library.add(faHeart, faBookmark,faClock,faRoad,faBell,faBellSlash)
+library.add(faHeart, faBookmark, faClock, faRoad, faBell, faBellSlash);
 
 const app = createApp(App);
 
-
-  
 app.use(BootstrapVue3);
 app.use(router);
 app.use(store);
