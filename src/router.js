@@ -29,6 +29,8 @@ import Socket from "./components/socket/socket.vue";
 import CustomerSupport from "./components/CustomerSupport/CustomerSupport.vue";
 import ContactUs from "./components/CustomerSupport/ContactUs.vue";
 import Statistical from "./components/Statistical/Statistical.vue";
+import QLOrder from "./components/Order/Order.vue";
+import DetailsOrder from "./components/Order/DetailsOrder.vue";
 import Notification from "./components/Notification.vue";
 const routes = [
   {
@@ -132,6 +134,16 @@ const routes = [
         name: "UserDetails",
         component: UserDetails,
       },
+      {
+        path: "/CustomerSupport",
+        name: "CustomerSupport",
+        component: CustomerSupport,
+      },
+      {
+        path: "/CustomerSupport/ContactUs",
+        name: "ContactUs",
+        component: ContactUs,
+      },
     ],
   },
   {
@@ -175,15 +187,21 @@ const routes = [
         name: "Statistical",
         component: Statistical,
       },
+     
       {
-        path: "/CustomerSupport",
-        name: "CustomerSupport",
-        component: CustomerSupport,
+        path: "/QLOrder",
+        name: "QLOrder",
+        component: QLOrder,
       },
       {
-        path: "/CustomerSupport/ContactUs",
-        name: "ContactUs",
-        component: ContactUs,
+        path: "/DetailsOrder/:id",
+        name: "DetailsOrder",
+        component: DetailsOrder,
+      },
+      {
+        path: "/UserAdmin",
+        name: "UserAdmin",
+        component: UserAdmin,
       },
     ],
   },
