@@ -42,19 +42,6 @@
                 >Hỗ trợ <i class="fas fa-chevron-down"></i></span
             ></a>
             <a class="text-gray-800" href="#">Hợp tác với chúng tôi</a>
-            <span
-              v-if="valueCurrentUser"
-              @click="goToFavorite"
-              class="text-gray-800 d-flex align-items-center justify-content-around"
-              style="cursor: pointer"
-            >
-              Đã Lưu
-              <font-awesome-icon
-                :class="$style.solidSave"
-                class="ml-0.5"
-                icon="bookmark"
-              />
-            </span>
 
             <div
               v-if="valueCurrentUser"
@@ -167,7 +154,6 @@
                 </div>
               </div>
             </div>
-            <a class="text-gray-800">Hợp tác với chúng tôi</a>
             <span
               @click="goToFavorite"
               class="text-gray-800 d-flex align-items-center justify-content-around"
@@ -474,7 +460,7 @@ export default {
       } else if (valueCurrentUser.value.notication == 1) {
         notifications.value.push(e);
         totalNotRead.value += 1;
-        console.log(e);
+        console.log("Đang làm gì z", e);
       }
     };
     const seenAllNotifiCation = async () => {
@@ -545,7 +531,6 @@ export default {
       checkNotifyUser,
       seeAll,
       goToChatBot,
-      goToFavorite,
       goToUserDetails,
       goToCustomerSupport,
       handleChat,
