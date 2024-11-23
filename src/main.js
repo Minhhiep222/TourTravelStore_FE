@@ -17,19 +17,19 @@ import {
   faBellSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import Echo from "laravel-echo";
+// import Echo from "laravel-echo";
 
-window.Pusher = require("pusher-js");
+// window.Pusher = require("pusher-js");
 
-window.Echo = new Echo({
-  broadcaster: "pusher",
-  key: "local",
-  wsHost: process.env.VUE_APP_WEBSOCKETS_SERVER,
-  wsPort: 6001,
-  forceTLS: false,
-  disableStats: true,
-  cluster: "local",
-});
+// window.Echo = new Echo({
+//   broadcaster: "pusher",
+//   key: "local",
+//   wsHost: process.env.VUE_APP_WEBSOCKETS_SERVER,
+//   wsPort: 6001,
+//   forceTLS: false,
+//   disableStats: true,
+//   cluster: "local",
+// });
 
 library.add(faHeart, faBookmark, faClock, faRoad, faBell, faBellSlash);
 

@@ -58,13 +58,12 @@ export default {
     const notification = ref(null);
     const displayErrors = ref(null);
 
-
     const listenForNewTours = () => {
-      window.Echo.channel('tour-notifications')
-        .listen('TourCreated', (event) => {
-          console.log('New tour created:', event.tour);
-          notification.value.unshift(event.tour);
-        });
+      // window.Echo.channel('tour-notifications')
+      //   .listen('TourCreated', (event) => {
+      //     console.log('New tour created:', event.tour);
+      //     notification.value.unshift(event.tour);
+      //   });
     };
 
     const getNewesTour = async () => {
@@ -118,11 +117,11 @@ export default {
 
     const logValue = () => {
       console.log("valueCurrentUser", valueCurrentUser);
-      console.log("notification",notification);
+      console.log("notification", notification);
     };
     onMounted(() => {
       getNewesTour();
-      listenForNewTours
+      listenForNewTours;
     });
 
     return {

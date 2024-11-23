@@ -10,9 +10,11 @@
           <ul>
             <li class="mb-4">
               <router-link
-                to="/admin/manager/tours"
+                to="/minh-hiep/tours"
                 class="flex items-center p-2"
-                :class="{ 'bg-blue-500 text-white': isActive('/admin/tours') }"
+                :class="{
+                  'bg-blue-500 text-white': isActive('/minh-hiep/tours'),
+                }"
               >
                 <i class="fas fa-map-signs"></i>
                 <span class="ml-4">Quản lý Tour</span>
@@ -20,7 +22,7 @@
             </li>
             <li class="mb-4">
               <router-link
-                to="/QLOrder"
+                to=""
                 class="flex items-center p-2"
                 :class="{ 'bg-blue-500 text-white': isActive('/QLOrder') }"
               >
@@ -30,7 +32,7 @@
             </li>
             <li class="mb-4">
               <router-link
-                to="/UserAdmin"
+                to=""
                 class="flex items-center p-2"
                 :class="{ 'bg-blue-500 text-white': isActive('/UserAdmin') }"
               >
@@ -40,7 +42,7 @@
             </li>
             <li class="mb-4">
               <router-link
-                to="/Statistical"
+                to=""
                 class="flex items-center p-2"
                 :class="{ 'bg-blue-500 text-white': isActive('/Statistical') }"
               >

@@ -15,10 +15,17 @@
             <span>|</span>
             <div
               class="cursor-pointer items-center hover:text-blue-500 text-lg"
-              v-if="valueCurrentUser"
+              v-if="user_current?.role === '3'"
+              @click="handleIntoPageAdmin"
+            >
+              Trang admin
+            </div>
+            <div
+              class="cursor-pointer items-center hover:text-blue-500 text-lg"
+              v-if="user_current?.role === '2'"
               @click="handleIntoPageVendor"
             >
-              Trang quản lý
+              Trang người bán
             </div>
           </div>
 
@@ -267,6 +274,7 @@ import { inject, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 document.title = "Trang chủ";
 export default {
@@ -275,6 +283,9 @@ export default {
   methods: {
     handleIntoPageVendor() {
       this.$router.push("/minh-hiep/tours");
+    },
+    handleIntoPageAdmin() {
+      this.$router.push("/admin/manager/tours");
     },
     homePage() {
       this.$router.push("/");
@@ -291,10 +302,44 @@ export default {
     const handleDisplayRegister = inject("handleDisplayRegister");
     const totalNotRead = ref([]);
     const statusNotication = ref();
+    const user_current = ref(null);
+
     const showCurrentUser = () => {
       console.log("notification", notifications);
       console.log("Current User Value:", valueCurrentUser);
       console.log("totalNotRead", totalNotRead);
+    };
+
+    const fetchUserData = async () => {
+      try {
+        const jwt = Cookies.get("tokenLogin");
+        if (!jwt) {
+          return;
+        }
+        const token = jwt.split("|")[1];
+        const response = await fetch(
+          `http://localhost:8000/api/inforCurrentUser`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`, // Nếu cần sử dụng token để xác thực
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        const user = data.data;
+        user_current.value = user;
+
+        console.log(user_current.value.role);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        // this.$router.push({ name: "login" });
+        // return null;
+      }
     };
 
     const checkNotifyUser = async () => {
@@ -493,10 +538,11 @@ export default {
     onMounted(() => {
       checkNotifyUser();
       fetchNotification();
-      window.Echo.channel("tour-channel").listen("Notify", (e) => {
-        // console.log('logSocket',e);
-        setRealtime(e);
-      });
+      // window.Echo.channel("tour-channel").listen("Notify", (e) => {
+      //   // console.log('logSocket',e);
+      //   setRealtime(e);
+      // });
+      fetchUserData();
     });
 
     watch(() => {
@@ -534,6 +580,7 @@ export default {
       goToUserDetails,
       goToCustomerSupport,
       handleChat,
+      user_current,
     };
   },
 };

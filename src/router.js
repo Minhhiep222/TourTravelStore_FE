@@ -34,6 +34,7 @@ import DetailsOrder from "./components/Order/DetailsOrder.vue";
 // import QLOrder from "./components/Order/Order.vue";
 // import DetailsOrder from "./components/Order/DetailsOrder.vue";
 import Notification from "./components/Notification.vue";
+import DefaultLayoutVendor from "./Layout/DefaultLayout/DefaultLayoutVendor.vue";
 
 const routes = [
   {
@@ -41,6 +42,7 @@ const routes = [
     name: "Register",
     component: UserRegister,
   },
+
   {
     path: "/login",
     name: "Login",
@@ -176,7 +178,7 @@ const routes = [
         component: TourList,
       },
       {
-        path: "/admin/tours",
+        path: "/admin/manager/tours",
         name: "QLTour",
         component: QLTour,
       },
@@ -205,6 +207,17 @@ const routes = [
         path: "/UserAdmin",
         name: "UserAdmin",
         component: UserAdmin,
+      },
+    ],
+  },
+  {
+    path: "/",
+    component: DefaultLayoutVendor,
+    children: [
+      {
+        path: "/:vendor/tours",
+        name: "Tours",
+        component: TourList,
       },
     ],
   },
