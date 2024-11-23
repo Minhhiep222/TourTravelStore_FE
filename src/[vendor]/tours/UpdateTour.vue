@@ -6,7 +6,6 @@
     <div class="container p-0 my-8 rounded">
       <form
         class="bg-white form_tour"
-        class="bg-white form_tour"
         v-if="swicth == ''"
         @submit.prevent="handleSubmit"
       >
@@ -104,11 +103,6 @@
               <input placeholder="Nhập vào giá" type="text" v-model="price" />
               <div v-if="errorPrice" class="error">{{ errorPrice }}</div>
             </div>
-            <div v-if="status !== '0'" class="status">
-              <label>Trạng thái</label>
-              <select v-model="status">
-                <option value="1">Đang hoạt động</option>
-                <option value="2">Ngưng hoạt động</option>
             <div v-if="status !== '0'" class="status">
               <label>Trạng thái</label>
               <select v-model="status">
@@ -248,7 +242,6 @@ export default {
     const end_date = ref("");
     const user_id = ref("");
     const status = ref(null);
-    const status = ref(null);
 
     onMounted(async () => {
       try {
@@ -263,7 +256,6 @@ export default {
         price.value = String(tourData.value.tour.price);
         location.value = tourData.value.tour.location;
         availability.value = tourData.value.tour.availability;
-        status.value = tourData.value.tour.status;
         status.value = tourData.value.tour.status;
         start.value = moment(tourData.value.tour.start_date).toDate();
         end.value = moment(tourData.value.tour.end_date).toDate();
@@ -283,9 +275,6 @@ export default {
             time_schedule: item.time,
           });
         });
-
-        console.log(status.value, "status");
-
 
         console.log(status.value, "status");
 
@@ -425,8 +414,6 @@ export default {
           this.schedules[index].time_schedule = moment(
             schedule.time_schedule,
             "YYYY/MM/DD HH:mm" // Chỉ rõ định dạng đầu vào
-            schedule.time_schedule,
-            "YYYY/MM/DD HH:mm" // Chỉ rõ định dạng đầu vào
           ).format("YYYY/MM/DD HH:mm");
           this.validateSchedules();
         });
@@ -525,7 +512,6 @@ export default {
     setSwicth(item) {
       this.swicth = item;
     },
-
 
     handleFileUpload(event) {
       const files = event.target.files;
@@ -629,15 +615,6 @@ export default {
       //   /\.(jpg|svg|png)$/i
       // );
 
-      // const isValidImage = this.validateField(
-      //   "Image",
-      //   "Hình ảnh",
-      //   this.image,
-      //   1,
-      //   500,
-      //   /\.(jpg|svg|png)$/i
-      // );
-
       //Check Validate of Date
       // const validDate = this.checkDate();
       // Check if any validation failed
@@ -646,8 +623,6 @@ export default {
         !isValidLocation ||
         !isValidDescription ||
         !isValidDuration ||
-        !isValidPrice
-        // !isValidImage
         !isValidPrice
         // !isValidImage
       ) {
@@ -663,7 +638,6 @@ export default {
         return false;
       }
 
-
       let isValidNameSchedule = true;
       let isValidTimeSchedule = true;
       this.errorNameSchedule = [];
@@ -676,11 +650,7 @@ export default {
       // Lấy thời gian hiện tại (chú ý là dạng local)
       const currentDate = moment(); // sử dụng moment để lấy thời gian hiện tại
 
-      // Lấy thời gian hiện tại (chú ý là dạng local)
-      const currentDate = moment(); // sử dụng moment để lấy thời gian hiện tại
-
       this.schedules.forEach((schedule, index) => {
-        // Kiểm tra tên lịch trình
         // Kiểm tra tên lịch trình
         const isValid = this.validateField(
           "NameSchedule",
@@ -707,25 +677,7 @@ export default {
         }
 
         // Kiểm tra thời gian của lịch trình sau không được nhỏ hơn lịch trình trước
-
-        // Kiểm tra thời gian lịch trình
-        const scheduleDate = moment(schedule.time_schedule, "YYYY/MM/DD HH:mm"); // chuyển thời gian lịch trình thành moment
-
-        if (scheduleDate.isBefore(currentDate)) {
-          // Kiểm tra lịch trình có trước ngày hiện tại không
-          this.errorDateTimeSchedule[index] = `Lịch trình ${
-            index + 1
-          } không thể có thời gian trong quá khứ.`;
-          isValidTimeSchedule = false;
-        }
-
-        // Kiểm tra thời gian của lịch trình sau không được nhỏ hơn lịch trình trước
         if (index < this.schedules.length - 1) {
-          const nextScheduleDate = moment(
-            this.schedules[index + 1].time_schedule,
-            "YYYY/MM/DD HH:mm"
-          );
-          if (nextScheduleDate.isBefore(scheduleDate)) {
           const nextScheduleDate = moment(
             this.schedules[index + 1].time_schedule,
             "YYYY/MM/DD HH:mm"
@@ -739,8 +691,6 @@ export default {
         }
       });
 
-      });
-
       return isValidNameSchedule && isValidTimeSchedule;
     },
 
@@ -752,11 +702,6 @@ export default {
     },
 
     async handleSubmit() {
-      if (this.imagePreviews.length < 1) {
-        this.errorImage = "Vui lòng chọn tệp hình ảnh.";
-        return;
-      }
-
       if (this.imagePreviews.length < 1) {
         this.errorImage = "Vui lòng chọn tệp hình ảnh.";
         return;
@@ -791,7 +736,6 @@ export default {
       formData.append("availability", this.availability);
       formData.append("status", this.status);
       console.log("status", this.status);
-      formData.append("status", this.status);
       formData.append("schedules", JSON.stringify(this.schedules));
 
       // Append files to form data
