@@ -1,10 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 import UserRegister from "./components/Register/Register.vue";
+// import UserLogin from "./components/Login/Login.vue";
 import TourList from "./[vendor]/tours/Tour.vue";
 import QLTour from "./[vendor]/tours/QLTour.vue";
 import CreateTour from "./[vendor]/tours/CreateTour.vue";
 import UpdateTour from "./[vendor]/tours/UpdateTour.vue";
 import DetailTour from "./[vendor]/tours/DetailTour.vue";
+// import UserRegister from './components/Register/Register.vue';
+// import UserLogin from './components/Login/Login.vue';
 import Payment from "./[user]/Payment.vue";
 import Success from "./[user]/Success.vue";
 import UserDetails from "./components/UserDetails/UserDetails.vue";
@@ -51,7 +54,7 @@ const routes = [
         component: Search,
       },
       {
-        path: "/:user/chat",
+        path: "/:user/chat_cv",
         name: "chat",
         component: ChatRealTime,
       },
@@ -160,7 +163,7 @@ const routes = [
         component: TourList,
       },
       {
-        path: "/admin/tours",
+        path: "/:vendor/qltours",
         name: "QLTour",
         component: QLTour,
       },

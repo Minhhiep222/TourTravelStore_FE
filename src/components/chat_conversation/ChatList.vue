@@ -241,6 +241,10 @@ const user_current = ref(null);
 const currentUserId = ref(null);
 const currentConversationId = ref(null);
 const conversations = ref([]);
+// const router = useRouter();
+// const route = useRoute();
+// Lấy thông tin người dùng từ Vuex
+// const userStore = store.state;
 
 //CUộn xuống cuối
 const scrollToBottom = async () => {
@@ -345,6 +349,7 @@ const fetchConversations = async () => {
       }
     );
     conversations.value.push(...response.data);
+    console.log(conversations.value);
   } catch (error) {
     console.log(error);
   }
@@ -410,9 +415,7 @@ const initializeEcho = (conversation_id) => {
     .listen(".MessageSent", (event) => {
       // Thêm dấu chấm trước tên event để matche với App.Event.MessageSent
       messages.value.push(event.message);
-      console.log(event);
-      conversations.value = [];
-      fetchConversations();
+      console.log(event.message);
       scrollToBottom();
     })
     .error((error) => {

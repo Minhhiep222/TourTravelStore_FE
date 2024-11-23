@@ -93,7 +93,7 @@ export default {
         console.log("Bắt đầu cuộc trò chuyện:", conver);
         localStorage.setItem("conversation", JSON.stringify(conver));
         router.push({
-          path: `/minh-hiep/chat`,
+          path: `/minh-hiep/chat_cv`,
         });
       } catch (error) {
         console.error("Lỗi khi bắt đầu cuộc trò chuyện:", error);
