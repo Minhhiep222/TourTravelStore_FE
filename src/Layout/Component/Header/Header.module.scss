@@ -4,7 +4,96 @@
   position: sticky;
   top: 0;
   z-index: 99;
-}
-.solidSave {
-  color: pink;
+  .solidSave {
+    color: pink;
+    width: 20px;
+    height: 20px;
+  }
+  .solidBell {
+    color: rgb(59 130 246);
+    width: 20px;
+    height: 20px;
+  }
+  .total__notRead {
+    position: absolute;
+    top: -5px;
+    right: -12px;
+    background-color: red;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 50%;
+  }
+  
+  .wrap__notifcation {
+    background-color: #fff;
+    border-radius: .125rem;
+    box-shadow: 0 1px 3.125rem 0 rgba(0, 0, 0, .2);
+    color: #000;
+    overflow: hidden;
+    width: 25rem;
+    position: absolute;
+    top: 25 px;
+    right: 30px;
+    // transform: translateX(-337px) translateY(41px);
+    .title__notification {
+      color: rgba(0, 0, 0, .26);
+      height: 2.5rem;
+      padding: 0 .625rem;
+      text-transform: capitalize;
+      display: flex;
+      align-items: center;
+    }
+    .item_notRead {
+      padding: .5rem .625rem;
+      display: flex;
+      background-color: #fff2ee;
+    }
+    .wrap__item {
+      padding: .5rem .625rem;
+      display: flex;
+      &:hover {
+        background-color: #f8f8f8;
+      }
+      .item__img {
+        width: 40px;
+        height: 40px;
+      }
+      .item__content {
+        margin-left: 10px;
+        .item__name {
+          margin-bottom: 5px;
+          font-weight: bold;
+        }
+        .item__des {
+          font-size: 15px;
+          margin-bottom: 5px;
+        }
+        .wrap_listImg {
+          display: flex;
+          align-items: center;
+          .content__img {
+            width: 100px;
+            height: 100px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin: .1875rem .75rem .625rem 0;
+          }
+        }
+      }
+    }
+    .more__item {
+    background-color: #fcfcfc;
+    color: rgba(0, 0, 0, .8);
+    height: 2.5rem;
+    width: calc(100% - 1.25rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+  }
 }

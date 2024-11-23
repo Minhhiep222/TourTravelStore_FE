@@ -373,7 +373,6 @@ export default {
         this.notifyError("Thêm");
         break;
     }
-
     //Replace url when success action
     setTimeout(() => {
       this.$router.replace({
@@ -381,6 +380,7 @@ export default {
       });
     }, 3000);
   },
+
 };
 </script>
 

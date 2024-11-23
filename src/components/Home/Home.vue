@@ -1,4 +1,5 @@
 <template>
+   <!-- <button @click="logValue">logvalue</button> -->
   <div class="relative">
     <img
       alt="Cityscape at night with lights"
@@ -488,6 +489,7 @@
     </div>
 
     <div class="p-8">
+     
       <div>
         <div class="section-title">Điểm đến được yêu thích</div>
         <div>
@@ -563,6 +565,11 @@ import { onMounted, ref, inject, watch } from "vue";
 import { useRouter } from "vue-router";
 
 import Swal from "sweetalert2";
+// import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+
+window.Pusher = Pusher;
+
 
 export default {
   name: "HomePage",
@@ -571,6 +578,10 @@ export default {
     const valueCurrentUser = inject("valueCurrentUser");
     const newesTour = ref([]);
     const displayErrors = ref(null);
+    const notification = ref(null);
+
+   
+
     const getNewesTour = async () => {
       let userID = null;
       if (valueCurrentUser.value && valueCurrentUser.value.id) {
@@ -679,6 +690,7 @@ export default {
 
     const logValue = () => {
       console.log("valueCurrentUser", valueCurrentUser);
+      console.log("notification", notification);
     };
     const formatPrice = (price) => {
       return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -686,6 +698,7 @@ export default {
 
     onMounted(() => {
       getNewesTour();
+      // listenForNewTours();
     });
     watch(() => {
       getNewesTour();

@@ -29,6 +29,7 @@ import Socket from "./components/socket/socket.vue";
 import CustomerSupport from "./components/CustomerSupport/CustomerSupport.vue";
 import ContactUs from "./components/CustomerSupport/ContactUs.vue";
 import Statistical from "./components/Statistical/Statistical.vue";
+import Notification from "./components/Notification.vue";
 const routes = [
   {
     path: "/register",
@@ -120,6 +121,11 @@ const routes = [
         path: "/favorite",
         name: "Favorite",
         component: Favorite,
+      },
+      {
+        path: "/notification",
+        name: "Notification",
+        component: Notification,
       },
       {
         path: "/UserDetails/:id",
