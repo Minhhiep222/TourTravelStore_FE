@@ -6,11 +6,10 @@
       alt="Shop logo"
       class="rounded-full w-16 h-16"
       height="60"
-      :src="shop.logoUrl || shop.logo"
       width="60"
     />
     <div class="ml-4 flex-1">
-      <div class="text-lg font-bold">{{ shop.name }}</div>
+      <div class="text-lg font-bold">{{ shop?.name }}</div>
       <div class="text-gray-500">Online 5 Phút Trước</div>
       <div class="mt-2 flex space-x-2">
         <button
@@ -35,7 +34,7 @@
       </div>
       <div class="flex justify-between mt-2">
         <div class="text-gray-500">Sản Phẩm</div>
-        <div class="text-blue-500">{{ shop.product?.count || "0" }}</div>
+        <div class="text-blue-500">{{ shop?.product?.count || "0" }}</div>
       </div>
     </div>
     <div class="ml-4 flex-1">

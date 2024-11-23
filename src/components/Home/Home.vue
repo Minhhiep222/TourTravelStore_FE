@@ -179,7 +179,7 @@
       </div>
       <div class="grid grid-cols-5 gap-1">
         <div
-          v-for="tour in newesTour"
+          v-for="tour in newesTour.slice(0, 10)"
           :key="tour.id"
           class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300"
         >
@@ -195,26 +195,48 @@
                 ? tour.images[0].alt_text
                 : 'Default alt text'
             "
-            class="w-full h-68 object-cover"
+            class="w-full h-68 object-cover min-h-32 max-h-32"
             height="200"
             width="300"
           />
-          <div class="p-2 flex flex-col justify-between">
-            <p class="text-gray-700">
-              {{ tour.name }}
-            </p>
-            <div class="flex items-center mt-2">
-              <span @click="removeItem(tour.id)" v-if="tour.is_favorite == true"
-                ><font-awesome-icon :class="$style.heartSolid" icon="heart"
-              /></span>
-              <span @click="handleAddTourToFavorite(tour.id)" v-else
-                ><font-awesome-icon icon="heart"
-              /></span>
+          <div
+            class="p-2 flex flex-col justify-between"
+            style="min-height: 164px"
+          >
+            <div class="">
+              <p class="text-gray-700">{{ tour?.name.substring(0, 40) }}...</p>
+              <div class="location text-sm">
+                <i class="fas fa-map-marker-alt text-blue-600"></i>
+                {{ tour?.location.substring(0, 20) }}...
+              </div>
+
+              <div class="rating">
+                <i
+                  v-for="star in Math.floor(tour.avgReview)"
+                  v-bind:key="star"
+                  class="fas fa-star text-blue-400"
+                ></i>
+                <i
+                  v-if="tour.avgReview % 1 !== 0"
+                  class="fas fa-star-half-alt text-blue-400"
+                ></i>
+              </div>
             </div>
-            <div class="w-full mt-8">
+
+            <div class="flex justify-between items-end w-full mt-4">
               <p class="text-orange-500 font-bold">
                 <span>{{ formatPrice(tour.price) }} VND</span>
               </p>
+              <div class="flex items-center mt-2">
+                <span
+                  @click="removeItem(tour.id)"
+                  v-if="tour.is_favorite == true"
+                  ><font-awesome-icon :class="$style.heartSolid" icon="heart"
+                /></span>
+                <span @click="handleAddTourToFavorite(tour.id)" v-else
+                  ><font-awesome-icon icon="heart"
+                /></span>
+              </div>
             </div>
           </div>
         </div>
@@ -252,9 +274,10 @@
         <div
           v-for="tour in tours"
           :key="tour.id"
-          class="bg-white rounded-lg shadow-md overflow-hidden relative"
+          class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300"
         >
           <img
+            @click="detailTour(tour.id)"
             :src="
               tour.images.length > 0
                 ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
@@ -265,25 +288,48 @@
                 ? tour.images[0].alt_text
                 : 'Default alt text'
             "
-            @click="detailTour(tour.id)"
-            class="w-full h-68 object-cover"
+            class="w-full h-68 object-cover min-h-32 max-h-32"
             height="200"
             width="300"
           />
           <div
-            class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded"
+            class="p-2 flex flex-col justify-between"
+            style="min-height: 164px"
           >
-            Tiết kiệm 20%
-          </div>
-          <div class="p-2 flex flex-col justify-between">
-            <p class="text-gray-700">{{ tour?.name }}</p>
-            <div class="w-full mt-8">
-              <p class="text-gray-700 line-through mt-2">
-                {{ formatVND(tour?.price) }}
-              </p>
+            <div class="">
+              <p class="text-gray-700">{{ tour?.name.substring(0, 40) }}...</p>
+              <div class="location text-sm">
+                <i class="fas fa-map-marker-alt text-blue-600"></i>
+                {{ tour?.location.substring(0, 20) }}...
+              </div>
+
+              <div class="rating">
+                <i
+                  v-for="star in Math.floor(tour.avgReview)"
+                  v-bind:key="star"
+                  class="fas fa-star text-blue-400"
+                ></i>
+                <i
+                  v-if="tour.avgReview % 1 !== 0"
+                  class="fas fa-star-half-alt text-blue-400"
+                ></i>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-end w-full mt-4">
               <p class="text-orange-500 font-bold">
-                {{ formatVND(tour?.price) }} VND
+                <span>{{ formatPrice(tour.price) }} VND</span>
               </p>
+              <div class="flex items-center mt-2">
+                <span
+                  @click="removeItem(tour.id)"
+                  v-if="tour.is_favorite == true"
+                  ><font-awesome-icon :class="$style.heartSolid" icon="heart"
+                /></span>
+                <span @click="handleAddTourToFavorite(tour.id)" v-else
+                  ><font-awesome-icon icon="heart"
+                /></span>
+              </div>
             </div>
           </div>
         </div>
@@ -304,70 +350,67 @@
         </button>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-5 gap-2">
-        <div class="col-span-1">
+        <div
+          v-for="tour in tours"
+          :key="tour.id"
+          class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300"
+        >
           <img
-            alt="Tour Bali"
-            class="w-full h-auto mb-2 rounded-sm"
+            @click="detailTour(tour.id)"
+            :src="
+              tour.images.length > 0
+                ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
+                : ''
+            "
+            :alt="
+              tour.images.length > 0
+                ? tour.images[3].alt_text
+                : 'Default alt text'
+            "
+            class="w-full h-68 object-cover min-h-32 max-h-32"
             height="200"
-            src="https://storage.googleapis.com/a1aa/image/PKiFGSzKci60CtiHbhFhKidqnBRnU71rp0m46fwClHFmO22JA.jpg"
-            width="200"
+            width="300"
           />
-          <p class="font-medium">
-            Tour trọn gói Bali (Kintamani, Bali Swing, đền Tanah Lot, cổng...)
-          </p>
-          <p class="text-orange-500">VND 10.990.000</p>
-        </div>
-        <div class="col-span-1">
-          <img
-            alt="Tour Thái Lan"
-            class="w-full h-auto mb-2 rounded-sm"
-            height="200"
-            src="https://storage.googleapis.com/a1aa/image/VbFU2byuxOZ3LVHZy2sBgTFVmeK8B7TvD5DQPiGQJAapO22JA.jpg"
-            width="200"
-          />
-          <p class="font-medium">
-            Tour Thái Lan trọn gói (Bangkok, Pattaya) - 5N4Đ
-          </p>
-          <p class="text-orange-500">VND 6.990.000</p>
-        </div>
-        <div class="col-span-1">
-          <img
-            alt="Tour Bali"
-            class="w-full h-auto mb-2 rounded-sm"
-            height="200"
-            src="https://storage.googleapis.com/a1aa/image/PKiFGSzKci60CtiHbhFhKidqnBRnU71rp0m46fwClHFmO22JA.jpg"
-            width="200"
-          />
-          <p class="font-medium">
-            Tour trọn gói Bali (Kintamani, Bali Swing, đền Tanah Lot, cổng...)
-          </p>
-          <p class="text-orange-500">VND 10.990.000</p>
-        </div>
-        <div class="col-span-1">
-          <img
-            alt="Tour Singapore"
-            class="w-full h-auto mb-2 rounded-sm"
-            height="200"
-            src="https://storage.googleapis.com/a1aa/image/C5xkppftIF32Uaihl1tbg8Ldo1MNs9XOLhZL9QcZSG3nO22JA.jpg"
-            width="200"
-          />
-          <p class="font-medium">
-            Tour Singapore trọn gói (Gardens by the Bay, đảo ...)
-          </p>
-          <p class="text-orange-500">VND 10.390.000</p>
-        </div>
-        <div class="col-span-1">
-          <img
-            alt="Tour Singapore và Malaysia"
-            class="w-full h-auto mb-2 rounded-sm"
-            height="200"
-            src="https://storage.googleapis.com/a1aa/image/ff5vQLQAxSnRA0z67wxdH83WLDshIuBhO1puSm1UyCzRdstTA.jpg"
-            width="200"
-          />
-          <p class="font-medium">
-            Tour Singapore và Malaysia trọn gói (Gardens by the Bay, Tháp ...)
-          </p>
-          <p class="text-orange-500">VND 12.390.000</p>
+          <div
+            class="p-2 flex flex-col justify-between"
+            style="min-height: 164px"
+          >
+            <div class="">
+              <p class="text-gray-700">{{ tour?.name.substring(0, 40) }}...</p>
+              <div class="location text-sm">
+                <i class="fas fa-map-marker-alt text-blue-600"></i>
+                {{ tour?.location.substring(0, 20) }}...
+              </div>
+
+              <div class="rating">
+                <i
+                  v-for="star in Math.floor(tour.avgReview)"
+                  v-bind:key="star"
+                  class="fas fa-star text-blue-400"
+                ></i>
+                <i
+                  v-if="tour.avgReview % 1 !== 0"
+                  class="fas fa-star-half-alt text-blue-400"
+                ></i>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-end w-full mt-4">
+              <p class="text-orange-500 font-bold">
+                <span>{{ formatPrice(tour.price) }} VND</span>
+              </p>
+              <div class="flex items-center mt-2">
+                <span
+                  @click="removeItem(tour.id)"
+                  v-if="tour.is_favorite == true"
+                  ><font-awesome-icon :class="$style.heartSolid" icon="heart"
+                /></span>
+                <span @click="handleAddTourToFavorite(tour.id)" v-else
+                  ><font-awesome-icon icon="heart"
+                /></span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="flex justify-center mt-6">
@@ -715,7 +758,7 @@ export default {
     async fetchTours(page = 1) {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/tours/list?page=${page}&per_page=5&sort=${this.sortBy}`
+          `http://127.0.0.1:8000/api/tours/product?page=${page}&per_page=5&sort=${this.sortBy}`
         );
         if (response.data.tours.length === 0) {
           console.log("Không có tour nào để hiển thị.");

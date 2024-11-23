@@ -54,45 +54,45 @@
           <span v-if="valueTour">{{ valueTour.duration }}</span>
         </span>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
         <div class="relative">
           <img
             class="w-full h-full object-cover rounded-lg"
-            height="400"
-            width="600"
+            max-height="400"
+            max-width="600"
             v-if="valueTour && valueTour.images && valueTour.images.length > 0"
             :src="`http://127.0.0.1:8000/images/${valueTour.images[0].image_url}`"
             :alt="valueTour.images[0]?.alt_text"
           />
         </div>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-2">
           <img
-            class="w-full h-full object-cover rounded-lg"
-            height="300"
-            width="200"
+            class="w-full h-full object-cover rounded-lg max-h-56 min-h-56"
+            max-height="300"
+            max-width="200"
             v-if="valueTour && valueTour.images && valueTour.images.length > 0"
             :src="`http://127.0.0.1:8000/images/${valueTour.images[1]?.image_url}`"
             :alt="valueTour.images[1]?.alt_text"
           />
           <img
-            class="w-full h-full object-cover rounded-lg"
-            height="400"
-            width="600"
+            class="w-full h-full object-cover rounded-lg max-h-56 min-h-56"
+            max-height="400"
+            max-width="600"
             v-if="valueTour && valueTour.images && valueTour.images.length > 0"
             :src="`http://127.0.0.1:8000/images/${valueTour.images[2]?.image_url}`"
             :alt="valueTour.images[2]?.alt_text"
           />
           <img
-            class="w-full h-full object-cover rounded-lg"
-            height="400"
-            width="600"
+            class="w-full h-full object-cover rounded-lg max-h-56 min-h-56"
+            max-height="400"
+            max-width="600"
             v-if="valueTour && valueTour.images && valueTour.images.length > 0"
             :src="`http://127.0.0.1:8000/images/${valueTour.images[3]?.image_url}`"
             :alt="valueTour.images[3]?.alt_text"
           />
           <div class="relative">
             <img
-              class="w-full h-full object-cover rounded-lg"
+              class="w-full h-full object-cover rounded-lg max-h-56 min-h-56"
               height="400"
               width="600"
               v-if="
@@ -710,15 +710,7 @@ export default {
     const router = useRouter();
     const displayMap = ref(false);
 
-    const shop = ref({
-      id: 5,
-      name: "Shop Thời Trang Cao Cấp",
-      logoUrl:
-        "https://storage.googleapis.com/a1aa/image/T2AJGyFCnWKtO5WfPDe3YVVNPAhfpUajNnGKHlgL4PVJgxlnA.jpg",
-      product: {
-        count: "500", // Số lượng sản phẩm
-      },
-    });
+    const shop = ref(null);
 
     const getDetailTour = async () => {
       try {

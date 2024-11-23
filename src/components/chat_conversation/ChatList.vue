@@ -1,12 +1,14 @@
 <template>
-  <div class="min-h-full flex bg-gray-50" style="height: 87vh">
+  <div class="min-h-full flex bg-gray-50">
     <!-- Sidebar -->
     <div class="w-1/4 bg-white border-r border-gray-200 shadow-sm">
       <!-- Header -->
       <div
         class="p-4 flex items-center justify-between border-b border-gray-200 bg-white"
       >
-        <div class="text-xl font-bold text-blue-600">min_hiq</div>
+        <div class="text-xl font-bold text-blue-600">
+          {{ user_current?.name }}
+        </div>
         <i
           class="fas fa-edit text-xl hover:text-blue-600 transition-colors duration-200"
         >
@@ -77,7 +79,13 @@
               {{ conversation?.other_user?.name }}
             </div>
             <div class="flex items-center justify-between">
-              <div class="text-sm text-gray-600 truncate max-w-[150px]">
+              <div
+                :class="
+                  checkReadAt(conversation?.last_message?.read_at)
+                    ? 'text-sm text-gray-600 truncate max-w-[150px]'
+                    : 'text-sm text-black-600 truncate max-w-[150px]'
+                "
+              >
                 {{ conversation?.last_message?.message?.substring(0, 20) }}
               </div>
               <div class="text-xs text-gray-500">Active 3h ago</div>
@@ -235,6 +243,7 @@ const newMessage = ref("");
 const messageContainer = ref(null);
 const isLoading = ref(true);
 const user_other = ref(null);
+const user_current = ref(null);
 const currentUserId = ref(null);
 const currentConversationId = ref(null);
 const conversations = ref([]);
@@ -245,6 +254,11 @@ const scrollToBottom = async () => {
   if (messageContainer.value) {
     messageContainer.value.scrollTop = messageContainer.value.scrollHeight;
   }
+};
+
+//Check read_at
+const checkReadAt = (val) => {
+  return val === null ? false : true;
 };
 
 //Hàm get user trong cuộc trò chuyện
@@ -316,8 +330,9 @@ const fetchUserData = async () => {
     }
     const data = await response.json();
     const user = data.data;
+    user_current.value = user;
     currentUserId.value = user.id;
-    console.log(currentUserId.value);
+    console.log(currentUserId.name);
   } catch (error) {
     console.error("Error fetching user data:", error);
     // this.$router.push({ name: "login" });
@@ -342,6 +357,7 @@ const fetchConversations = async () => {
       }
     );
     conversations.value.push(...response.data);
+    console.log(conversations.value);
   } catch (error) {
     console.log(error);
   }
@@ -447,6 +463,13 @@ const getCurentConversation = () => {
 //Kiểm tra trạng thái của conversation id
 watch(currentConversationId, (newId) => {
   initializeEcho(newId);
+});
+
+watch(newMessage, (mes) => {
+  if (mes.length > 300) {
+    console.log("nhiều từ quá");
+    newMessage.value = "";
+  }
 });
 
 //Lấy user và lấy hộp trò chuyện

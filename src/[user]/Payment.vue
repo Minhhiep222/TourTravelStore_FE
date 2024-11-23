@@ -210,6 +210,7 @@
                 </div>
               </div>
             </div>
+
             <div class="mb-4">
               <div class="flex items-center mb-2">
                 <input
@@ -221,8 +222,33 @@
                   class="mr-2 cursor-pointer"
                 />
                 <label for="store">Thanh toán với ATM momo</label>
+                <img
+                  class="max-h-8 ml-2"
+                  src="@/assets/Images/logo2.svg"
+                  alt=""
+                />
               </div>
             </div>
+
+            <div class="mb-4">
+              <div class="flex items-center mb-2">
+                <input
+                  type="radio"
+                  id="payment_zalopay"
+                  name="payment_zalopay"
+                  v-model="selectPayment"
+                  value="transfer_zalopay"
+                  class="mr-2 cursor-pointer"
+                />
+                <label for="store">Thanh toán với ZaloPay</label>
+                <img
+                  class="max-h-8 ml-2"
+                  src="@/assets/Images/logo-zalopay.png"
+                  alt=""
+                />
+              </div>
+            </div>
+
             <div class="mb-4">
               <div class="flex items-center mb-2">
                 <input
@@ -350,6 +376,9 @@ export default {
         case "transfer":
           this.payment_momo();
           break;
+        case "transfer_zalopay":
+          this.payment_zalo();
+          break;
         case "cash":
           this.payment_card();
           break;
@@ -386,6 +415,38 @@ export default {
       }
     },
 
+    async payment_zalo() {
+      let id = this.user ? this.user.id : null;
+      try {
+        const formData = new FormData();
+        formData.append("urlCheckout", this.urlCheckout);
+        formData.append("user_id", id);
+        formData.append("tour_id", this.tour_id);
+        formData.append("total_price", this.price);
+        formData.append("status", "pending");
+        formData.append("notes", "");
+        formData.append("transaction_id", "");
+        formData.append("payment_method", "transfer");
+        formData.append("number_of_tickers", this.booking.number_of_people);
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/payments/zalo_payment",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(response.data.data.order_url);
+        if (response.status === 200) {
+          window.location.href = response.data.data.order_url;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    //Payment with card
     async payment_card() {
       let id = this.user ? this.user.id : 0;
       console.log(id);
@@ -421,6 +482,7 @@ export default {
       }
     },
 
+    //Fetch user
     async fetchUserData() {
       try {
         const jwt = Cookies.get("tokenLogin");
@@ -451,6 +513,7 @@ export default {
       }
     },
 
+    //fectchBookingData
     async fectchBookingData() {
       try {
         const idBooking = Cookies.get("bookingId");
@@ -477,6 +540,8 @@ export default {
         console.log(error);
       }
     },
+
+    //Format price
     formatVND(amount) {
       return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
