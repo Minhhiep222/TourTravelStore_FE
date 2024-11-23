@@ -332,7 +332,6 @@ const fetchUserData = async () => {
     const user = data.data;
     user_current.value = user;
     currentUserId.value = user.id;
-    console.log(currentUserId.name);
   } catch (error) {
     console.error("Error fetching user data:", error);
     // this.$router.push({ name: "login" });

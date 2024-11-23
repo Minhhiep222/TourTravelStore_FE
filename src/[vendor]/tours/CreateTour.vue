@@ -732,6 +732,7 @@ export default {
       // Prepare form data for upload
       const formData = new FormData();
       formData.append("name", this.name);
+      formData.append("status", "0");
       formData.append("user_id", this.user_id);
       formData.append("description", this.description);
       formData.append("duration", this.duration.trim());
