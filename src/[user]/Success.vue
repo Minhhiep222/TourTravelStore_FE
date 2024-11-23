@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col items-center" id="app">
+  <div class="bg-white min-h-screen flex flex-col items-center" id="app">
     <div
       class="w-full mt-8 flex-grow flex flex-col items-center text-center space-y-8"
     >
@@ -65,7 +65,7 @@ export default {
   },
 
   methods: {
-    async updateStatusPayment() {
+    async updateStatusPaymentMomo() {
       try {
         const formData = new FormData();
         formData.append("orderId", this.orderId);
@@ -79,7 +79,35 @@ export default {
           }
         );
 
-        if (response.ok) {
+        if (response.status == 200) {
+          Swal.fire({
+            title: "Thành công!",
+            text: "Đặt hàng thành công",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+        }
+
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async updateStatusPaymentZalo() {
+      try {
+        const formData = new FormData();
+        formData.append("orderId", this.orderId);
+        formData.append("transdId", this.transId);
+        const response = await fetch(
+          "http://127.0.0.1:8000/api/payments/zalo/ipn",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        if (response.status == 200) {
           Swal.fire({
             title: "Thành công!",
             text: "Đặt hàng thành công",
@@ -98,10 +126,14 @@ export default {
   },
 
   mounted() {
-    this.transId = this.$route.query.transId;
-    this.orderId = this.$route.query.orderId;
-    if (this.trandId != null) {
-      this.updateStatusPayment(this.trandId);
+    if (this.$route.query.partnerCode) {
+      this.orderId = this.$route.query.orderId;
+      this.transId = this.$route.query.transId;
+      this.updateStatusPaymentMomo();
+    } else if (this.$route.query.apptransid) {
+      console.log("check");
+      this.transId = this.$route.query.apptransid;
+      this.updateStatusPaymentZalo();
     }
   },
 };

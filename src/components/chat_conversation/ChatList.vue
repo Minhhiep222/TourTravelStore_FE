@@ -6,7 +6,9 @@
       <div
         class="p-4 flex items-center justify-between border-b border-gray-200 bg-white"
       >
-        <div class="text-xl font-bold text-blue-600">min_hiq</div>
+        <div class="text-xl font-bold text-blue-600">
+          {{ user_current?.name }}
+        </div>
         <i
           class="fas fa-edit text-xl hover:text-blue-600 transition-colors duration-200"
         >
@@ -241,6 +243,7 @@ const newMessage = ref("");
 const messageContainer = ref(null);
 const isLoading = ref(true);
 const user_other = ref(null);
+const user_current = ref(null);
 const currentUserId = ref(null);
 const currentConversationId = ref(null);
 const conversations = ref([]);
@@ -327,8 +330,9 @@ const fetchUserData = async () => {
     }
     const data = await response.json();
     const user = data.data;
+    user_current.value = user;
     currentUserId.value = user.id;
-    console.log(currentUserId.value);
+    console.log(currentUserId.name);
   } catch (error) {
     console.error("Error fetching user data:", error);
     // this.$router.push({ name: "login" });
@@ -459,6 +463,13 @@ const getCurentConversation = () => {
 //Kiểm tra trạng thái của conversation id
 watch(currentConversationId, (newId) => {
   initializeEcho(newId);
+});
+
+watch(newMessage, (mes) => {
+  if (mes.length > 300) {
+    console.log("nhiều từ quá");
+    newMessage.value = "";
+  }
 });
 
 //Lấy user và lấy hộp trò chuyện

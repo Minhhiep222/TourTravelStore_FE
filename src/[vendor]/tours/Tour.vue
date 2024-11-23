@@ -53,26 +53,32 @@
             </div>
 
             <div class="middle-section">
-              <h2>{{ tour.name }}</h2>
+              <h2 class="">{{ tour.name }}</h2>
               <div class="rating">
-                <!-- <i v-for="star in Math.floor(tour.rating)" class="fas fa-star"></i>
-                  <i v-if="tour.rating % 1 !== 0" class="fas fa-star-half-alt"></i>
-                  <span>({{ tour.reviews }} Đánh giá)</span> -->
+                <i
+                  v-for="star in Math.floor(tour.avgReview)"
+                  v-bind:key="star"
+                  class="fas fa-star text-blue-400"
+                ></i>
+                <i
+                  v-if="tour.avgReview % 1 !== 0"
+                  class="fas fa-star-half-alt text-blue-400"
+                ></i>
               </div>
-              <div class="location">
-                <i class="fas fa-map-marker-alt"></i>
+              <div class="location text-sm">
+                <i class="fas fa-map-marker-alt text-blue-600"></i>
                 {{ tour.location }}
               </div>
               <div class="features">
-                <div>
+                <div class="mr-3">
                   <i class="fas fa-bicycle"></i>
                   Cho thuê xe đạp
                 </div>
-                <div>
+                <div class="mr-3">
                   <i class="fas fa-car"></i>
                   Cho thuê xe hơi
                 </div>
-                <div>
+                <div class="mr-2">
                   <i class="fas fa-plane"></i>
                   Đưa đón sân bay
                 </div>
@@ -84,12 +90,23 @@
               </div>
             </div>
 
-            <div class="right-section">
+            <div class="right-section flex flex-col items-left">
+              <div v-if="tour.status == '0'" class="status text-orange-400">
+                Đang chờ kiểm duyệt
+              </div>
+              <div v-if="tour.status == '1'" class="status text-green-500">
+                Đang hoạt động
+              </div>
+              <div v-if="tour.status == '2'" class="status text-red-500">
+                Ngưng hoạt động
+              </div>
               <div class="text-orange-500 font-bold">
                 {{ formatVND(tour.price) }} VND
               </div>
-              <!-- <div class="original-price">{{ tour.original_price }} VND</div>
-                <div class="bookings">{{ tour.bookings }} lượt đặt</div> -->
+              <div class="original-price">
+                {{ formatVND(tour.price + tour.price * 0.2) }} VND
+              </div>
+              <!-- <div class="bookings">{{ tour.bookings }} lượt đặt</div> -->
             </div>
 
             <div class="buttons text-white font-medium">
@@ -389,4 +406,7 @@ export default {
 <style lang="scss" scoped>
 @use "../../assets/Global.module.scss";
 @use "../../assets/Tour.module.scss";
+</style>
+<style>
+@import "./Tour.css";
 </style>
