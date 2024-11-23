@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-full flex bg-gray-50">
+  <div class="min-h-full flex bg-gray-50" style="height: 87vh">
     <!-- Sidebar -->
     <div class="w-1/4 bg-white border-r border-gray-200 shadow-sm">
       <!-- Header -->
@@ -79,13 +79,7 @@
               {{ conversation?.other_user?.name }}
             </div>
             <div class="flex items-center justify-between">
-              <div
-                :class="
-                  checkReadAt(conversation?.last_message?.read_at)
-                    ? 'text-sm text-gray-600 truncate max-w-[150px]'
-                    : 'text-sm text-black-600 truncate max-w-[150px]'
-                "
-              >
+              <div class="text-sm text-gray-600 truncate max-w-[150px]">
                 {{ conversation?.last_message?.message?.substring(0, 20) }}
               </div>
               <div class="text-xs text-gray-500">Active 3h ago</div>
@@ -256,11 +250,6 @@ const scrollToBottom = async () => {
   }
 };
 
-//Check read_at
-const checkReadAt = (val) => {
-  return val === null ? false : true;
-};
-
 //Hàm get user trong cuộc trò chuyện
 const getUser = (user) => {
   user_other.value = user;
@@ -356,7 +345,6 @@ const fetchConversations = async () => {
       }
     );
     conversations.value.push(...response.data);
-    console.log(conversations.value);
   } catch (error) {
     console.log(error);
   }

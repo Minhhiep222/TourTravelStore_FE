@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header></Header>
-    <section class="main">
+    <section class="main min-h-full">
       <router-view />
     </section>
   </div>
@@ -20,6 +20,8 @@ export default {
 <style>
 /* Thêm các style cho layout */
 .main {
-  max-height: 80vh;
+  position: sticky;
+  top: 30px;
+  min-height: 100vh; /* Đảm bảo main luôn có chiều cao tối thiểu là chiều cao của viewport */
 }
 </style>

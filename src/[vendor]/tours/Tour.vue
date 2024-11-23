@@ -24,14 +24,13 @@
           </button>
         </div>
         <div class="tour_list">
-          <div class="tour_item bg-white" v-for="tour in tours" :key="tour.id">
+          <div class="tour_item" v-for="tour in tours" :key="tour.id">
             <div class="left-section">
               <img
                 alt="Main tour image"
                 height="120"
                 :src="getImageUrl(tour.images[0]?.image_url)"
                 width="120"
-                class="min-h-28"
               />
               <div class="image-grid">
                 <img
@@ -134,47 +133,46 @@
             </div>
           </div>
 
-          <nav
-            aria-label="Page navigation"
-            v-if="links"
-            class="flex justify-center mt-4"
-          >
-            <div class="flex items-center space-x-2">
-              <!-- Previous Button -->
-              <button
-                @click.prevent="fetchTours(meta.current_page - 1)"
-                :disabled="!links.prev"
-                class="px-2 py-1 rounded-l-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+          <nav aria-label="Page navigation example mt-4" v-if="links">
+            <ul class="pagination mt-4">
+              <li class="page-item" :class="{ disabled: !links.prev }">
+                <a
+                  class="p-1 page-link"
+                  href="#"
+                  @click.prevent="fetchTours(meta.current_page - 1)"
+                  aria-label="Previous"
+                  :disabled="!links.prev"
+                >
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li
+                v-for="page in meta.last_page"
+                :key="page"
+                class="page-item"
+                :class="{ active: page === meta.current_page }"
               >
-                <i class="fa fa-angles-left text-blue-800"></i>
-              </button>
-
-              <!-- Page Numbers -->
-              <div class="flex">
-                <template v-for="page in meta.last_page" :key="page">
-                  <button
-                    @click.prevent="fetchTours(page)"
-                    class="px-3 py-2 border border-gray-300 transition-all duration-300 hover:bg-blue-50 text-sm font-semibold tracking-tight hover:text-blue-600 hover:border-blue-300 focus:z-10 focus:ring-2 focus:ring-blue-200"
-                    :class="{
-                      'bg-blue-500 text-white hover:bg-blue-600 border-blue-500':
-                        page === meta.current_page,
-                      'text-gray-600': page !== meta.current_page,
-                    }"
-                  >
-                    {{ page }}
-                  </button>
-                </template>
-              </div>
-
-              <!-- Next Button -->
-              <button
-                @click.prevent="fetchTours(meta.current_page + 1)"
-                :disabled="!links.next"
-                class="px-2 py-1 rounded-r-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
-              >
-                <i class="fa fa-angles-right text-blue-800"></i>
-              </button>
-            </div>
+                <a
+                  class="p-1 px-2 page-link"
+                  href="#"
+                  @click.prevent="fetchTours(page)"
+                  >{{ page }}</a
+                >
+              </li>
+              <li class="page-item" :class="{ disabled: !links.next }">
+                <a
+                  class="p-1 page-link"
+                  href="#"
+                  @click.prevent="fetchTours(meta.current_page + 1)"
+                  aria-label="Next"
+                  :disabled="!links.next"
+                >
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
           </nav>
         </div>
       </div>
