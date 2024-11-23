@@ -713,8 +713,8 @@ export default {
     const shop = ref({
       id: 5,
       name: "Shop Thời Trang Cao Cấp",
-      logoUrl:
-        "https://storage.googleapis.com/a1aa/image/T2AJGyFCnWKtO5WfPDe3YVVNPAhfpUajNnGKHlgL4PVJgxlnA.jpg",
+      // logoUrl:
+      //   "https://storage.googleapis.com/a1aa/image/T2AJGyFCnWKtO5WfPDe3YVVNPAhfpUajNnGKHlgL4PVJgxlnA.jpg",
       product: {
         count: "500", // Số lượng sản phẩm
       },

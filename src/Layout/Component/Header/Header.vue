@@ -385,6 +385,58 @@ export default {
       handleDisplayLogin(false);
       setCurrentUser(null);
     };
+    const goToUserDetails = (userId) => {
+      if (userId) {
+        router.push({ name: "UserDetails", params: { id: userId } });
+      }
+    };
+    const setRealtime = (e) => {
+      // console.log(e)
+        if(valueCurrentUser.value == null) {
+            // return
+        } else if(valueCurrentUser.value.notication == 1) {
+          notifications.value.push(e); 
+          totalNotRead.value += 1
+          console.log('logNotification',e);
+        }
+      }
+      const seenAllNotifiCation = async () => {
+  try {
+    const response = await axios.post('http://localhost:8000/api/seenAllNotification', {
+      user_id: valueCurrentUser.value.id, // Kiểm tra user_id có đúng không
+    });
+    console.log('response', response); // Đảm bảo không thiếu dấu phẩy sau `response`
+    
+    fetchNotification(); // Kiểm tra xem fetchNotification có định nghĩa không
+    router.push({ name: "Notification" }); // Kiểm tra xem router đã định nghĩa đúng chưa
+  } catch (error) {
+    console.error("Failed to retrieve notifications:", error.response ? error.response.data.message : error.message);
+
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: error.response ? error.response.data.message : error.message,
+      footer: '<a href="#">Why do I have this issue?</a>', // Kiểm tra dấu ngoặc trong footer
+    });
+  }
+};
+
+  
+    
+    onMounted(() => {
+      checkNotifyUser();
+      fetchNotification();   
+        window.Echo.channel('tour-channel').listen('Notify',(e) => {
+        // console.log('logSocket',e);    
+        setRealtime(e);  
+      });
+     });
+
+     
+     watch(() => {
+      fetchNotification();
+      checkNotifyUser();
+     },[valueCurrentUser])
 
     return {
       valueCurrentUser,
@@ -392,7 +444,25 @@ export default {
       setLogout,
       showCurrentUser,
       setRegister,
-      goToFavorite
+      goToFavorite,
+      goToUserDetails,
+      goToCustomerSupport,
+      handleChat,
+      handleDisplayNotify,
+      notifications,
+      displayNotification,
+      fetchNotification,
+      seenAllNotifiCation,
+      logValue,
+      totalNotRead,
+      readNotification,
+      setRealtime,
+      turnOfNotification,
+      turnOnOffNotification,
+      statusNotication,
+      checkNotifyUser,
+      seeAll,
+      goToChatBot,
     };
   },
 };
