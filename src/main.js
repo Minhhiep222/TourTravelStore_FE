@@ -17,19 +17,47 @@ import {
   faBellSlash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-// import Echo from "laravel-echo";
+import Echo from "laravel-echo";
+import Cookies from "js-cookie";
 
-// window.Pusher = require("pusher-js");
+window.Pusher = require("pusher-js");
 
-// window.Echo = new Echo({
-//   broadcaster: "pusher",
-//   key: "local",
-//   wsHost: process.env.VUE_APP_WEBSOCKETS_SERVER,
-//   wsPort: 6001,
-//   forceTLS: false,
-//   disableStats: true,
-//   cluster: "local",
-// });
+const jwt = Cookies.get("tokenLogin");
+
+console.log(jwt);
+if (!jwt) {
+  console.log("CÓ LỖI");
+}
+
+window.Echo = new Echo({
+  broadcaster: "pusher",
+  key: "3e4fadf6091f7e34865d",
+  wsPort: 6001,
+  forceTLS: false,
+  disableStats: true,
+  cluster: "ap1",
+  authEndpoint: "http://127.0.0.1:8000/api/broadcasting/auth",
+  auth: {
+    headers: {
+      Authorization: `Bearer ${jwt}`,
+      Accept: "application/json",
+    },
+  },
+});
+
+window.Echo.connector.pusher.connection.bind("error", (err) => {
+  console.error("Pusher connection error:", err);
+});
+
+// Gắn state change handler
+window.Echo.connector.pusher.connection.bind("state_change", (states) => {
+  console.log(
+    "Connection state changed from",
+    states.previous,
+    "to",
+    states.current
+  );
+});
 
 library.add(faHeart, faBookmark, faClock, faRoad, faBell, faBellSlash);
 
@@ -39,5 +67,4 @@ app.use(BootstrapVue3);
 app.use(router);
 app.use(store);
 app.component("font-awesome-icon", FontAwesomeIcon);
-
 app.mount("#app");

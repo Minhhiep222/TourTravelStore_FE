@@ -20,9 +20,10 @@
             >
               Trang admin
             </div>
+            <span v-if="user_current?.role === '3'">|</span>
             <div
               class="cursor-pointer items-center hover:text-blue-500 text-lg"
-              v-if="user_current?.role === '2'"
+              v-if="user_current?.role === '2' || user_current?.role === '3'"
               @click="handleIntoPageVendor"
             >
               Trang người bán
@@ -30,16 +31,6 @@
           </div>
 
           <div class="flex items-center space-x-4">
-            <div class="flex items-center space-x-1">
-              <img
-                alt="Vietnam flag"
-                class="w-5 h-5"
-                src="https://storage.googleapis.com/a1aa/image/Gk1qI5bKGcoNOR3EPAXEGN3mX6XPN09tnbBZ9ytZDbghwa7E.jpg"
-              />
-              <span class="text-gray-800"
-                >VI | VND <i class="fas fa-chevron-down"></i
-              ></span>
-            </div>
             <a class="text-gray-800 flex items-center space-x-1" href="#"
               ><i class="fas fa-percent text-green-500"></i
               ><span>Khuyến mãi</span></a
@@ -234,7 +225,6 @@
         <div class="flex items-center space-x-4 px-4">
           <a class="text-gray-600 hover:text-gray-800" href="#">Khách sạn</a>
           <a class="text-gray-600 hover:text-gray-800" href="#">Vé máy bay</a>
-          <div @click="showCurrentUser">logValue</div>
           <a class="text-gray-600 hover:text-gray-800" href="#">Vé xe khách</a>
           <a class="text-gray-600 hover:text-gray-800" href="#"
             >Đưa đón sân bay</a
@@ -270,7 +260,7 @@
 </template>
 
 <script>
-import { inject, onMounted, ref, watch } from "vue";
+import { inject, onMounted, ref, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -379,6 +369,7 @@ export default {
     const handleDisplayNotify = (status) => {
       displayNotification.value = status;
     };
+
     const fetchNotification = async () => {
       if (
         valueCurrentUser &&
@@ -535,17 +526,78 @@ export default {
       }
     };
 
+    //Notification for message chat real time
+    const intalation = () => {
+      const userId = 4;
+      window.Echo.channel(`notifications.${userId}`).listen(
+        "MessageNotifycation",
+        (e) => {
+          // Xử lý hiển thị thông báo
+          // showNotification(e.message);
+          console.log("ê",e);
+        }
+      );
+    };
+
+    // const showNotification = (message) => {
+    //   console.log("ê");
+    //   // Kiểm tra hỗ trợ Notification API
+    //   // if (!("Notification" in window)) {
+    //   //   alert("Trình duyệt không hỗ trợ thông báo!");
+    //   // }
+    //   // // Kiểm tra quyền thông báo
+    //   // else if (Notification.permission === "granted") {
+    //   //   createNotification(message);
+    //   // }
+    //   // // Yêu cầu quyền nếu chưa được cấp
+    //   // else if (Notification.permission !== "denied") {
+    //   //   Notification.requestPermission().then(function (permission) {
+    //   //     if (permission === "granted") {
+    //   //       createNotification(message);
+    //   //     }
+    //   //   });
+    //   // }
+    // };
+
+    // const createNotification = (message) => {
+    //   // Tạo thông báo
+    //   const notification = new Notification("Tin nhắn mới", {
+    //     body: `${message.sender_name}: ${message.content}`,
+    //     icon: "/path/to/icon.png", // Thêm icon cho thông báo
+    //   });
+
+    //   // Xử lý khi click vào thông báo
+    //   notification.onclick = function (event) {
+    //     event.preventDefault();
+    //     window.open(`/conversations/${message.conversation_id}`, "_blank");
+    //   };
+
+    //   // Có thể thêm âm thanh thông báo
+    //   const audio = new Audio("/path/to/notification-sound.mp3");
+    //   audio.play();
+    // };
+
     onMounted(() => {
+      fetchUserData();
       checkNotifyUser();
       fetchNotification();
-      // window.Echo.channel("tour-channel").listen("Notify", (e) => {
-      //   // console.log('logSocket',e);
-      //   setRealtime(e);
-      // });
-      fetchUserData();
+      intalation();
+      window.Echo.channel("tour-channel").listen("Notify", (e) => {
+        console.log("logSocket", e);
+        setRealtime(e);
+      });
+      // const userId = "1|PtPLArpE8SRPiIslrXFDPXjdbWUZ3tknQ5rYzFYGa5e45837";
+      // window.Echo.join(`notifications.${userId}`).listen(
+      //   ".MessageNotifycation",
+      //   (e) => {
+      //     // Xử lý hiển thị thông báo
+      //     // showNotification(e.message);
+      //     console.log("ê");
+      //   }
+      // );
     });
 
-    watch(() => {
+    watchEffect(() => {
       fetchNotification();
       checkNotifyUser();
     }, [valueCurrentUser]);
@@ -581,6 +633,7 @@ export default {
       goToCustomerSupport,
       handleChat,
       user_current,
+      intalation,
     };
   },
 };

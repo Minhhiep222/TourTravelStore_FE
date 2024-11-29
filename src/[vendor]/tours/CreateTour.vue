@@ -216,8 +216,7 @@ export default {
     // Sử dụng ref để quản lý start và end date
     const start = ref(null);
     const end = ref(null);
-    const regex =
-      /^(?!.*\s{2})(?!.*\u3000)(?=.*[\p{L}])(?!^\d+$)[\p{L}0-9\s]+$/u;
+    const regex =/^[a-zA-Z0-9\u00C0-\u017F]/u;
     // Function cập nhật giá trị start_date và end_date
     return {
       start,
@@ -360,7 +359,7 @@ export default {
       start_date: "",
       end_date: "",
       location: "",
-      availability: "",
+      availability: "0",
       image: "",
       swicth: "",
       errorName: "",

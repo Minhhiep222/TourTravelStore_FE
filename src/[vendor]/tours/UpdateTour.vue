@@ -401,7 +401,7 @@ export default {
           this.location,
           20,
           100,
-          this.regex
+          /^(?!.*\s{2})(?!.*\u3000)(?=.*[\p{L}])(?!^\d+$)[\p{L}0-9\s,]+$/u
         );
       },
       deep: true,

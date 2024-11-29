@@ -94,14 +94,14 @@
             <div class="buttons text-white font-medium">
               <button
                 class="bg-green-500 hover:bg-green-600"
-                @click="updateStatus(tour.id, 1)"
+                @click="updateStatus(tour.id, '1')"
               >
                 <i class="fas fa-check"></i>
                 Duyệt Tour
               </button>
               <button
                 class="bg-red-500 hover:bg-red-600"
-                @click="updateStatus(tour.id, 2)"
+                @click="updateStatus(tour.id, '2')"
               >
                 <i class="fas fa-trash-alt"></i>
                 Không duyệt Tour
@@ -117,46 +117,47 @@
             </div>
           </div>
 
-          <nav aria-label="Page navigation example mt-4" v-if="links">
-            <ul class="pagination mt-4">
-              <li class="page-item" :class="{ disabled: !links.prev }">
-                <a
-                  class="p-1 page-link"
-                  href="#"
-                  @click.prevent="fetchTours(meta.current_page - 1)"
-                  aria-label="Previous"
-                  :disabled="!links.prev"
-                >
-                  <span aria-hidden="true">&laquo;</span>
-                  <span class="sr-only">Previous</span>
-                </a>
-              </li>
-              <li
-                v-for="page in meta.last_page"
-                :key="page"
-                class="page-item"
-                :class="{ active: page === meta.current_page }"
+          <nav
+            aria-label="Page navigation"
+            v-if="links"
+            class="flex justify-center mt-4"
+          >
+            <div class="flex items-center space-x-2">
+              <!-- Previous Button -->
+              <button
+                @click.prevent="fetchTours(meta.current_page - 1)"
+                :disabled="!links.prev"
+                class="px-2 py-1 rounded-l-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
               >
-                <a
-                  class="p-1 px-2 page-link"
-                  href="#"
-                  @click.prevent="fetchTours(page)"
-                  >{{ page }}</a
-                >
-              </li>
-              <li class="page-item" :class="{ disabled: !links.next }">
-                <a
-                  class="p-1 page-link"
-                  href="#"
-                  @click.prevent="fetchTours(meta.current_page + 1)"
-                  aria-label="Next"
-                  :disabled="!links.next"
-                >
-                  <span aria-hidden="true">&raquo;</span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </li>
-            </ul>
+                <i class="fa fa-angles-left text-blue-800"></i>
+              </button>
+
+              <!-- Page Numbers -->
+              <div class="flex">
+                <template v-for="page in meta.last_page" :key="page">
+                  <button
+                    @click.prevent="fetchTours(page)"
+                    class="px-3 py-2 border border-gray-300 transition-all duration-300 hover:bg-blue-50 text-sm font-semibold tracking-tight hover:text-blue-600 hover:border-blue-300 focus:z-10 focus:ring-2 focus:ring-blue-200"
+                    :class="{
+                      'bg-blue-500 text-white hover:bg-blue-600 border-blue-500':
+                        page === meta.current_page,
+                      'text-gray-600': page !== meta.current_page,
+                    }"
+                  >
+                    {{ page }}
+                  </button>
+                </template>
+              </div>
+
+              <!-- Next Button -->
+              <button
+                @click.prevent="fetchTours(meta.current_page + 1)"
+                :disabled="!links.next"
+                class="px-2 py-1 rounded-r-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+              >
+                <i class="fa fa-angles-right text-blue-800"></i>
+              </button>
+            </div>
           </nav>
         </div>
       </div>
@@ -206,30 +207,28 @@ export default {
   data() {
     return {
       tours: [], // Danh sách các tour
+      meta: {},
+      links: {},
+      sortBy: "latest",
       tourToDelete: null,
       isModalVisible: false,
       count: 0, // Tổng số tour
     };
   },
   methods: {
-    async fetchTours() {
+    async fetchTours(page = 1) {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/tours/list`
+          `http://127.0.0.1:8000/api/tours/admin?page=${page}&per_page=5&sort=${this.sortBy}`
         );
 
-        // Lọc các tour có availability = 0
-        const availableTours = response.data.tours.filter(
-          (tour) => tour.availability === 0
-        );
+        // if (availableTours.length === 0) {
+        //   console.log("Không có tour nào với availability = 0.");
+        //   this.tours = []; // Đảm bảo danh sách tours trống
+        //   return;
+        // }
 
-        if (availableTours.length === 0) {
-          console.log("Không có tour nào với availability = 0.");
-          this.tours = []; // Đảm bảo danh sách tours trống
-          return;
-        }
-
-        this.tours = availableTours;
+        this.tours = response.data.tours;
       } catch (error) {
         console.error("Failed to fetch tour data:", error);
       }
@@ -245,9 +244,12 @@ export default {
           `http://127.0.0.1:8000/api/tours/${tourId}/status`,
           {
             status: status,
-            availability: status === 1 ? 1 : 0,
+            availability: status, // Nếu đây là giá trị khác, chỉnh lại tại đây
           }
         );
+
+        console.log(response);
+
         if (response.status === 200) {
           this.notifySuccess(status === 1 ? "Duyệt tour" : "Không duyệt tour");
           this.fetchTours();
@@ -342,6 +344,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use "../../assets/Global.module.scss";
-@use "../../assets/Tour.module.scss";
+@use "../assets/Global.module.scss";
+@use "../assets/Tour.module.scss";
 </style>

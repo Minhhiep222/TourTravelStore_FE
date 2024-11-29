@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import UserRegister from "./components/Register/Register.vue";
 import TourList from "./[vendor]/tours/Tour.vue";
-import QLTour from "./[vendor]/tours/QLTour.vue";
+import QLTour from "./[admin]/QLTour.vue";
 import CreateTour from "./[vendor]/tours/CreateTour.vue";
 import UpdateTour from "./[vendor]/tours/UpdateTour.vue";
 import DetailTour from "./[vendor]/tours/DetailTour.vue";

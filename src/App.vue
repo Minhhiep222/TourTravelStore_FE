@@ -3,7 +3,6 @@
     <main>
       <router-view />
     </main>
-
     <Login
       v-if="displayLogin"
       :handleDisplayLogin="handleDisplayLogin"

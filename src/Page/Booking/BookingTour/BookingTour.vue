@@ -24,6 +24,7 @@
                     class="w-full p-2 border rounded"
                     placeholder="Họ và tên"
                     type="text"
+                  
                   />
                   <p v-if="errorNameContact" class="text-sm text-red-500 mt-1">
                     {{ errorNameContact }}
@@ -138,12 +139,12 @@
                 Họ tên
                 <span class="text-red-500"> * </span>
               </label>
-              <input
-                v-model="nameCustomer"
-                class="block w-full border border-gray-300 rounded-lg p-2.5"
-                type="text"
-                value=""
-              />
+                 <input
+            v-model="nameCustomer"
+            class="block w-full border border-gray-300 rounded-lg p-2.5"
+            type="text"
+           :disabled="!emailContact || !nameContact || type_customer == 'self'"
+             />
               <p class="text-sm text-gray-500 mt-1">
                 như trên CMND (không dấu)
               </p>
@@ -161,7 +162,7 @@
                   v-model="emailCustomer"
                   class="block w-full border border-gray-300 rounded-lg p-2.5"
                   type="text"
-                  value=""
+                   :disabled="!emailContact || !nameContact || type_customer == 'self'"
                 />
                 <p class="text-sm text-gray-500 mt-1">VD: email@example.com</p>
                 <p v-if="errorEmailCustomer" class="text-sm text-red-500 mt-1">
@@ -236,6 +237,7 @@ export default {
     const errorNameContact = ref(null);
     const errorEmailCustomer = ref(null);
     const errorNameCustomer = ref(null);
+   
 
     const getDetailTour = async () => {
       try {
@@ -339,14 +341,16 @@ export default {
     watch(type_customer, () => {
       updateCustomerInfo();
     });
-
     const setType = (item) => {
-      if (item === "other") {
-        type_customer.value = "other";
-      } else if (item === "self") {
-        type_customer.value = "self";
-      }
-    };
+  if (item === "other") {
+    type_customer.value = "other";
+  
+  } else if (item === "self") {
+    type_customer.value = "self";
+  
+  }
+};
+
 
     return {
       type_customer,
@@ -368,6 +372,7 @@ export default {
       errorNameContact,
       errorEmailCustomer,
       errorNameCustomer,
+
     };
   },
 };

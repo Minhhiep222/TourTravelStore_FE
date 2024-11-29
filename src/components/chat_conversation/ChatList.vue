@@ -51,7 +51,7 @@
       </div>
 
       <!-- Conversation List -->
-      <div class="overflow-y-auto" style="height: calc(87vh - 160px)">
+      <div class="overflow-y-auto" style="height: calc(83vh - 200px)">
         <div
           v-for="conversation in conversations"
           v-bind:key="conversation.id"
@@ -136,7 +136,7 @@
       <div
         class="flex-1 p-4 flex flex-col overflow-y-auto bg-gray-50"
         ref="messageContainer"
-        style="max-height: calc(87vh - 140px)"
+        style="max-height: calc(92vh - 240px)"
       >
         <div
           v-for="message in messages"

@@ -1,5 +1,5 @@
 <template>
-   <!-- <button @click="logValue">logvalue</button> -->
+  <!-- <button @click="logValue">logvalue</button> -->
   <div class="relative">
     <img
       alt="Cityscape at night with lights"
@@ -532,7 +532,6 @@
     </div>
 
     <div class="p-8">
-     
       <div>
         <div class="section-title">Điểm đến được yêu thích</div>
         <div>
@@ -604,15 +603,14 @@
 </template>
 <script>
 import axios from "axios";
-import { onMounted, ref, inject, watch } from "vue";
+import { onMounted, ref, inject, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 
 import Swal from "sweetalert2";
 // import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
+import Pusher from "pusher-js";
 
 window.Pusher = Pusher;
-
 
 export default {
   name: "HomePage",
@@ -622,8 +620,6 @@ export default {
     const newesTour = ref([]);
     const displayErrors = ref(null);
     const notification = ref(null);
-
-   
 
     const getNewesTour = async () => {
       let userID = null;
@@ -743,7 +739,7 @@ export default {
       getNewesTour();
       // listenForNewTours();
     });
-    watch(() => {
+    watchEffect(() => {
       getNewesTour();
     }, [valueCurrentUser]);
 
