@@ -26,27 +26,14 @@
             Xem lịch
           </button>
           <div class="flex space-x-2">
-            <button class="px-4 py-2 border rounded-lg">
-              Thứ 4<br />6 thg 11
-            </button>
-            <button class="px-4 py-2 border rounded-lg">
-              Thứ 5<br />7 thg 11
-            </button>
-            <button class="px-4 py-2 border rounded-lg">
-              Thứ 6<br />8 thg 11
-            </button>
-            <button class="px-4 py-2 border rounded-lg">
-              Thứ 7<br />9 thg 11
-            </button>
-            <button class="px-4 py-2 border rounded-lg">
-              CN<br />10 thg 11
-            </button>
-            <button class="px-4 py-2 border rounded-lg">
-              Thứ 2<br />11 thg 11
-            </button>
-            <button class="px-4 py-2 border rounded-lg">
-              Thứ 3<br />12 thg 11
-            </button>
+            <button
+                v-for="(day, index) in weekDays"
+                :key="index"
+                class="px-4 py-2 border rounded-lg"
+                @click="choosenDate(day.fullDate)"
+              >
+                {{ day.formatDate }}
+             </button>
             <button class="px-4 py-2 border rounded-lg">&gt;</button>
           </div>
         </div>
@@ -54,9 +41,9 @@
           <p>Error: {{ errorValue }}</p>
         </div>
         <!-- Selected Date -->
-        <div class="bg-blue-100 p-4 rounded-lg mb-4">
+        <div v-if="valueChoosenDate" class="bg-blue-100 p-4 rounded-lg mb-4">
           <span>Ngày tham quan đã chọn</span>
-          <h3 class="text-lg font-bold">Thứ 4, 6 thg 11 2024</h3>
+          <h3 class="text-lg font-bold">{{valueChoosenDate}}</h3>
         </div>
 
         <!-- Adult and Children Inputs -->
@@ -140,6 +127,9 @@
           >
             Đặt ngay
           </button>
+          <button @click="logValue">
+            logValue
+          </button>
         </div>
       </div>
     </div>
@@ -164,6 +154,28 @@ export default {
     const totalPrice = ref(0);
     const numAdults = ref(1);
     const numChildren = ref(0);
+    const weekDays = ref([]);
+    const valueChoosenDate = ref(null);
+
+
+    const getDate = () => {
+      const currentDate = new Date();
+      for (let i = 0; i < 6; i++) {
+        const nextDate = new Date(currentDate);
+        nextDate.setDate(currentDate.getDate() + i);
+        const dayOfWeek = nextDate.toLocaleString("vi-VN", { weekday: "short" });
+        const dayOfMonth = nextDate.getDate();
+        const month = nextDate.getMonth() + 1;
+        const year = nextDate.getFullYear();
+        const formatDate = `${dayOfMonth} thg ${month} ${year}`; 
+        const fullDate = `${dayOfWeek}, ${dayOfMonth} thg ${month} ${year}`; 
+        const databaseDate = `${year}-${month}-${dayOfMonth}`; 
+        weekDays.value.push({formatDate: formatDate, fullDate:fullDate, databaseDate:databaseDate });
+      }
+    };
+    const choosenDate = (date) => {
+      valueChoosenDate.value = date
+    }
 
     // Lấy thông tin chi tiết tour
     const getDetailTour = async () => {
@@ -184,6 +196,7 @@ export default {
       }
     };
 
+    // Cập nhật tổng giá tiền
     const updateTotalPrice = () => {
       if (valueTour.value) {
         totalPrice.value =
@@ -195,33 +208,42 @@ export default {
       }
     };
 
+  
     const plusTour = (type) => {
       if (type === "adult") {
         numAdults.value++;
       } else if (type === "child") {
         numChildren.value++;
       }
-      updateTotalPrice();
+      updateTotalPrice(); 
     };
 
+    const logValue = () => {
+        console.log('valueCurrentDate',weekDays);
+        console.log('valueChoosenDate',valueChoosenDate);
+    }
+  
     const minusTour = (type) => {
       if (type === "adult" && numAdults.value > 0) {
         numAdults.value--;
       } else if (type === "child" && numChildren.value > 0) {
         numChildren.value--;
       }
-      updateTotalPrice();
+      updateTotalPrice(); 
     };
 
     onMounted(() => {
       tourID.value = route.params.id;
       getDetailTour();
+      getDate();
     });
 
+ 
     const formatPrice = (price) => {
       return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
 
+    // Đặt vé tour
     const bookTour = (id) => {
       router.push({ name: "BookingTour", params: { id } });
     };
@@ -237,6 +259,11 @@ export default {
       formatPrice,
       bookTour,
       errorValue,
+      logValue,
+      getDate,
+      weekDays,
+      choosenDate,
+      valueChoosenDate,
     };
   },
 };

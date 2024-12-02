@@ -1,48 +1,29 @@
 <template>
   <!-- <button @click="logValue">logvalue</button> -->
   <div class="relative">
-    <img
-      alt="Cityscape at night with lights"
-      class="w-full h-96 object-cover"
-      height="600"
-      src="@/assets/Images/CeUH4ecYMTmxnUrXSAKjDzGGU69eNgmHqoXfiYd1Wi9Iqt2OB.jpg"
-      width="1920"
-    />
+    <img alt="Cityscape at night with lights" class="w-full h-96 object-cover" height="600"
+      src="@/assets/Images/CeUH4ecYMTmxnUrXSAKjDzGGU69eNgmHqoXfiYd1Wi9Iqt2OB.jpg" width="1920" />
     <div class="absolute inset-0 bg-black opacity-50"></div>
-    <div
-      class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4"
-    >
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
       <h1 class="text-4xl font-bold">
         Trải nghiệm vui vẻ cho chuyến đi khó quên
       </h1>
-      <div
-        class="mt-4 flex items-center bg-white text-black rounded-full px-4 py-2"
-      >
+      <div class="mt-4 flex items-center bg-white text-black rounded-full px-4 py-2">
         <i class="fas fa-map-marker-alt text-blue-500"> </i>
         <span class="ml-2"> Khám phá điểm đến kế tiếp của bạn </span>
         <i class="fas fa-chevron-down ml-2"> </i>
       </div>
       <div class="mt-4 flex items-center rounded-full px-4 py-2 w-1/2">
-        <input
-          class="flex-grow px-4 py-2.5 rounded-l-full text-black focus:outline-none"
-          placeholder="Tìm kiếm địa điểm hoặc hoạt động"
-          value=""
-          type="text"
-          v-model="key"
-        />
-        <button
-          class="bg-blue-500 text-white px-4 py-2.5 rounded-r-full"
-          @click="handleSearch"
-        >
+        <input class="flex-grow px-4 py-2.5 rounded-l-full text-black focus:outline-none"
+          placeholder="Tìm kiếm địa điểm hoặc hoạt động" value="" type="text" v-model="key" />
+        <button class="bg-blue-500 text-white px-4 py-2.5 rounded-r-full" @click="handleSearch">
           Tìm kiếm
         </button>
       </div>
     </div>
   </div>
 
-  <div
-    class="bg-white border-b shadow-sm rounded-t-lg px-4 py-2 flex justify-around"
-  >
+  <div class="bg-white border-b shadow-sm rounded-t-lg px-4 py-2 flex justify-around">
     <div class="flex flex-col items-center">
       <i class="fas fa-th-large text-2xl"> </i>
       <span class="mt-1"> Tất cả các hoạt động </span>
@@ -83,31 +64,17 @@
       </div>
       <div class="grid grid-cols-3 gap-4">
         <div class="col-span-1">
-          <img
-            alt="Promotion 2: Imagine Dragons Concert"
-            class="w-full h-auto rounded-lg shadow-md"
-            height="150"
-            src="@/assets/Images/EI5mPWVd9l4aA5aoYfCn1efAcSMII187QknrZvDhXX3ANXbnA.jpg"
-            width="300"
-          />
+          <img alt="Promotion 2: Imagine Dragons Concert" class="w-full h-auto rounded-lg shadow-md" height="150"
+            src="@/assets/Images/EI5mPWVd9l4aA5aoYfCn1efAcSMII187QknrZvDhXX3ANXbnA.jpg" width="300" />
         </div>
         <div class="col-span-1">
-          <img
-            alt="Promotion 3: 11.11 Tiệc Sale Cuối Năm - Mã giảm đến 1,1 triệu"
-            class="w-full h-auto rounded-lg shadow-md"
-            height="150"
-            src="@/assets/Images/joRuHe34cjzZXKmw9v4xcWLgtMZLB3DslWehMOUSHvLhmrtTA.jpg"
-            width="300"
-          />
+          <img alt="Promotion 3: 11.11 Tiệc Sale Cuối Năm - Mã giảm đến 1,1 triệu"
+            class="w-full h-auto rounded-lg shadow-md" height="150"
+            src="@/assets/Images/joRuHe34cjzZXKmw9v4xcWLgtMZLB3DslWehMOUSHvLhmrtTA.jpg" width="300" />
         </div>
         <div class="col-span-1">
-          <img
-            alt="Promotion 4: Cuối tuần đi chơi gần nhà - Giảm đến 300k"
-            class="w-full h-auto rounded-lg shadow-md"
-            height="150"
-            src="@/assets/Images/eIy3L5zfwpm0nEMcRo07fm3W8nfZ2uuPWwzXueCKIIprzctdC.jpg"
-            width="300"
-          />
+          <img alt="Promotion 4: Cuối tuần đi chơi gần nhà - Giảm đến 300k" class="w-full h-auto rounded-lg shadow-md"
+            height="150" src="@/assets/Images/eIy3L5zfwpm0nEMcRo07fm3W8nfZ2uuPWwzXueCKIIprzctdC.jpg" width="300" />
         </div>
       </div>
     </div>
@@ -119,53 +86,28 @@
       </h2>
       <div class="grid grid-cols-5 gap-4">
         <div class="bg-white shadow-md rounded-lg">
-          <img
-            alt="Tour và Điểm tham quan image"
-            class="rounded-lg"
-            height="200"
-            src="@/assets/Images/i4Vf2QqNtrUfJUvnttopTcgxRs3FyeKf44YNTXM9PvE34u2OB.jpg"
-            width="300"
-          />
+          <img alt="Tour và Điểm tham quan image" class="rounded-lg" height="200"
+            src="@/assets/Images/i4Vf2QqNtrUfJUvnttopTcgxRs3FyeKf44YNTXM9PvE34u2OB.jpg" width="300" />
           <p class="text-center font-semibold py-2">Tour và Điểm tham quan</p>
         </div>
         <div class="bg-white shadow-md rounded-lg">
-          <img
-            alt="Hoạt động vui chơi image"
-            class="rounded-lg"
-            height="200"
-            src="@/assets/Images/VCnIZdIsF3JFKJVrTAJBCRTJNrVptsacmJOdBrV6BsLk7a7E.jpg"
-            width="300"
-          />
+          <img alt="Hoạt động vui chơi image" class="rounded-lg" height="200"
+            src="@/assets/Images/VCnIZdIsF3JFKJVrTAJBCRTJNrVptsacmJOdBrV6BsLk7a7E.jpg" width="300" />
           <p class="text-center font-semibold py-2">Hoạt động vui chơi</p>
         </div>
         <div class="bg-white shadow-md rounded-lg">
-          <img
-            alt="Bảo hiểm du lịch image"
-            class="rounded-lg"
-            height="200"
-            src="@/assets/Images/8fsg2NVXzSV4JKqdJZqKQukNUfHWETJcJha6ZVHtfKIdcXbnA.jpg"
-            width="300"
-          />
+          <img alt="Bảo hiểm du lịch image" class="rounded-lg" height="200"
+            src="@/assets/Images/8fsg2NVXzSV4JKqdJZqKQukNUfHWETJcJha6ZVHtfKIdcXbnA.jpg" width="300" />
           <p class="text-center font-semibold py-2">Bảo hiểm du lịch</p>
         </div>
         <div class="bg-white shadow-md rounded-lg">
-          <img
-            alt="Đặt ngay Trả sau image"
-            class="rounded-lg"
-            height="200"
-            src="@/assets/Images/3JtKzhCAUUqjE5bIG9FCrvkGfycRFSu5L01RVPi8LIuI312JA.jpg"
-            width="300"
-          />
+          <img alt="Đặt ngay Trả sau image" class="rounded-lg" height="200"
+            src="@/assets/Images/3JtKzhCAUUqjE5bIG9FCrvkGfycRFSu5L01RVPi8LIuI312JA.jpg" width="300" />
           <p class="text-center font-semibold py-2">Đặt ngay Trả sau</p>
         </div>
         <div class="bg-white shadow-md rounded-lg">
-          <img
-            alt="Hoạt động vui chơi image"
-            class="rounded-lg"
-            height="200"
-            src="@/assets/Images/VCnIZdIsF3JFKJVrTAJBCRTJNrVptsacmJOdBrV6BsLk7a7E.jpg"
-            width="300"
-          />
+          <img alt="Hoạt động vui chơi image" class="rounded-lg" height="200"
+            src="@/assets/Images/VCnIZdIsF3JFKJVrTAJBCRTJNrVptsacmJOdBrV6BsLk7a7E.jpg" width="300" />
           <p class="text-center font-semibold py-2">Hoạt động vui chơi</p>
         </div>
       </div>
@@ -179,31 +121,16 @@
         <p>Error: {{ displayErrors }}</p>
       </div>
       <div class="grid grid-cols-5 gap-1">
-        <div
-          v-for="tour in newesTour.slice(0, 10)"
-          :key="tour.id"
-          class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300"
-        >
-          <img
-            @click="detailTour(tour.id)"
-            :src="
-              tour.images.length > 0
-                ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
-                : ''
-            "
-            :alt="
-              tour.images.length > 0
+        <div v-for="tour in newesTour.slice(0, 10)" :key="tour.id"
+          class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300">
+          <img @click="detailTour(tour.id)" :src="tour.images.length > 0
+              ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
+              : ''
+            " :alt="tour.images.length > 0
                 ? tour.images[0].alt_text
                 : 'Default alt text'
-            "
-            class="w-full h-68 object-cover min-h-32 max-h-32"
-            height="200"
-            width="300"
-          />
-          <div
-            class="p-2 flex flex-col justify-between"
-            style="min-height: 164px"
-          >
+              " class="w-full h-68 object-cover min-h-32 max-h-32" height="200" width="300" />
+          <div class="p-2 flex flex-col justify-between" style="min-height: 164px">
             <div class="">
               <p class="text-gray-700">{{ tour?.name.substring(0, 40) }}...</p>
               <div class="location text-sm">
@@ -212,15 +139,8 @@
               </div>
 
               <div class="rating">
-                <i
-                  v-for="star in Math.floor(tour.avgReview)"
-                  v-bind:key="star"
-                  class="fas fa-star text-blue-400"
-                ></i>
-                <i
-                  v-if="tour.avgReview % 1 !== 0"
-                  class="fas fa-star-half-alt text-blue-400"
-                ></i>
+                <i v-for="star in Math.floor(tour.avgReview)" v-bind:key="star" class="fas fa-star text-blue-400"></i>
+                <i v-if="tour.avgReview % 1 !== 0" class="fas fa-star-half-alt text-blue-400"></i>
               </div>
             </div>
 
@@ -229,14 +149,9 @@
                 <span>{{ formatPrice(tour.price) }} VND</span>
               </p>
               <div class="flex items-center mt-2">
-                <span
-                  @click="removeItem(tour.id)"
-                  v-if="tour.is_favorite == true"
-                  ><font-awesome-icon :class="$style.heartSolid" icon="heart"
-                /></span>
-                <span @click="handleAddTourToFavorite(tour.id)" v-else
-                  ><font-awesome-icon icon="heart"
-                /></span>
+                <span @click="removeItem(tour.id)" v-if="tour.is_favorite == true"><font-awesome-icon
+                    :class="$style.heartSolid" icon="heart" /></span>
+                <span @click="handleAddTourToFavorite(tour.id)" v-else><font-awesome-icon icon="heart" /></span>
               </div>
             </div>
           </div>
@@ -272,31 +187,16 @@
         </button>
       </div>
       <div class="grid grid-cols-5 gap-1">
-        <div
-          v-for="tour in tours"
-          :key="tour.id"
-          class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300"
-        >
-          <img
-            @click="detailTour(tour.id)"
-            :src="
-              tour.images.length > 0
-                ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
-                : ''
-            "
-            :alt="
-              tour.images.length > 0
+        <div v-for="tour in tours" :key="tour.id"
+          class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300">
+          <img @click="detailTour(tour.id)" :src="tour.images.length > 0
+              ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
+              : ''
+            " :alt="tour.images.length > 0
                 ? tour.images[0].alt_text
                 : 'Default alt text'
-            "
-            class="w-full h-68 object-cover min-h-32 max-h-32"
-            height="200"
-            width="300"
-          />
-          <div
-            class="p-2 flex flex-col justify-between"
-            style="min-height: 164px"
-          >
+              " class="w-full h-68 object-cover min-h-32 max-h-32" height="200" width="300" />
+          <div class="p-2 flex flex-col justify-between" style="min-height: 164px">
             <div class="">
               <p class="text-gray-700">{{ tour?.name.substring(0, 40) }}...</p>
               <div class="location text-sm">
@@ -305,15 +205,8 @@
               </div>
 
               <div class="rating">
-                <i
-                  v-for="star in Math.floor(tour.avgReview)"
-                  v-bind:key="star"
-                  class="fas fa-star text-blue-400"
-                ></i>
-                <i
-                  v-if="tour.avgReview % 1 !== 0"
-                  class="fas fa-star-half-alt text-blue-400"
-                ></i>
+                <i v-for="star in Math.floor(tour.avgReview)" v-bind:key="star" class="fas fa-star text-blue-400"></i>
+                <i v-if="tour.avgReview % 1 !== 0" class="fas fa-star-half-alt text-blue-400"></i>
               </div>
             </div>
 
@@ -322,14 +215,9 @@
                 <span>{{ formatPrice(tour.price) }} VND</span>
               </p>
               <div class="flex items-center mt-2">
-                <span
-                  @click="removeItem(tour.id)"
-                  v-if="tour.is_favorite == true"
-                  ><font-awesome-icon :class="$style.heartSolid" icon="heart"
-                /></span>
-                <span @click="handleAddTourToFavorite(tour.id)" v-else
-                  ><font-awesome-icon icon="heart"
-                /></span>
+                <span @click="removeItem(tour.id)" v-if="tour.is_favorite == true"><font-awesome-icon
+                    :class="$style.heartSolid" icon="heart" /></span>
+                <span @click="handleAddTourToFavorite(tour.id)" v-else><font-awesome-icon icon="heart" /></span>
               </div>
             </div>
           </div>
@@ -351,31 +239,16 @@
         </button>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-5 gap-2">
-        <div
-          v-for="tour in tours"
-          :key="tour.id"
-          class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300"
-        >
-          <img
-            @click="detailTour(tour.id)"
-            :src="
-              tour.images.length > 0
-                ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
-                : ''
-            "
-            :alt="
-              tour.images.length > 0
+        <div v-for="tour in tours" :key="tour.id"
+          class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300">
+          <img @click="detailTour(tour.id)" :src="tour.images.length > 0
+              ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
+              : ''
+            " :alt="tour.images.length > 0
                 ? tour.images[3].alt_text
                 : 'Default alt text'
-            "
-            class="w-full h-68 object-cover min-h-32 max-h-32"
-            height="200"
-            width="300"
-          />
-          <div
-            class="p-2 flex flex-col justify-between"
-            style="min-height: 164px"
-          >
+              " class="w-full h-68 object-cover min-h-32 max-h-32" height="200" width="300" />
+          <div class="p-2 flex flex-col justify-between" style="min-height: 164px">
             <div class="">
               <p class="text-gray-700">{{ tour?.name.substring(0, 40) }}...</p>
               <div class="location text-sm">
@@ -384,15 +257,8 @@
               </div>
 
               <div class="rating">
-                <i
-                  v-for="star in Math.floor(tour.avgReview)"
-                  v-bind:key="star"
-                  class="fas fa-star text-blue-400"
-                ></i>
-                <i
-                  v-if="tour.avgReview % 1 !== 0"
-                  class="fas fa-star-half-alt text-blue-400"
-                ></i>
+                <i v-for="star in Math.floor(tour.avgReview)" v-bind:key="star" class="fas fa-star text-blue-400"></i>
+                <i v-if="tour.avgReview % 1 !== 0" class="fas fa-star-half-alt text-blue-400"></i>
               </div>
             </div>
 
@@ -401,14 +267,9 @@
                 <span>{{ formatPrice(tour.price) }} VND</span>
               </p>
               <div class="flex items-center mt-2">
-                <span
-                  @click="removeItem(tour.id)"
-                  v-if="tour.is_favorite == true"
-                  ><font-awesome-icon :class="$style.heartSolid" icon="heart"
-                /></span>
-                <span @click="handleAddTourToFavorite(tour.id)" v-else
-                  ><font-awesome-icon icon="heart"
-                /></span>
+                <span @click="removeItem(tour.id)" v-if="tour.is_favorite == true"><font-awesome-icon
+                    :class="$style.heartSolid" icon="heart" /></span>
+                <span @click="handleAddTourToFavorite(tour.id)" v-else><font-awesome-icon icon="heart" /></span>
               </div>
             </div>
           </div>
@@ -455,13 +316,8 @@
       </div>
       <div class="grid grid-cols-5 gap-2 mt-6">
         <div class="bg-white shadow rounded-lg overflow-hidden">
-          <img
-            alt="Sun World Ba Na Hills tại Đà Nẵng"
-            class="w-full h-48 object-cover"
-            height="200"
-            src="@/assets/Images/rZpYfgjLXn2JGi2ueIdfe993X6uSSNRyX0yIDzzlYcChWz2OB.jpg"
-            width="300"
-          />
+          <img alt="Sun World Ba Na Hills tại Đà Nẵng" class="w-full h-48 object-cover" height="200"
+            src="@/assets/Images/rZpYfgjLXn2JGi2ueIdfe993X6uSSNRyX0yIDzzlYcChWz2OB.jpg" width="300" />
           <div class="p-4">
             <h2 class="text-lg font-bold text-gray-800">
               Sun World Ba Na Hills tại Đà Nẵng
@@ -470,13 +326,8 @@
           </div>
         </div>
         <div class="bg-white shadow rounded-lg overflow-hidden">
-          <img
-            alt="Vé Công viên nước Đà Nẵng Mikazuki Water Park 365"
-            class="w-full h-48 object-cover"
-            height="200"
-            src="@/assets/Images/JGjioJOCBI6IORZUjhGEC5Wr01LYdScwT30sAu9yJdyZNb7E.jpg"
-            width="300"
-          />
+          <img alt="Vé Công viên nước Đà Nẵng Mikazuki Water Park 365" class="w-full h-48 object-cover" height="200"
+            src="@/assets/Images/JGjioJOCBI6IORZUjhGEC5Wr01LYdScwT30sAu9yJdyZNb7E.jpg" width="300" />
           <div class="p-4">
             <h2 class="text-lg font-bold text-gray-800">
               Vé Công viên nước Đà Nẵng Mikazuki Water Park 365
@@ -485,13 +336,8 @@
           </div>
         </div>
         <div class="bg-white shadow rounded-lg overflow-hidden">
-          <img
-            alt="Vé công viên suối khoáng nóng Núi Thần Tài"
-            class="w-full h-48 object-cover"
-            height="200"
-            src="@/assets/Images/eaI7ZI4HLiSACqE4paefaFPXesAwdKiPHLzb0vgNK000Wz2OB.jpg"
-            width="300"
-          />
+          <img alt="Vé công viên suối khoáng nóng Núi Thần Tài" class="w-full h-48 object-cover" height="200"
+            src="@/assets/Images/eaI7ZI4HLiSACqE4paefaFPXesAwdKiPHLzb0vgNK000Wz2OB.jpg" width="300" />
           <div class="p-4">
             <h2 class="text-lg font-bold text-gray-800">
               Vé công viên suối khoáng nóng Núi Thần Tài
@@ -500,26 +346,16 @@
           </div>
         </div>
         <div class="bg-white shadow rounded-lg overflow-hidden">
-          <img
-            alt="Vé Đà Nẵng Downtown"
-            class="w-full h-48 object-cover"
-            height="200"
-            src="@/assets/Images/cMfPdFNZGOWdCKz9dYsuhvrvDwKXEXH5m8bMZj5MPWw1a22JA.jpg"
-            width="300"
-          />
+          <img alt="Vé Đà Nẵng Downtown" class="w-full h-48 object-cover" height="200"
+            src="@/assets/Images/cMfPdFNZGOWdCKz9dYsuhvrvDwKXEXH5m8bMZj5MPWw1a22JA.jpg" width="300" />
           <div class="p-4">
             <h2 class="text-lg font-bold text-gray-800">Vé Đà Nẵng Downtown</h2>
             <p class="text-red-500 mt-2">VND 130.101</p>
           </div>
         </div>
         <div class="bg-white shadow rounded-lg overflow-hidden">
-          <img
-            alt="Combo vé vui chơi siêu tiết kiệm từ Traveloka tại Đà Nẵng - Hội An"
-            class="w-full h-48 object-cover"
-            height="200"
-            src="@/assets/Images/nbo4KTPzxv4lFFTRPWqMN5Kf7J4hhBE1ucb0rF1Jbgb1a22JA.jpg"
-            width="300"
-          />
+          <img alt="Combo vé vui chơi siêu tiết kiệm từ Traveloka tại Đà Nẵng - Hội An" class="w-full h-48 object-cover"
+            height="200" src="@/assets/Images/nbo4KTPzxv4lFFTRPWqMN5Kf7J4hhBE1ucb0rF1Jbgb1a22JA.jpg" width="300" />
           <div class="p-4">
             <h2 class="text-lg font-bold text-gray-800">
               Combo vé vui chơi siêu tiết kiệm từ - Hội An
@@ -576,9 +412,7 @@
           <span class="link-item">Vé Đà Nẵng Downtown</span>
           <span class="link-item">Vé trượt Zipline Đà Lạt</span>
           <span class="link-item">Vé cáp treo núi Bà Đen Sun World</span>
-          <span class="link-item"
-            >Vé tắm bùn khoáng nóng I-Resort Nha Trang</span
-          >
+          <span class="link-item">Vé tắm bùn khoáng nóng I-Resort Nha Trang</span>
           <span class="link-item">Vé đài quan sát Landmark 81 Skyview</span>
           <span class="link-item">Vé show Ký Ức Hội An</span>
           <span class="link-item">Vé VinWonders Nha Trang</span>
@@ -592,9 +426,7 @@
           <span class="link-item">Vé Fresh Garden Đà Lạt</span>
           <span class="link-item">Vé Vườn Ánh Sáng Lumiere Đà Lạt</span>
           <span class="link-item">Vé Sun World Hạ Long</span>
-          <span class="link-item"
-            >Vé công viên suối khoáng nóng Núi Thần Tài</span
-          >
+          <span class="link-item">Vé công viên suối khoáng nóng Núi Thần Tài</span>
           <span class="link-item">Vé VinWonders Nam Hội An</span>
         </div>
       </div>
@@ -603,14 +435,14 @@
 </template>
 <script>
 import axios from "axios";
-import { onMounted, ref, inject, watch } from "vue";
+import { onMounted, ref, inject, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 
 import Swal from "sweetalert2";
 // import Echo from 'laravel-echo';
-// import Pusher from 'pusher-js';
+import Pusher from "pusher-js";
 
-// window.Pusher = Pusher;
+window.Pusher = Pusher;
 
 export default {
   name: "HomePage",
@@ -739,7 +571,7 @@ export default {
       getNewesTour();
       // listenForNewTours();
     });
-    watch(() => {
+    watchEffect(() => {
       getNewesTour();
     }, [valueCurrentUser]);
 

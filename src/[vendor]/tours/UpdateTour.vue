@@ -4,59 +4,27 @@
       <label>Chỉnh sửa tour du lịch</label>
     </div>
     <div class="container p-0 my-8 rounded">
-      <form
-        class="form_tour"
-        v-if="swicth == ''"
-        @submit.prevent="handleSubmit"
-      >
+      <form class="form_tour" v-if="swicth == ''" @submit.prevent="handleSubmit">
         <!-- image -->
         <div class="form-group">
           <label> Hình ảnh </label>
           <div class="group_image">
             <div class="image_tours" v-if="imagePreviews.length">
-              <div
-                class="image-item"
-                v-for="(image, index) in imagePreviews"
-                :key="index"
-              >
-                <img
-                  class="image_tours-item"
-                  :src="image"
-                  alt="Image"
-                  width="100"
-                />
-                <button
-                  class="btn_removeImage"
-                  @click.prevent="removeImage(index)"
-                >
+              <div class="image-item" v-for="(image, index) in imagePreviews" :key="index">
+                <img class="image_tours-item" :src="image" alt="Image" width="100" />
+                <button class="btn_removeImage" @click.prevent="removeImage(index)">
                   <i class="fas fa-trash"></i>
                 </button>
               </div>
-              <img
-                class="image_tours-item button"
-                :src="imageDefault"
-                alt="Image"
-                width="100"
-                @click="openFileDialog"
-              />
+              <img class="image_tours-item button" :src="imageDefault" alt="Image" width="100"
+                @click="openFileDialog" />
             </div>
             <div v-else>
-              <img
-                class="image_tours-item button"
-                :src="imageDefault"
-                alt="Image"
-                width="100"
-                @click="openFileDialog"
-              />
+              <img class="image_tours-item button" :src="imageDefault" alt="Image" width="100"
+                @click="openFileDialog" />
             </div>
-            <input
-              class="input_img"
-              type="file"
-              @change="handleFileUpload"
-              accept=".jpg, .png, .svg, .jpeg"
-              multiple
-              hidden
-            />
+            <input class="input_img" type="file" @change="handleFileUpload" accept=".jpg, .png, .svg, .jpeg" multiple
+              hidden />
             <div v-if="errorImage" class="error">{{ errorImage }}</div>
           </div>
         </div>
@@ -64,23 +32,14 @@
         <!-- name -->
         <div class="form-group">
           <label> Tên tour </label>
-          <input
-            @input="logTour"
-            placeholder="Nhập tên tour du lịch"
-            type="text"
-            v-model="name"
-          />
+          <input @input="logTour" placeholder="Nhập tên tour du lịch" type="text" v-model="name" />
           <div v-if="errorName" class="error">{{ errorName }}</div>
         </div>
 
         <!-- duration -->
         <div class="form-group">
           <label> Thời gian </label>
-          <input
-            placeholder="Nhập vào số ngày"
-            type="text"
-            v-model="duration"
-          />
+          <input placeholder="Nhập vào số ngày" type="text" v-model="duration" />
           <div v-if="errorDuration" class="error">{{ errorDuration }}</div>
         </div>
 
@@ -105,11 +64,7 @@
         <!-- end date -->
         <div class="form-group">
           <label> Địa chỉ </label>
-          <input
-            placeholder="Nhập vào địa chỉ"
-            type="text"
-            v-model="location"
-          />
+          <input placeholder="Nhập vào địa chỉ" type="text" v-model="location" />
           <div v-if="errorLocation" class="error">{{ errorLocation }}</div>
         </div>
 
@@ -136,36 +91,23 @@
         <!-- schedule -->
         <div class="form-group">
           <label> Lịch trình </label>
-          <div
-            class="schedule"
-            v-for="(schedule, index) in schedules"
-            :key="index"
-          >
+          <div class="schedule" v-for="(schedule, index) in schedules" :key="index">
             <div class="schedule-item">
               <div class="schedule-item_name">
-                <input
-                  :placeholder="'Nhập vào tên lịch trình ' + (index + 1)"
-                  type="text"
-                  v-model="schedule.name_schedule"
-                />
+                <input :placeholder="'Nhập vào tên lịch trình ' + (index + 1)" type="text"
+                  v-model="schedule.name_schedule" />
                 <div v-if="errorNameSchedule[index]" class="error">
                   {{ errorNameSchedule[index] }}
                 </div>
               </div>
               <div class="schedule-item_time">
-                <VueDatePicker
-                  v-model="schedule.time_schedule"
-                  placeholder="Chọn thời gian lịch trình"
-                >
+                <VueDatePicker v-model="schedule.time_schedule" placeholder="Chọn thời gian lịch trình">
                 </VueDatePicker>
                 <div v-if="errorDateTimeSchedule[index]" class="error">
                   {{ errorDateTimeSchedule[index] }}
                 </div>
               </div>
-              <button
-                class="btn_removeSchedule"
-                @click.prevent="removeSchedule(index)"
-              >
+              <button class="btn_removeSchedule" @click.prevent="removeSchedule(index)">
                 <i class="fas fa-trash"></i>
               </button>
             </div>
@@ -179,11 +121,7 @@
         <!-- desciption -->
         <div class="form-group">
           <label> Mô tả </label>
-          <textarea
-            placeholder="Nhập vào mô tả"
-            type="text"
-            v-model="description"
-          ></textarea>
+          <textarea placeholder="Nhập vào mô tả" type="text" v-model="description"></textarea>
           <div v-if="errorDescription" class="error">
             {{ errorDescription }}
           </div>
@@ -197,12 +135,7 @@
     </div>
 
     <!-- Modal for confirmation -->
-    <div
-      v-if="isModalVisible"
-      @click="closeModal"
-      class="modal fade show"
-      style="display: block; z-index: 1050"
-    >
+    <div v-if="isModalVisible" @click="closeModal" class="modal fade show" style="display: block; z-index: 1050">
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content p-3">
           <div class="modal-header">
@@ -262,6 +195,8 @@ export default {
     const image = ref("");
     const start_date = ref("");
     const end_date = ref("");
+    const user_id = ref("");
+    const status = ref(null);
 
     onMounted(async () => {
       try {
@@ -327,6 +262,8 @@ export default {
       image,
       start_date,
       end_date,
+      status,
+      user_id,
     };
   },
   data() {
@@ -437,7 +374,7 @@ export default {
           this.location,
           20,
           100,
-          this.regex
+          /^(?!.*\s{2})(?!.*\u3000)(?=.*[\p{L}])(?!^\d+$)[\p{L}0-9\s,]+$/u
         );
       },
       deep: true,
@@ -765,9 +702,8 @@ export default {
         if (index < this.schedules.length - 1) {
           const nextDate = this.schedules[index + 1].time_schedule;
           if (nextDate < currentDate) {
-            this.errorDateTimeSchedule[index] = `Thời gian lịch trình ${
-              index + 1
-            } không được bé hơn lịch trình ${index + 2}`;
+            this.errorDateTimeSchedule[index] = `Thời gian lịch trình ${index + 1
+              } không được bé hơn lịch trình ${index + 2}`;
             isValidTimeSchedule = false;
           }
         }
@@ -825,6 +761,8 @@ export default {
       formData.append("end_date", this.end_date);
       formData.append("location", this.location);
       formData.append("availability", this.availability);
+      formData.append("status", this.status);
+      console.log("status", this.status);
       formData.append("schedules", JSON.stringify(this.schedules));
 
       // Append files to form data

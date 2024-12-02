@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import UserRegister from "./components/Register/Register.vue";
 // import UserLogin from "./components/Login/Login.vue";
 import TourList from "./[vendor]/tours/Tour.vue";
-import QLTour from "./[vendor]/tours/QLTour.vue";
+import QLTour from "./[admin]/QLTour.vue";
 import CreateTour from "./[vendor]/tours/CreateTour.vue";
 import UpdateTour from "./[vendor]/tours/UpdateTour.vue";
 import DetailTour from "./[vendor]/tours/DetailTour.vue";
@@ -32,12 +32,20 @@ import Socket from "./components/socket/socket.vue";
 import CustomerSupport from "./components/CustomerSupport/CustomerSupport.vue";
 import ContactUs from "./components/CustomerSupport/ContactUs.vue";
 import Statistical from "./components/Statistical/Statistical.vue";
+import QLOrder from "./components/Order/Order.vue";
+import DetailsOrder from "./components/Order/DetailsOrder.vue";
+// import QLOrder from "./components/Order/Order.vue";
+// import DetailsOrder from "./components/Order/DetailsOrder.vue";
+import Notification from "./components/Notification.vue";
+import DefaultLayoutVendor from "./Layout/DefaultLayout/DefaultLayoutVendor.vue";
+
 const routes = [
   {
     path: "/register",
     name: "Register",
     component: UserRegister,
   },
+
   {
     path: "/login",
     name: "Login",
@@ -134,6 +142,16 @@ const routes = [
         name: "UserDetails",
         component: UserDetails,
       },
+      {
+        path: "/CustomerSupport",
+        name: "CustomerSupport",
+        component: CustomerSupport,
+      },
+      {
+        path: "/CustomerSupport/ContactUs",
+        name: "ContactUs",
+        component: ContactUs,
+      },
     ],
   },
   {
@@ -163,7 +181,7 @@ const routes = [
         component: TourList,
       },
       {
-        path: "/:vendor/qltours",
+        path: "/admin/manager/tours",
         name: "QLTour",
         component: QLTour,
       },
@@ -186,6 +204,17 @@ const routes = [
         path: "/CustomerSupport/ContactUs",
         name: "ContactUs",
         component: ContactUs,
+      },
+    ],
+  },
+  {
+    path: "/",
+    component: DefaultLayoutVendor,
+    children: [
+      {
+        path: "/:vendor/tours",
+        name: "Tours",
+        component: TourList,
       },
     ],
   },

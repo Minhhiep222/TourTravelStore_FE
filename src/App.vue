@@ -3,16 +3,8 @@
     <main>
       <router-view />
     </main>
-
-    <Login
-      v-if="displayLogin"
-      :handleDisplayLogin="handleDisplayLogin"
-      :setCurrentUser="setCurrentUser"
-    ></Login>
-    <Register
-      v-if="displayRegister"
-      :handleDisplayRegister="handleDisplayRegister"
-    ></Register>
+    <Login v-if="displayLogin" :handleDisplayLogin="handleDisplayLogin" :setCurrentUser="setCurrentUser"></Login>
+    <Register v-if="displayRegister" :handleDisplayRegister="handleDisplayRegister"></Register>
     <!-- <button @click="logData">logData</button> -->
   </div>
 </template>
@@ -81,7 +73,6 @@ export default {
       }
     };
 
-  
     onMounted(() => {
       handleDataCurrentUser();
       // window.Echo.channel('tour-channel').listen('Notify',(e) => {
@@ -89,8 +80,8 @@ export default {
       // });
     });
 
-   
-   
+
+
 
     provide('dataValue', dataValue);
     provide('valueCurrentUser', valueCurrentUser);

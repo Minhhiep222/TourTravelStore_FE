@@ -5,34 +5,18 @@
       <b-row>
         <b-col v-for="(tour, index) in newesTour" :key="index" cols="3">
           <div>
-            <b-card
-              :title="tour.name"
-              :img-src="
-                tour.images.length > 0
-                  ? `http://localhost:8000/${tour.images[0].image_url}`
-                  : ''
-              "
-              :img-alt="
-                tour.images.length > 0
+            <b-card :title="tour.name" :img-src="tour.images.length > 0
+                ? `http://localhost:8000/${tour.images[0].image_url}`
+                : ''
+              " :img-alt="tour.images.length > 0
                   ? `http://localhost:8000/${tour.images[0].alt_text}`
                   : ''
-              "
-              img-top
-              tag="article"
-              style="max-width: 20rem"
-              class="mb-2"
-            >
+                " img-top tag="article" style="max-width: 20rem" class="mb-2">
               <b-card-text>
                 {{ tour.description }}
               </b-card-text>
-              <b-button
-                @click="handleAddTourToFavorite(tour.id)"
-                variant="primary"
-                >Add to Favorite</b-button
-              >
-              <b-button @click="detailTour(tour.id)" variant="primary"
-                >Detail Tour</b-button
-              >
+              <b-button @click="handleAddTourToFavorite(tour.id)" variant="primary">Add to Favorite</b-button>
+              <b-button @click="detailTour(tour.id)" variant="primary">Detail Tour</b-button>
               <!-- <b-button @click="logValue" variant="primary">log</b-button> -->
             </b-card>
           </div>
@@ -58,13 +42,12 @@ export default {
     const notification = ref(null);
     const displayErrors = ref(null);
 
-
     const listenForNewTours = () => {
-      window.Echo.channel('tour-notifications')
-        .listen('TourCreated', (event) => {
-          console.log('New tour created:', event.tour);
-          notification.value.unshift(event.tour);
-        });
+      // window.Echo.channel('tour-notifications')
+      //   .listen('TourCreated', (event) => {
+      //     console.log('New tour created:', event.tour);
+      //     notification.value.unshift(event.tour);
+      //   });
     };
 
     const getNewesTour = async () => {
@@ -118,11 +101,11 @@ export default {
 
     const logValue = () => {
       console.log("valueCurrentUser", valueCurrentUser);
-      console.log("notification",notification);
+      console.log("notification", notification);
     };
     onMounted(() => {
       getNewesTour();
-      listenForNewTours
+      listenForNewTours;
     });
 
     return {
