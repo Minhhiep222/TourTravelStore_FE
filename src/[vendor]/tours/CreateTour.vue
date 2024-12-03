@@ -4,7 +4,7 @@
       <label> Thông tin cấu hình tour du lịch </label>
     </div>
     <div class="container p-0 my-8 rounded">
-      <form class="form_tour" v-if="swicth == ''" @submit.prevent="handleSubmit">
+      <form class="bg-white form_tour" v-if="swicth == ''" @submit.prevent="handleSubmit">
         <!-- image -->
         <div class="form-group">
           <label> Hình ảnh </label>

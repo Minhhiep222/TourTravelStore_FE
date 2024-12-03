@@ -2,11 +2,26 @@
 
 ## Description
 
-Dự án quản lý tour du lịch - Client-side response. Dự án này bao gồm các tính năng như bản đồ Google, bản đồ Leaflet, và các biểu tượng Font Awesome để tạo giao diện người dùng hấp dẫn.
+Dự án quản lý tour du lịch
+
+- Client-side response. Dự án này bao gồm các tính năng như:
+
+* Đăng ký thành người mua, người bán
+* Chat với thời gian thực
+* Thông báo
+* Thanh toán qua các cổng thanh toán như Momo, ZaloPay,vv..
+* Tìm kiếm
+* Chat bot với AI(Aftical Interlegen)
+* Quản lý user
+* Quản lý tour du lịch
+* Quản lý đơn hàng
+* Đánh giá/bình luận
+* Chức năng yêu thích
+* Bản đồ Google, bản đồ Leaflet, và các biểu tượng Font Awesome để tạo giao diện người dùng hấp dẫn.
 
 ---
 
-## Screenshots
+## SPACE FOR USER/CUSTOMER
 
 ### Home Page
 
@@ -14,6 +29,14 @@ Dự án quản lý tour du lịch - Client-side response. Dự án này bao g�
 ![Home Page 2](./public/images/homePage2.png)
 ![Home Page 3](./public/images/homePage3.png)
 ![Home Page 4](./public/images/homePage4.png)
+
+### Favouri
+
+-- Click for like
+![Search Page](./public/images/favouri.png)
+
+-- Space save favouri product
+![Search Page](./public/images/spaceLove.png)
 
 ### Search Page
 
@@ -30,6 +53,10 @@ Dự án quản lý tour du lịch - Client-side response. Dự án này bao g�
 ### Google Map Integration
 
 ![Google Map](./public/images/googleMap.png)
+
+### Chat wit AI
+
+![Google Map](./public/images/chatBot.png)
 
 ### Comment in product
 
@@ -86,7 +113,41 @@ Dự án quản lý tour du lịch - Client-side response. Dự án này bao g�
 
 ### Success in web
 
-## ![Payment Page](./public/images/successMain.png)
+![Payment Page](./public/images/successMain.png);
+
+## SPACE FOR VENDER
+
+### Management Tours
+
+![Payment Page](./public/images/vendor/tours.png);
+
+### Create Tour
+
+![Payment Page](./public/images/vendor/createTour.png);
+
+### Verify Tour
+
+![Payment Page](./public/images/vendor/verifyCreate.png);
+
+### Create Tour Success
+
+![Payment Page](./public/images/vendor/createTourSuccess.png);
+
+### Update Tour
+
+![Payment Page](./public/images/vendor/updateTour.png);
+
+### Update Success
+
+![Payment Page](./public/images/vendor/updateSuccess.png);
+
+### Delete Tour
+
+![Payment Page](./public/images/vendor/deleteTour.png);
+
+### Delete Tour Success
+
+![Payment Page](./public/images/vendor/deleteSuccess.png);
 
 ## Changelog
 
