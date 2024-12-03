@@ -2,26 +2,24 @@
 
 ## Description
 
-Dự án quản lý tour du lịch
+This is a tour management project that provides a client-side response. The project includes features such as:
 
-- Client-side response. Dự án này bao gồm các tính năng như:
-
-* Đăng ký thành người mua, người bán
-* Chat với thời gian thực
-* Thông báo
-* Thanh toán qua các cổng thanh toán như Momo, ZaloPay,vv..
-* Tìm kiếm
-* Chat bot với AI(Aftical Interlegen)
-* Quản lý user
-* Quản lý tour du lịch
-* Quản lý đơn hàng
-* Đánh giá/bình luận
-* Chức năng yêu thích
-* Bản đồ Google, bản đồ Leaflet, và các biểu tượng Font Awesome để tạo giao diện người dùng hấp dẫn.
+- Register as a buyer or seller
+- Real-time chat
+- Notifications
+- Payment through various gateways like Momo, ZaloPay, etc.
+- Search functionality
+- AI-powered chatbot (Artificial Intelligence)
+- User management
+- Tour management
+- Order management
+- Reviews and comments
+- Wishlist functionality
+- Google Maps, Leaflet maps, and Font Awesome icons for an attractive user interface.
 
 ---
 
-## SPACE FOR USER/CUSTOMER
+## SPACE FOR USERS / CUSTOMERS
 
 ### Home Page
 
@@ -30,13 +28,13 @@ Dự án quản lý tour du lịch
 ![Home Page 3](./public/images/homePage3.png)
 ![Home Page 4](./public/images/homePage4.png)
 
-### Favouri
+### Favourites
 
--- Click for like
-![Search Page](./public/images/favouri.png)
+- Click to like
+  ![Search Page](./public/images/favouri.png)
 
--- Space save favouri product
-![Search Page](./public/images/spaceLove.png)
+- Space to save favourite products
+  ![Search Page](./public/images/spaceLove.png)
 
 ### Search Page
 
@@ -54,26 +52,23 @@ Dự án quản lý tour du lịch
 
 ![Google Map](./public/images/googleMap.png)
 
-### Chat wit AI
+### Chat with AI
 
-![Google Map](./public/images/chatBot.png)
+![Chat with AI](./public/images/chatBot.png)
 
-### Comment in product
+### Comment on Product
 
--- Form comment
-![Comment](./public/images/comment.png);
+- Comment Form
+  ![Comment Form](./public/images/comment.png)
 
--- Comment Success
-![Comment](./public/images/commentSuccess.png);
+- Comment Success
+  ![Comment Success](./public/images/commentSuccess.png)
 
--- List comment
-![Comment](./public/images/comments.png);
+- List of Comments
+  ![Comments List](./public/images/comments.png)
 
--- Comment Update
-![Comment](./public/images/commentUpdate.png);
-
--- Comment Success
-![Comment](./public/images/commentSuccess.png);
+- Update Comment
+  ![Comment Update](./public/images/commentUpdate.png)
 
 ### Real-Time Chat with Vendor
 
@@ -91,70 +86,78 @@ Dự án quản lý tour du lịch
 
 ![Payment Page](./public/images/pageMethod.png)
 
-### Payment With Momo
+### Payment with Momo
 
--- Gate way with Momo
-![Payment Page](./public/images/gateWayMomo.png)
+- Payment Gateway with Momo
+  ![Payment Gateway with Momo](./public/images/gateWayMomo.png)
 
--- Verify OTP
-![Payment Page](./public/images/otp.png)
+- Verify OTP
+  ![Verify OTP](./public/images/otp.png)
 
--- Momo Success
-![Payment Page](./public/images/successMomo.png)
+- Momo Payment Success
+  ![Momo Success](./public/images/successMomo.png)
 
-### Payment with Zalo
+### Payment with ZaloPay
 
--- Chosen gate way
-![Payment Page](./public/images/methodXalo.png)
--- Gate way with Zalo pay
-![Payment Page](./public/images/gateWayZalo.png)
--- Zalo Success
-![Payment Page](./public/images/zaloSuccess.png)
+- Choose Payment Gateway
+  ![Choose Gateway](./public/images/methodXalo.png)
 
-### Success in web
+- Payment Gateway with ZaloPay
+  ![Payment Gateway with ZaloPay](./public/images/gateWayZalo.png)
 
-![Payment Page](./public/images/successMain.png);
+- ZaloPay Success
+  ![Zalo Success](./public/images/zaloSuccess.png)
 
-## SPACE FOR VENDER
+### Payment Success Page
 
-### Management Tours
+![Payment Success](./public/images/successMain.png)
 
-![Payment Page](./public/images/vendor/tours.png);
+---
+
+## SPACE FOR VENDORS
+
+### Manage Tours
+
+![Manage Tours](./public/images/vendor/tours.png)
 
 ### Create Tour
 
-![Payment Page](./public/images/vendor/createTour.png);
+![Create Tour](./public/images/vendor/createTour.png)
 
-### Verify Tour
+### Verify Tour Creation
 
-![Payment Page](./public/images/vendor/verifyCreate.png);
+![Verify Tour](./public/images/vendor/verifyCreate.png)
 
 ### Create Tour Success
 
-![Payment Page](./public/images/vendor/createTourSuccess.png);
+![Create Tour Success](./public/images/vendor/createTourSuccess.png)
 
 ### Update Tour
 
-![Payment Page](./public/images/vendor/updateTour.png);
+![Update Tour](./public/images/vendor/updateTour.png)
 
 ### Update Success
 
-![Payment Page](./public/images/vendor/updateSuccess.png);
+![Update Success](./public/images/vendor/updateSuccess.png)
 
 ### Delete Tour
 
-![Payment Page](./public/images/vendor/deleteTour.png);
+![Delete Tour](./public/images/vendor/deleteTour.png)
 
 ### Delete Tour Success
 
-![Payment Page](./public/images/vendor/deleteSuccess.png);
+![Delete Tour Success](./public/images/vendor/deleteSuccess.png)
 
-## Changelog
+---
 
-### 13/11/2024
+## Installation
 
-- Cài đặt Font Awesome:
-  ```bash
-  npm install --save font-awesome
-  npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/vue-fontawesome
-  ```
+To install the project, follow these steps:
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Minhhiep222/TourTravelStore_FE.git
+   ```
+2. run "npm install"
+
+3. run "npm run serve"
