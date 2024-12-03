@@ -158,6 +158,13 @@ To install the project, follow these steps:
    ```bash
    git clone https://github.com/Minhhiep222/TourTravelStore_FE.git
    ```
-2. run "npm install"
+2. **run "npm install"**
 
-3. run "npm run serve"
+   ```bash
+   npm install
+   ```
+
+3. **run "npm run serve"**
+   ```bash
+   npm run serve
+   ```
