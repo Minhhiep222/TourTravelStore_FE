@@ -26,26 +26,11 @@
         <div class="tour_list">
           <div class="tour_item" v-for="tour in tours" :key="tour.id">
             <div class="left-section">
-              <img
-                alt="Main tour image"
-                height="120"
-                :src="getImageUrl(tour.images[0]?.image_url)"
-                width="120"
-              />
+              <img alt="Main tour image" height="120" :src="getImageUrl(tour.images[0]?.image_url)" width="120" />
               <div class="image-grid">
-                <img
-                  v-for="image in tour.images?.slice(0, 2)"
-                  :key="image.id"
-                  alt="Tour image"
-                  height="40"
-                  :src="getImageUrl(image?.image_url)"
-                  width="40"
-                  class="image-grid-item"
-                />
-                <div
-                  class="view-more image-grid-item"
-                  v-if="tour.images.length > 2"
-                >
+                <img v-for="image in tour.images?.slice(0, 2)" :key="image.id" alt="Tour image" height="40"
+                  :src="getImageUrl(image?.image_url)" width="40" class="image-grid-item" />
+                <div class="view-more image-grid-item" v-if="tour.images.length > 2">
                   Xem ảnh
                 </div>
               </div>
@@ -92,17 +77,11 @@
             </div>
 
             <div class="buttons text-white font-medium">
-              <button
-                class="bg-green-500 hover:bg-green-600"
-                @click="updateStatus(tour.id, 1)"
-              >
+              <button class="bg-green-500 hover:bg-green-600" @click="updateStatus(tour.id, 1)">
                 <i class="fas fa-check"></i>
                 Duyệt Tour
               </button>
-              <button
-                class="bg-red-500 hover:bg-red-600"
-                @click="updateStatus(tour.id, 2)"
-              >
+              <button class="bg-red-500 hover:bg-red-600" @click="updateStatus(tour.id, 2)">
                 <i class="fas fa-trash-alt"></i>
                 Không duyệt Tour
               </button>
@@ -120,38 +99,19 @@
           <nav aria-label="Page navigation example mt-4" v-if="links">
             <ul class="pagination mt-4">
               <li class="page-item" :class="{ disabled: !links.prev }">
-                <a
-                  class="p-1 page-link"
-                  href="#"
-                  @click.prevent="fetchTours(meta.current_page - 1)"
-                  aria-label="Previous"
-                  :disabled="!links.prev"
-                >
+                <a class="p-1 page-link" href="#" @click.prevent="fetchTours(meta.current_page - 1)"
+                  aria-label="Previous" :disabled="!links.prev">
                   <span aria-hidden="true">&laquo;</span>
                   <span class="sr-only">Previous</span>
                 </a>
               </li>
-              <li
-                v-for="page in meta.last_page"
-                :key="page"
-                class="page-item"
-                :class="{ active: page === meta.current_page }"
-              >
-                <a
-                  class="p-1 px-2 page-link"
-                  href="#"
-                  @click.prevent="fetchTours(page)"
-                  >{{ page }}</a
-                >
+              <li v-for="page in meta.last_page" :key="page" class="page-item"
+                :class="{ active: page === meta.current_page }">
+                <a class="p-1 px-2 page-link" href="#" @click.prevent="fetchTours(page)">{{ page }}</a>
               </li>
               <li class="page-item" :class="{ disabled: !links.next }">
-                <a
-                  class="p-1 page-link"
-                  href="#"
-                  @click.prevent="fetchTours(meta.current_page + 1)"
-                  aria-label="Next"
-                  :disabled="!links.next"
-                >
+                <a class="p-1 page-link" href="#" @click.prevent="fetchTours(meta.current_page + 1)" aria-label="Next"
+                  :disabled="!links.next">
                   <span aria-hidden="true">&raquo;</span>
                   <span class="sr-only">Next</span>
                 </a>
@@ -342,6 +302,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use "../../assets/Global.module.scss";
-@use "../../assets/Tour.module.scss";
+@use "../assets/Global.module.scss";
+@use "../assets/Tour.module.scss";
 </style>

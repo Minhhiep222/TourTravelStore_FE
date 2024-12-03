@@ -3,13 +3,9 @@
     <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg">
       <div class="flex">
         <div class="w-2/3">
-          <div
-            class="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center"
-          >
-            <span
-              >Đừng lo lắng, giá vẫn giữ nguyên. Hoàn tất thanh toán của bạn
-              bằng</span
-            >
+          <div class="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
+            <span>Đừng lo lắng, giá vẫn giữ nguyên. Hoàn tất thanh toán của bạn
+              bằng</span>
             <span class="font-bold">01:41:42</span>
           </div>
           <div class="p-4">
@@ -18,24 +14,13 @@
             </h2>
             <div class="mb-4">
               <div class="flex items-center mb-2">
-                <input
-                  type="radio"
-                  id="vietqr"
-                  name="payment"
-                  class="mr-2 cursor-pointer"
-                  v-model="selectPayment"
-                  value="vietqr"
-                />
+                <input type="radio" id="vietqr" name="payment" class="mr-2 cursor-pointer" v-model="selectPayment"
+                  value="vietqr" />
                 <label for="vietqr" class="font-bold">VietQR</label>
-                <span
-                  class="ml-2 bg-green-200 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded"
-                  >Ưu đãi giảm giá</span
-                >
+                <span class="ml-2 bg-green-200 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">Ưu đãi giảm
+                  giá</span>
               </div>
-              <div
-                v-if="selectPayment === 'vietqr'"
-                class="border border-blue-500 p-4 rounded-lg bg-blue-50"
-              >
+              <div v-if="selectPayment === 'vietqr'" class="border border-blue-500 p-4 rounded-lg bg-blue-50">
                 <ul class="list-disc pl-5 text-sm">
                   <li>
                     Đảm bảo bạn có ví điện tử hoặc ứng dụng ngân hàng di động hỗ
@@ -55,14 +40,8 @@
             </div>
             <div class="mb-4">
               <div class="flex items-center mb-2">
-                <input
-                  type="radio"
-                  id="bank-transfer"
-                  name="payment"
-                  class="mr-2 cursor-pointer"
-                  v-model="selectPayment"
-                  value="bank-transfer"
-                />
+                <input type="radio" id="bank-transfer" name="payment" class="mr-2 cursor-pointer"
+                  v-model="selectPayment" value="bank-transfer" />
                 <label for="bank-transfer">Chuyển khoản ngân hàng</label>
               </div>
               <div v-if="selectPayment === 'bank-transfer'" class="mb-4">
@@ -90,35 +69,21 @@
                 </div>
                 <div class="mb-6 mt-2">
                   <h2 class="text-lg font-bold mb-2">Chọn tài khoản đích</h2>
-                  <div
-                    class="border border-blue-300 rounded p-1 px-2 mb-2 flex items-center bg-blue-50"
-                  >
+                  <div class="border border-blue-300 rounded p-1 px-2 mb-2 flex items-center bg-blue-50">
                     <input type="radio" name="payment" class="mr-2" />
                     <span class="flex-grow"> Vietcombank Transfer </span>
-                    <img
-                      alt="Vietcombank logo"
-                      class="ml-2"
-                      height="20"
+                    <img alt="Vietcombank logo" class="ml-2" height="20"
                       src="https://storage.googleapis.com/a1aa/image/WgnTcRsEac6PFJK5maP5qedpY4mpmJzX63I6gNxz5G1r6l2JA.jpg"
-                      width="50"
-                    />
+                      width="50" />
                   </div>
-                  <div
-                    class="border border-gray-300 rounded p-1 px-2 flex items-center bg-gray-50"
-                  >
+                  <div class="border border-gray-300 rounded p-1 px-2 flex items-center bg-gray-50">
                     <input type="radio" name="payment" class="mr-2" />
                     <span class="flex-grow"> Chuyển tiền qua VietinBank </span>
-                    <img
-                      alt="VietinBank logo"
-                      class="ml-2"
-                      height="20"
+                    <img alt="VietinBank logo" class="ml-2" height="20"
                       src="https://storage.googleapis.com/a1aa/image/Gg4fjVzYknxQDS2wjmSPSqu3gAqRnfkfvTtRcIxUn9HyqXanA.jpg"
-                      width="50"
-                    />
+                      width="50" />
                   </div>
-                  <div
-                    class="text-sm text-gray-600 mt-2 bg-blue-50 p-2 rounded"
-                  >
+                  <div class="text-sm text-gray-600 mt-2 bg-blue-50 p-2 rounded">
                     Các bước thanh toán dễ dàng và xác minh nhanh hơn
                   </div>
                 </div>
@@ -126,30 +91,20 @@
             </div>
             <div class="mb-4">
               <div class="flex items-center mb-2">
-                <input
-                  type="radio"
-                  id="credit-card"
-                  name="payment"
-                  class="mr-2 cursor-pointer"
-                  v-model="selectPayment"
-                  value="credit-card"
-                />
+                <input type="radio" id="credit-card" name="payment" class="mr-2 cursor-pointer" v-model="selectPayment"
+                  value="credit-card" />
                 <label for="credit-card">Thẻ thanh toán</label>
               </div>
 
-              <div
-                v-if="selectPayment === 'credit-card'"
-                class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow-md"
-              >
+              <div v-if="selectPayment === 'credit-card'"
+                class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow-md">
                 <div class="mb-4">
                   <label class="block text-gray-700 text-sm font-medium mb-2">
                     Số thẻ tín dụng
                   </label>
                   <input
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Số thẻ tín dụng"
-                    type="text"
-                  />
+                    placeholder="Số thẻ tín dụng" type="text" />
                 </div>
                 <div class="flex space-x-4 mb-4">
                   <div class="w-1/2">
@@ -158,9 +113,7 @@
                     </label>
                     <input
                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder="MM/YY"
-                      type="text"
-                    />
+                      placeholder="MM/YY" type="text" />
                   </div>
                   <div class="w-1/2">
                     <label class="block text-gray-700 text-sm font-medium mb-2">
@@ -169,20 +122,12 @@
                     <div class="relative">
                       <input
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Mã 3-4 chữ số"
-                        type="text"
-                      />
-                      <div
-                        class="absolute inset-y-0 right-0 flex items-center pr-3"
-                      >
+                        placeholder="Mã 3-4 chữ số" type="text" />
+                      <div class="absolute inset-y-0 right-0 flex items-center pr-3">
                         <i class="fas fa-question-circle text-blue-500"> </i>
-                        <img
-                          alt="CVV example"
-                          class="h-5 ml-2"
-                          height="20"
+                        <img alt="CVV example" class="h-5 ml-2" height="20"
                           src="https://storage.googleapis.com/a1aa/image/2RLJMyi2LZ4uKp1vl7t1rK3U6IjD8jeY46zXtzr5YfnO8MtTA.jpg"
-                          width="30"
-                        />
+                          width="30" />
                       </div>
                     </div>
                   </div>
@@ -193,16 +138,10 @@
                   </label>
                   <input
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Tên ghi trên thẻ"
-                    type="text"
-                  />
+                    placeholder="Tên ghi trên thẻ" type="text" />
                 </div>
                 <div class="flex items-center">
-                  <input
-                    checked=""
-                    class="form-checkbox text-blue-600"
-                    type="checkbox"
-                  />
+                  <input checked="" class="form-checkbox text-blue-600" type="checkbox" />
                   <label class="ml-2 text-sm text-gray-700">
                     Lưu thẻ để thanh toán nhanh hơn vào lần sau
                   </label>
@@ -213,58 +152,29 @@
 
             <div class="mb-4">
               <div class="flex items-center mb-2">
-                <input
-                  type="radio"
-                  id="payment_momo"
-                  name="payment_momo"
-                  v-model="selectPayment"
-                  value="transfer"
-                  class="mr-2 cursor-pointer"
-                />
+                <input type="radio" id="payment_momo" name="payment_momo" v-model="selectPayment" value="transfer"
+                  class="mr-2 cursor-pointer" />
                 <label for="store">Thanh toán với ATM momo</label>
-                <img
-                  class="max-h-8 ml-2"
-                  src="@/assets/Images/logo2.svg"
-                  alt=""
-                />
+                <img class="max-h-8 ml-2" src="@/assets/Images/logo2.svg" alt="" />
               </div>
             </div>
 
             <div class="mb-4">
               <div class="flex items-center mb-2">
-                <input
-                  type="radio"
-                  id="payment_zalopay"
-                  name="payment_zalopay"
-                  v-model="selectPayment"
-                  value="transfer_zalopay"
-                  class="mr-2 cursor-pointer"
-                />
+                <input type="radio" id="payment_zalopay" name="payment_zalopay" v-model="selectPayment"
+                  value="transfer_zalopay" class="mr-2 cursor-pointer" />
                 <label for="store">Thanh toán với ZaloPay</label>
-                <img
-                  class="max-h-8 ml-2"
-                  src="@/assets/Images/logo-zalopay.png"
-                  alt=""
-                />
+                <img class="max-h-8 ml-2" src="@/assets/Images/logo-zalopay.png" alt="" />
               </div>
             </div>
 
             <div class="mb-4">
               <div class="flex items-center mb-2">
-                <input
-                  type="radio"
-                  id="store"
-                  name="payment_cash"
-                  class="mr-2 cursor-pointer"
-                  v-model="selectPayment"
-                  value="cash"
-                />
+                <input type="radio" id="store" name="payment_cash" class="mr-2 cursor-pointer" v-model="selectPayment"
+                  value="cash" />
                 <label for="store">Tại điểm du lịch</label>
               </div>
-              <div
-                v-if="selectPayment === 'cash'"
-                class="border border-blue-500 p-4 rounded-lg bg-blue-50"
-              >
+              <div v-if="selectPayment === 'cash'" class="border border-blue-500 p-4 rounded-lg bg-blue-50">
                 <ul class="list-disc pl-5 text-sm">
                   <li>
                     Đảm bảo bạn có ví điện tử hoặc ứng dụng ngân hàng di động hỗ
@@ -278,9 +188,7 @@
                 <div class="flex justify-between items-center">
                   <div class="flex items-center">
                     <i class="fas fa-percent text-blue-500 mr-2"></i>
-                    <span class="font-semibold text-gray-800"
-                      >Thêm mã giảm</span
-                    >
+                    <span class="font-semibold text-gray-800">Thêm mã giảm</span>
                   </div>
                   <a href="#" class="text-blue-500 font-semibold">Thêm mã</a>
                 </div>
@@ -290,32 +198,26 @@
               </div>
               <div class="p-4 bg-white rounded-lg shadow-md">
                 <div class="flex justify-between items-center mb-4">
-                  <span class="font-semibold text-gray-800 text-lg"
-                    >Tổng giá tiền</span
-                  >
+                  <span class="font-semibold text-gray-800 text-lg">Tổng giá tiền</span>
                   <span class="font-semibold text-gray-800 text-lg">{{
                     formatVND(this.price)
                   }}</span>
                 </div>
                 <button
                   class="w-full bg-orange-500 text-white font-semibold py-3 rounded-lg text-center hover:bg-orange-600"
-                  @click.prevent="payment_method"
-                >
+                  @click.prevent="payment_method">
                   Thanh toán & Hiển thị mã QR
                 </button>
                 <p class="text-gray-500 text-center mt-4">
                   Bằng cách tiếp tục thanh toán, bạn đã đồng ý
                   <a href="#" class="text-blue-500">Điều khoản & Điều kiện</a>
                   và
-                  <a href="#" class="text-blue-500">Chính sách quyền riêng tư</a
-                  >.
+                  <a href="#" class="text-blue-500">Chính sách quyền riêng tư</a>.
                 </p>
               </div>
               <div class="mt-4 p-4 bg-blue-100 rounded-lg flex items-center">
                 <i class="fas fa-star text-blue-500 mr-2"></i>
-                <span class="text-blue-500 font-semibold"
-                  >Kiếm 1.156.560 Sao Priority</span
-                >
+                <span class="text-blue-500 font-semibold">Kiếm 1.156.560 Sao Priority</span>
               </div>
             </div>
           </div>

@@ -49,13 +49,13 @@
                   .slice()
                   .reverse()
                   .slice(0, 3)" @click="
-                      readNotification(
-                        notification.encrypt_id || notification.tour.encrypt_id
-                      )
-                      " :key="index" :class="[
-                    $style.wrap__item,
-                    notification.read === 1 ? '' : $style.item_notRead,
-                  ]">
+                    readNotification(
+                      notification.encrypt_id || notification.tour.encrypt_id
+                    )
+                    " :key="index" :class="[
+                      $style.wrap__item,
+                      notification.read === 1 ? '' : $style.item_notRead,
+                    ]">
                   <img :class="$style.item__img"
                     src="https://image.pitchbook.com/w8elAV0qwPeHVx5Z0Xl2VJTEbst1489735146585_200x200" alt="" />
                   <div :class="$style.item__content">
@@ -110,6 +110,17 @@
               <a class="text-gray-800" href="#">Đặt chỗ của tôi</a>
 
               <div class="flex items-center space-x-1">
+                <button v-if="valueCurrentUser" @click="handleChat" class="text-blue-500 mr-1">
+                  <div class="relative inline-flex items-center">
+                    <i
+                      class="fa fa-comment-dots text-2xl text-blue-500 hover:text-blue-700 cursor-pointer transition-colors"></i>
+                    <span
+                      class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                      3
+                    </span>
+                  </div>
+                </button>
+
                 <img alt="User avatar" class="w-5 h-5 rounded-full" @click="goToUserDetails(valueCurrentUser.id)"
                   src="https://storage.googleapis.com/a1aa/image/WZNnADVMnkqlKVQ5vH3H483t1j2I9eIbX5axZ5u0ejqFCrtTA.jpg"
                   v-if="valueCurrentUser" />
@@ -326,7 +337,7 @@ export default {
     };
 
     const handleChat = () => {
-      router.push({ path: "/minh-hiep/chat" });
+      router.push({ path: "/minh-hiep/chat_cv" });
     };
     const logValue = () => {
       console.log("notification", notifications);
@@ -485,7 +496,7 @@ export default {
       fetchUserData();
       checkNotifyUser();
       fetchNotification();
-      intalation();
+      // intalation();
       window.Echo.channel("tour-channel").listen("Notify", (e) => {
         console.log("logSocket", e);
         setRealtime(e);

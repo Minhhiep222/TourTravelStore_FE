@@ -18,22 +18,22 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Echo from "laravel-echo";
-import axios from "axios";
-axios.defaults.baseURL = "/api";
-axios.defaults.withCredentials = true;
-axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+// import axios from "axios";
+// axios.defaults.baseURL = "/api";
+// axios.defaults.withCredentials = true;
+// axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
-window.Pusher = require("pusher-js");
-import Cookies from "js-cookie";
+// window.Pusher = require("pusher-js");
+// import Cookies from "js-cookie";
 
-window.Pusher = require("pusher-js");
+// window.Pusher = require("pusher-js");
 
-const jwt = Cookies.get("tokenLogin");
+// const jwt = Cookies.get("tokenLogin");
 
-console.log(jwt);
-if (!jwt) {
-  console.log("CÓ LỖI");
-}
+// console.log(jwt);
+// if (!jwt) {
+//   console.log("CÓ LỖI");
+// }
 
 window.Echo = new Echo({
   broadcaster: "pusher",
@@ -43,20 +43,20 @@ window.Echo = new Echo({
   forceTLS: false,
   disableStats: true,
   cluster: "ap1",
-  authEndpoint: "http://127.0.0.1:8000/api/broadcasting/auth",
-  auth: {
-    headers: {
-      Authorization: `Bearer ${jwt}`,
-      Accept: "application/json",
-    },
-  },
+  // authEndpoint: "http://127.0.0.1:8000/api/broadcasting/auth",
+  // auth: {
+  //   headers: {
+  //     Authorization: `Bearer ${jwt}`,
+  //     Accept: "application/json",
+  //   },
+  // },
 });
 
 window.Echo.connector.pusher.connection.bind("error", (err) => {
   console.error("Pusher connection error:", err);
 });
 
-// Gắn state change handler
+// // Gắn state change handler
 window.Echo.connector.pusher.connection.bind("state_change", (states) => {
   console.log(
     "Connection state changed from",

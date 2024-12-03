@@ -124,11 +124,11 @@
         <div v-for="tour in newesTour.slice(0, 10)" :key="tour.id"
           class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300">
           <img @click="detailTour(tour.id)" :src="tour.images.length > 0
-              ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
-              : ''
+            ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
+            : ''
             " :alt="tour.images.length > 0
-                ? tour.images[0].alt_text
-                : 'Default alt text'
+              ? tour.images[0].alt_text
+              : 'Default alt text'
               " class="w-full h-68 object-cover min-h-32 max-h-32" height="200" width="300" />
           <div class="p-2 flex flex-col justify-between" style="min-height: 164px">
             <div class="">
@@ -190,11 +190,11 @@
         <div v-for="tour in tours" :key="tour.id"
           class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300">
           <img @click="detailTour(tour.id)" :src="tour.images.length > 0
-              ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
-              : ''
+            ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
+            : ''
             " :alt="tour.images.length > 0
-                ? tour.images[0].alt_text
-                : 'Default alt text'
+              ? tour.images[0].alt_text
+              : 'Default alt text'
               " class="w-full h-68 object-cover min-h-32 max-h-32" height="200" width="300" />
           <div class="p-2 flex flex-col justify-between" style="min-height: 164px">
             <div class="">
@@ -242,11 +242,11 @@
         <div v-for="tour in tours" :key="tour.id"
           class="bg-white rounded-lg shadow-md overflow-hidden relative cursor-pointer hover:bg-white-300">
           <img @click="detailTour(tour.id)" :src="tour.images.length > 0
-              ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
-              : ''
+            ? `http://127.0.0.1:8000/images/${tour.images[0].image_url}`
+            : ''
             " :alt="tour.images.length > 0
-                ? tour.images[3].alt_text
-                : 'Default alt text'
+              ? tour.images[3].alt_text
+              : 'Default alt text'
               " class="w-full h-68 object-cover min-h-32 max-h-32" height="200" width="300" />
           <div class="p-2 flex flex-col justify-between" style="min-height: 164px">
             <div class="">
